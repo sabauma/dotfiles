@@ -27,6 +27,8 @@ Bundle "snipMate"
 Bundle "taglist.vim"
 Bundle "vim-indent-object"
 Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
+Bundle "https://github.com/idris-hackers/idris-vim.git"
+Bundle "https://github.com/guns/vim-sexp.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -102,10 +104,10 @@ map j gj
 map k gk
 
 " Quick navigation of tabs
-map th :tabprev<CR>
-map tl :tabnext<CR>
-map tn :tabnew<CR>
-map td :tabclose<CR>
+map <leader>th :tabprev<CR>
+map <leader>tl :tabnext<CR>
+map <leader>tn :tabnew<CR>
+map <leader>td :tabclose<CR>
 
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
