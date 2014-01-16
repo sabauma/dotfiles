@@ -11,8 +11,8 @@ Bundle "a.vim"
 Bundle "buffergrep"
 Bundle "cecutil"
 Bundle "compview"
-Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
-Bundle "http://github.com/sjl/gundo.vim.git"
+Bundle "https://github.com/nathanaelkane/vim-indent-guides.git"
+Bundle "https://github.com/sjl/gundo.vim.git"
 Bundle "https://github.com/Shougo/vimproc.git"
 Bundle "https://github.com/eagletmt/ghcmod-vim.git"
 Bundle "https://github.com/godlygeek/tabular.git"
@@ -21,12 +21,13 @@ Bundle "https://github.com/scrooloose/nerdtree.git"
 Bundle "https://github.com/tpope/vim-repeat.git"
 Bundle "https://github.com/tpope/vim-surround.git"
 Bundle "https://github.com/zalun/vim-SyntaxFolds.git"
-Bundle "git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex"
+Bundle "https://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex"
 Bundle "python.vim"
 Bundle "snipMate"
 Bundle "taglist.vim"
 Bundle "vim-indent-object"
 Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
+Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -178,7 +179,6 @@ set pumheight=15
 
 " SuperTab option for context aware completion
 let g:SuperTabDefaultCompletionType = "context"
-
 
 " Show clang errors in the quickfix window
 let python_highlight_all = 1
