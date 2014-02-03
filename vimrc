@@ -12,7 +12,6 @@ Bundle "buffergrep"
 Bundle "cecutil"
 Bundle "compview"
 Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
-Bundle "http://github.com/sjl/gundo.vim.git"
 Bundle "https://github.com/Shougo/vimproc.git"
 Bundle "https://github.com/eagletmt/ghcmod-vim.git"
 Bundle "https://github.com/godlygeek/tabular.git"
@@ -23,12 +22,12 @@ Bundle "https://github.com/tpope/vim-surround.git"
 Bundle "https://github.com/zalun/vim-SyntaxFolds.git"
 Bundle "git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex"
 Bundle "python.vim"
-Bundle "snipMate"
 Bundle "taglist.vim"
 Bundle "vim-indent-object"
 Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
 Bundle "https://github.com/idris-hackers/idris-vim.git"
 Bundle "https://github.com/guns/vim-sexp.git"
+Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -78,7 +77,7 @@ set virtualedit=all
 set nocompatible
 set modelines=0
 set wrap
-set textwidth=78
+set textwidth=80
 set formatoptions=qrn1
 set colorcolumn=85
 set title
@@ -134,8 +133,6 @@ map <leader>j <C-w>j
 map <leader>k <C-w>k
 map <leader>l <C-w>l
 
-autocmd BufRead *\.cl set filetype=opencl
-
 " Use extra tag files for python
 autocmd FileType python set tags+=$HOME/.vim/tags/python.ctags
 
@@ -178,10 +175,6 @@ set completeopt=menu,menuone,longest
 " Limit popup menu height
 set pumheight=15
 
-" SuperTab option for context aware completion
-let g:SuperTabDefaultCompletionType = "context"
-
-
 " Show clang errors in the quickfix window
 let python_highlight_all = 1
 let python_slow_sync = 1
@@ -195,41 +188,8 @@ let g:ghc_version = "7.4.1"
 " --------
 " Toggle NERDTree with F2
 map <F2> :NERDTreeToggle<CR>
-" Toggle background color with F5
-call togglebg#map("<F5>")
 " Use Y to copy until the end of the line. Use yy to copy the whole line.
 nnoremap Y y$
-
-" Transparent editing of GnuPG-encrypted files
-" Based on a solution by Wouter Hanegraaff
-augroup encrypted
-    au!
-    " First make sure nothing is written to ~/.viminfo while editing
-    " an encrypted file.
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc set viminfo=
-    " We don't want a swap file, as it writes unencrypted data to disk.
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc set noswapfile
-    " Switch to binary mode to read the encrypted file.
-    autocmd BufReadPre,FileReadPre *.gpg set bin
-    autocmd BufReadPre,FileReadPre *.gpg,*.asc let ch_save = &ch|set ch=2
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc
-                \ '[,']!gpg --decrypt 2>/dev/null
-    " Switch to normal mode for editing
-    autocmd BufReadPost,FileReadPost *.gpg set nobin
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc let &ch = ch_save|unlet ch_save
-    autocmd BufReadPost,FileReadPost *.gpg,*.asc
-                \ execute ":doautocmd BufReadPost " . expand("%:r")
-
-    " Convert all text to encrypted text before writing
-    autocmd BufWritePre,FileWritePre *.gpg set bin
-    autocmd BufWritePre,FileWritePre *.gpg
-                \ '[,']!gpg --default-recipient-self -e 2>/dev/null
-    autocmd BufWritePre,FileWritePre *.asc
-                \ '[,']!gpg --default-recipient-self -e -a 2>/dev/null
-    " Undo the encryption so we are back in the normal text, directly
-    " after the file has been written.
-    autocmd BufWritePost,FileWritePost *.gpg,*.asc u
-augroup END
 
 " Some tricks for mutt
 " F1 through F3 re-wraps paragraphs in useful ways
@@ -261,9 +221,7 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" Settings for Notes plugin
-let g:notes_directories = ['~/Documents/Notes']
-let g:notes_suffix = '.txt'
-
 " Prefer C++11 over the standard C++ syntax file
 autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
+
+let g:sexp_enable_insert_mode_mappings = 0

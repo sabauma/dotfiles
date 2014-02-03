@@ -339,6 +339,7 @@ myStartupHook = return ()
 --
 main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
 
+
 allHooks = [manageDocks, myManageHook, manageHook defaultConfig, manageSpawn]
 
 -- A structure containing your configuration settings, overriding
