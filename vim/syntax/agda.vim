@@ -1,9 +1,13 @@
 " File: ~/.vim/syntax/agda.vim
 
+" This is reproduced from 
+" http://wiki.portal.chalmers.se/agda/pmwiki.php?n=Main.VIMEditing
+" for convenience
+
 if version < 600
-  syn clear
+    syn clear
 elseif exists("b:current_syntax")
-  finish
+    finish
 endif
 
 " To tokenize, the best pattern I've found so far is this:
@@ -18,8 +22,8 @@ endif
 
 syn match   agdaKeywords     "\v(^|\s|[.(){};])@<=(abstract|data|hiding|import|as|infix|infixl|infixr|module|mutual|open|primitive|private|public|record|renaming|rewrite|using|where|with|field|constructor|infix|infixl|infixr|syntax)($|\s|[.(){};])@="
 syn match   agdaDubious      "\v(^|\s|[.(){};])@<=(postulate|codata)($|\s|[.(){};])@="
-syn match   agdaOperator     "\v(^|\s|[.(){};])@<=(let|in|forall|&#955;|&#8594;|-\>|:|&#8704;|\=|\||\\)($|\s|[.(){};])@="
-syn match   agdaFunction     "\v(^|\s|[.(){};])@<=(Set[0-9&#8320;-&#8329;]*)($|\s|[.(){};])@="
+syn match   agdaOperator     "\v(^|\s|[.(){};])@<=(let|in|forall|λ|→|-\>|:|∀|\=|\||\\)($|\s|[.(){};])@="
+syn match   agdaFunction     "\v(^|\s|[.(){};])@<=(Set[0-9₀-₉]*)($|\s|[.(){};])@="
 syn match   agdaNumber       "\v(^|\s|[.(){};])@<=[0-9]+($|\s|[.(){};])@="
 syn match   agdaCharCode     contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
 syn match   agdaCharCode     contained "\v\\(NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL)"

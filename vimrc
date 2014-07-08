@@ -28,6 +28,8 @@ Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
 Bundle "https://github.com/idris-hackers/idris-vim.git"
 Bundle "https://github.com/guns/vim-sexp.git"
 Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
+Bundle "https://github.com/derekelkins/agda-vim.git"
+Bundle "https://github.com/wlangstroth/vim-racket.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -37,6 +39,7 @@ Bundle "Sorcerer"
 Bundle "https://github.com/altercation/vim-colors-solarized.git"
 Bundle "https://github.com/toupeira/desertink.vim.git"
 Bundle "native"
+Bundle "https://github.com/nanotech/jellybeans.vim.git"
 
 " Tab settings
 " set cindent
@@ -149,6 +152,10 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 " Spell checking for latex files
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
+set conceallevel=2
+let g:tex_conceal="abmgs"
+hi! link Conceal Operator
+
 " Load latex even for empty files
 let g:tex_flavor='latex'
 autocmd BufRead *\.tex set iskeyword+=:
@@ -225,3 +232,5 @@ autocmd BufWinLeave * call clearmatches()
 autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
 
 let g:sexp_enable_insert_mode_mappings = 0
+au BufNewFile,BufRead *.agda setf agda
+

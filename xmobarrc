@@ -1,9 +1,9 @@
 Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
        , bgColor = "black"
        , fgColor = "grey"
-       , position = Top
-       , commands = [ Run Network "em1" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+       , position = Static {xpos=0, ypos=0, width=1728, height=18}
+       , commands = [ Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","15","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%","--normal","green"] 10
                     , Run Swap [] 10
@@ -13,5 +13,5 @@ Config { font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#DC143C>%cpu%</fc> | <fc=#7777FF>%memory% * %swap%</fc> | <fc=#CCFF00>%em1%</fc> - <fc=#CCFF00>%eth0%</fc> | <fc=#FFAA00>%date%</fc> | %battery%"
+       , template = "%StdinReader% }{ <fc=#DC143C>%cpu%</fc> | <fc=#7777FF>%memory% * %swap%</fc> | <fc=#CCFF00>%eth0%</fc> - <fc=#CCFF00>%wlan0%</fc> | <fc=#FFAA00>%date%</fc> | %battery%"
        }
