@@ -97,10 +97,7 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["web", "email", "code"] ++ map show [4..9] ++ ["music"]
--- myWorkspaces    = [ "pheonix", "dragon", "lyorn", "tiassa", "hawk", "dzur"
---                   , "isolla", "tsalmoth", "vallista", "jhereg", "iorich"
---                   , "chreotha", "yendi", "orca", "teckla", "jhegalla", "athyra"]
+myWorkspaces    = ["web", "email", "code"] ++ map show [4..9] ++ ["music", "im", "torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -290,9 +287,9 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
-    , className =? "Firefox"        --> doShift (head myWorkspaces)
-    , className =? "Thunderbird"    --> doShift (myWorkspaces !! 1)
-    , className =? "banshee"        --> doShift (last myWorkspaces)
+    , className =? "Firefox"        --> doShift "web"
+    , className =? "banshee"        --> doShift "music"
+    , className =? "Deluge"         --> doShift "torrents"
     , resource  =? "desktop_window" --> doIgnore
     , isFullscreen                  --> doFullFloat ]
 

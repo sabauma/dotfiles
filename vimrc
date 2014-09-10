@@ -30,6 +30,7 @@ Bundle "https://github.com/guns/vim-sexp.git"
 Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
 Bundle "https://github.com/derekelkins/agda-vim.git"
 Bundle "https://github.com/wlangstroth/vim-racket.git"
+Bundle "https://github.com/ehamberg/vim-cute-python.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -85,6 +86,7 @@ set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
+set breakindent
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -159,7 +161,7 @@ hi! link Conceal Operator
 " Load latex even for empty files
 let g:tex_flavor='latex'
 autocmd BufRead *\.tex set iskeyword+=:
-map ,p :!pdflatex -shell-escape %<CR>
+map ,p :!xelatex -shell-escape %<CR>
 map ,b :!bibtex %<CR>
 
 " Remove trailing whitespace
