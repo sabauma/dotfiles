@@ -18,42 +18,36 @@ import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
-import           XMonad.Actions.WindowBringer
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Util.EZConfig              (additionalKeys)
-import           XMonad.Util.Run                   (safeSpawn, spawnPipe)
+import           XMonad.Util.EZConfig               (additionalKeys)
+import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
-import           XMonad.Layout.AutoMaster
-import           XMonad.Layout.Cross
-import           XMonad.Layout.Grid                (Grid (..))
-import           XMonad.Layout.LayoutHints
+import           XMonad.Layout.BinarySpacePartition (emptyBSP)
+import           XMonad.Layout.Grid                 (Grid (..))
 import           XMonad.Layout.Minimize
-import           XMonad.Layout.NoBorders           (smartBorders)
-import           XMonad.Layout.PerWorkspace        (onWorkspace)
-import           XMonad.Layout.Reflect
-import           XMonad.Layout.ResizableTile       (ResizableTall (..))
-import           XMonad.Layout.Spiral              (spiral)
-import           XMonad.Prompt                     (XPConfig (..),
-                                                    defaultXPConfig)
-import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
-import           XMonad.Prompt.Shell               (shellPrompt)
-import           XMonad.Prompt.Window              (windowPromptGoto)
-import           XMonad.Util.WindowProperties
+import           XMonad.Layout.NoBorders            (smartBorders)
+import           XMonad.Prompt                      (XPConfig (..),
+                                                     defaultXPConfig)
+import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
+import           XMonad.Prompt.Window               (windowPromptGoto)
 
 -- General libraries
-import           Data.Char                         (isAlpha, toLower)
-import           Data.Function                     (on)
-import           Data.List                         (foldr1, isInfixOf,
-                                                    stripPrefix)
-import           Data.Maybe                        (fromMaybe)
-import           Data.Monoid                       (appEndo)
+import           Data.Char                          (isAlpha, toLower)
+import           Data.Function                      (on)
+import           Data.List                          (isInfixOf, stripPrefix)
+import           Data.Maybe                         (fromMaybe)
+import           Data.Monoid                        (appEndo)
 import           System.Exit
 import           System.IO
 
-import qualified Data.Map                          as M
-import qualified XMonad.StackSet                   as W
+import           Graphics.X11.ExtraTypes.XF86       (xF86XK_AudioNext,
+                                                     xF86XK_AudioPlay,
+                                                     xF86XK_AudioPrev)
+
+import qualified Data.Map                           as M
+import qualified XMonad.StackSet                    as W
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -199,6 +193,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm               , xK_r) , nextScreen)
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
+
+    -- Control the music player
+    , ((0 , xF86XK_AudioPlay), spawn "banshee --toggle-playing")
+    , ((0 , xF86XK_AudioNext), spawn "banshee --next")
+    , ((0 , xF86XK_AudioPrev), spawn "banshee --previous")
     ]
     ++
     --
@@ -252,11 +251,11 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-grids = GridRatio (4/3) ||| simpleCross ||| autoMaster 1 (1/100) Grid
 
-mainLayouts = tiled ||| mirror ||| Full ||| grids ||| spiral (6/7)
+mainLayouts = tiled ||| mirror ||| Full ||| grids ||| emptyBSP
     where tiled  = Tall nmaster delta ratio
           mirror = Mirror tiled
+          grids  = GridRatio (4 / 3)
           -- default tiling algorithm partitions the screen into two panes
           -- The default number of windows in the master pane
           nmaster = 1
@@ -290,6 +289,7 @@ myManageHook = composeAll
     , className =? "Firefox"        --> doShift "web"
     , className =? "banshee"        --> doShift "music"
     , className =? "Deluge"         --> doShift "torrents"
+    , className =? "Pidgin"         --> doShift "im"
     , resource  =? "desktop_window" --> doIgnore
     , isFullscreen                  --> doFullFloat ]
 
@@ -365,11 +365,10 @@ defaults xmproc = defaultConfig
     , startupHook        = myStartupHook
     } `additionalKeys`
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
-      ((mod4Mask                , xK_F1 ) , spawn "firefox"                    ) ,
-      ((mod4Mask                , xK_F2 ) , spawn "thunderbird"                ) ,
-      ((mod4Mask                , xK_F3 ) , spawnHere "nautilus --no-desktop"  ) ,
-      ((mod4Mask                , xK_F4 ) , spawn "gvim"                       ) ,
-      ((mod4Mask                , xK_F5 ) , spawn "banshee"                    ) ,
-      ((mod4Mask                , xK_F6 ) , spawn "virtualbox"                 ) ,
-      ((mod4Mask                , xK_F7 ) , spawn "thunar"                     ) ]
+      ((mod4Mask                , xK_F1 ) , spawn "firefox"                   ) ,
+      ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"             ) ,
+      ((mod4Mask                , xK_F3 ) , spawnHere "nautilus --no-desktop" ) ,
+      ((mod4Mask                , xK_F4 ) , spawn "gvim"                      ) ,
+      ((mod4Mask                , xK_F5 ) , spawn "banshee"                   ) ,
+      ((mod4Mask                , xK_F6 ) , spawn "pidgin"                    ) ]
 
