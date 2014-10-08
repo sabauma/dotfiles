@@ -107,6 +107,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export PATH=$PATH:/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin
+export PATH=$PATH:/home/spenser/.local/bin
+export PATH=$PATH:/home/spenser/.local/bin:/home/spenser/bin/larceny
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
 
 TEXMF=/home/spenser/.latex
