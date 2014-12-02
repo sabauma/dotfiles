@@ -25,9 +25,12 @@ import           XMonad.Util.EZConfig               (additionalKeys)
 import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
 import           XMonad.Layout.BinarySpacePartition (emptyBSP)
+import           XMonad.Layout.IM
 import           XMonad.Layout.Grid                 (Grid (..))
 import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders            (smartBorders)
+import           XMonad.Layout.PerWorkspace         (onWorkspace)
+import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Prompt                      (XPConfig (..),
                                                      defaultXPConfig)
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
@@ -39,12 +42,11 @@ import           Data.Function                      (on)
 import           Data.List                          (isInfixOf, stripPrefix)
 import           Data.Maybe                         (fromMaybe)
 import           Data.Monoid                        (appEndo)
+import           Data.Ratio                         ((%))
 import           System.Exit
 import           System.IO
 
-import           Graphics.X11.ExtraTypes.XF86       (xF86XK_AudioNext,
-                                                     xF86XK_AudioPlay,
-                                                     xF86XK_AudioPrev)
+import           Graphics.X11.ExtraTypes.XF86
 
 import qualified Data.Map                           as M
 import qualified XMonad.StackSet                    as W
@@ -195,9 +197,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
     -- Control the music player
-    , ((0 , xF86XK_AudioPlay), spawn "banshee --toggle-playing")
-    , ((0 , xF86XK_AudioNext), spawn "banshee --next")
-    , ((0 , xF86XK_AudioPrev), spawn "banshee --previous")
+    , ((noModMask , xF86XK_AudioPlay), spawn "banshee --toggle-playing")
+    , ((noModMask , xF86XK_AudioNext), spawn "banshee --next")
+    , ((noModMask , xF86XK_AudioPrev), spawn "banshee --previous")
+
+    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2-")
+    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+")
+    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle")
     ]
     ++
     --
@@ -252,17 +258,19 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 -- which denotes layout choice.
 --
 
-mainLayouts = tiled ||| mirror ||| Full ||| grids ||| emptyBSP
-    where tiled  = Tall nmaster delta ratio
-          mirror = Mirror tiled
-          grids  = GridRatio (4 / 3)
-          -- default tiling algorithm partitions the screen into two panes
-          -- The default number of windows in the master pane
-          nmaster = 1
-          -- Default proportion of screen occupied by master pane
-          ratio   = 1 / 2
-          -- Percent of screen to increment by when resizing panes
-          delta   = 3 / 100
+mainLayouts = onWorkspace "im" grids
+            $ tiled ||| mirror ||| Full ||| grids ||| emptyBSP
+  where
+    tiled  = Tall nmaster delta ratio
+    mirror = Mirror tiled
+    grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ GridRatio (4 / 3)
+    -- default tiling algorithm partitions the screen into two panes
+    -- The default number of windows in the master pane
+    nmaster = 1
+    -- Default proportion of screen occupied by master pane
+    ratio   = 1 / 2
+    -- Percent of screen to increment by when resizing panes
+    delta   = 3 / 100
 
 myLayout = smartBorders . minimize . avoidStruts $ mainLayouts
 
@@ -285,12 +293,12 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore
+    , resource  =? "desktop"        --> doIgnore
+    , resource  =? "trayer"         --> doIgnore
     , className =? "Firefox"        --> doShift "web"
     , className =? "banshee"        --> doShift "music"
     , className =? "Deluge"         --> doShift "torrents"
     , className =? "Pidgin"         --> doShift "im"
-    , resource  =? "desktop_window" --> doIgnore
     , isFullscreen                  --> doFullFloat ]
 
 -- Whether focus follows the mouse pointer.

@@ -13,7 +13,7 @@ Bundle "cecutil"
 Bundle "compview"
 Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
 Bundle "https://github.com/Shougo/vimproc.git"
-Bundle "https://github.com/eagletmt/ghcmod-vim.git"
+" Bundle "https://github.com/eagletmt/ghcmod-vim.git"
 Bundle "https://github.com/godlygeek/tabular.git"
 Bundle "https://github.com/scrooloose/nerdcommenter.git"
 Bundle "https://github.com/scrooloose/nerdtree.git"
@@ -31,6 +31,7 @@ Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
 Bundle "https://github.com/derekelkins/agda-vim.git"
 Bundle "https://github.com/wlangstroth/vim-racket.git"
 Bundle "https://github.com/ehamberg/vim-cute-python.git"
+Bundle "http://github.com/ardagnir/vimbed"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -187,11 +188,6 @@ set pumheight=15
 " Show clang errors in the quickfix window
 let python_highlight_all = 1
 let python_slow_sync = 1
-
-" configure browser for haskell_doc.vim
-let g:haddock_browser = "/usr/bin/firefox"
-let g:haddock_docdir = "/usr/share/doc/ghc6-doc/html/"
-let g:ghc_version = "7.4.1"
 
 " Key Maps
 " --------
