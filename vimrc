@@ -156,8 +156,8 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
 set conceallevel=2
-let g:tex_conceal="abmgs"
-hi! link Conceal Operator
+"let g:tex_conceal="abmgs"
+"hi! link Conceal Operator
 
 " Load latex even for empty files
 let g:tex_flavor='latex'
@@ -232,3 +232,6 @@ autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
 let g:sexp_enable_insert_mode_mappings = 0
 au BufNewFile,BufRead *.agda setf agda
 
+" Interrobangs...
+digraph !? 8253
+digraph ?! 8253

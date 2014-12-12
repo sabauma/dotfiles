@@ -263,7 +263,7 @@ mainLayouts = onWorkspace "im" grids
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
-    grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ GridRatio (4 / 3)
+    grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ reflectHoriz $ GridRatio (4 / 3)
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane
     nmaster = 1
