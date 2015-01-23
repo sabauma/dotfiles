@@ -1,0 +1,48 @@
+#/bin/bash
+
+xrdb -merge ~/.Xresources &
+
+export WINDOW_MANAGER=xmonad
+
+xcompmgr &
+
+unity-settings-daemon &
+
+#trayer --edge top --align right --SetDockType true \
+       #--SetPartialStrut false \
+       #--expand true --width 10 --transparent true \
+       #--tint 0x000000 --alpha 0 --height 18 &
+
+#gnome-sound-applet &
+#nm-applet &
+wicd &
+gnome-keyring-daemon &
+gnome-sceensaver &
+offlineimap &
+system-config-printer-applet &
+conky &
+
+#xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Two-Finger Scrolling" 8 1
+#xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Synaptics Two-Finger Scrolling" 8 1 1
+#xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Synaptics Two-Finger Pressure" 32 10
+#xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Synaptics Two-Finger Width" 32 8
+#xinput set-prop "SynPS/2 Synaptics TouchPad" --type=int "Synaptics Circular Scrolling" 1
+#xinput set-prop "SynPS/2 Synaptics TouchPad" --type=int "Synaptics Circular Scrolling Trigger" 3
+
+# Not sure why this works, but this prevents multiple instances
+# of banshee from being run when media keys are used
+#killall xbindkeys && xbindkeys &
+
+# hsetroot -fill /home/spenser/Pictures/2560-1600-66798.jpg &
+# hsetroot -fill /home/spenser/Pictures/Wallpapers/starry-night.jpeg &
+# hsetroot -fill /home/spenser/Pictures/Wallpapers/myhaskell4.jpg
+# hsetroot -fill /home/spenser/Pictures/Sonnet-1920x1200.jpg
+
+# gnome-settings-daemon interferes with these two commands, so we need them to
+# wait and run after gnome-settings-daemon
+(sleep 5 && feh --bg-fill /home/spenser/Pictures/WPX7MHGC.jpg) &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/hdwallpaperpc_com_Laughing_Man_Ghost_in_the_Shell_Dark_1920x1080.jpg) &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/Wallpapers/starry-night.jpeg) &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/Wallpapers/solar_circles_2560x1440.jpg) &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/Wallpapers/i-see-no-god-up-here.jpg) &
+(sleep 10 && xmodmap ~/.Xmodmap) &
