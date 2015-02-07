@@ -175,7 +175,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Left  ), prevWS)
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
-    , ((modm               , xK_v        ) , selectWorkspace defaultXPConfig)
+    , ((modm               , xK_v        ) , selectWorkspace' appendWorkspace defaultXPConfig)
     , ((modm               , xK_b        ) , withWorkspace defaultXPConfig (windows . W.shift))
     , ((modm .|. shiftMask , xK_b        ) , withWorkspace defaultXPConfig (windows . copy))
     , ((modm               , xK_u        ) , renameWorkspace defaultXPConfig)

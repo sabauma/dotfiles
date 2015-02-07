@@ -13,7 +13,7 @@ Bundle "cecutil"
 Bundle "compview"
 Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
 Bundle "https://github.com/Shougo/vimproc.git"
-" Bundle "https://github.com/eagletmt/ghcmod-vim.git"
+Bundle "https://github.com/eagletmt/ghcmod-vim.git"
 Bundle "https://github.com/godlygeek/tabular.git"
 Bundle "https://github.com/scrooloose/nerdcommenter.git"
 Bundle "https://github.com/scrooloose/nerdtree.git"
@@ -155,7 +155,6 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 " Spell checking for latex files
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
-set conceallevel=2
 "let g:tex_conceal="abmgs"
 "hi! link Conceal Operator
 
@@ -235,3 +234,4 @@ au BufNewFile,BufRead *.agda setf agda
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
+
