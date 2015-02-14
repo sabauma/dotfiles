@@ -104,7 +104,7 @@ myFocusedBorderColor = "#ff0000"
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFA6A0"
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#BEFF9C"
+xmobarCurrentWorkspaceColor = "#8EFF6C"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
@@ -266,7 +266,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = def
   { activeBorderColor   = "#7C7C7C"
-  , activeTextColor     = "#CEFFAC"
+  , activeTextColor     = xmobarCurrentWorkspaceColor
   , activeColor         = "#000000"
   , inactiveBorderColor = "#7C7C7C"
   , inactiveTextColor   = "#EEEEEE"
