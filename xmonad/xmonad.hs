@@ -25,14 +25,15 @@ import           XMonad.Util.EZConfig               (additionalKeys)
 import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
 import           XMonad.Layout.BinarySpacePartition (emptyBSP)
-import           XMonad.Layout.IM
 import           XMonad.Layout.Grid                 (Grid (..))
+import           XMonad.Layout.IM
 import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
 import           XMonad.Layout.Reflect              (reflectHoriz)
-import           XMonad.Prompt                      (XPConfig (..),
-                                                     defaultXPConfig)
+import           XMonad.Layout.Tabbed
+import           XMonad.Prompt                      (XPConfig (..))
+
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
 
@@ -93,12 +94,20 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["web", "email", "code"] ++ map show [4..9] ++ ["music", "im", "torrents"]
+myWorkspaces    = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myNormalBorderColor  = "#7c7c7c"
+myFocusedBorderColor = "#ffb6b0"
+
+{-myNormalBorderColor  = "#dddddd"-}
+{-myFocusedBorderColor = "#ff0000"-}
+
+-- Color of current window title in xmobar.
+xmobarTitleColor = "#FFB6B0"
+-- Color of current workspace in xmobar.
+xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
@@ -154,11 +163,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Cycle recent workspaces
     , ((modm              , xK_Tab   ), toggleWS)
     -- Move current window to previous workspace
-    , ((modm .|. shiftMask, xK_Tab   ), toggleWindowTo)
+    -- , ((modm .|. shiftMask, xK_Tab   ), toggleWindowTo)
     -- Fullscreen apps
     , ((modm, xK_f                   ), fullFloatFocused)
     -- Grid Select Binding
-    , ((modm              , xK_g     ), goToSelected defaultGSConfig)
+    , ((modm              , xK_g     ), goToSelected def)
     -- Put cursor in upper left hand corner of the screen
     , ((modm, xK_o                   ), banish UpperLeft)
     -- Find an empty workspace
@@ -175,10 +184,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Left  ), prevWS)
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
-    , ((modm               , xK_v        ) , selectWorkspace defaultXPConfig)
-    , ((modm               , xK_b        ) , withWorkspace defaultXPConfig (windows . W.shift))
-    , ((modm .|. shiftMask , xK_b        ) , withWorkspace defaultXPConfig (windows . copy))
-    , ((modm               , xK_u        ) , renameWorkspace defaultXPConfig)
+    , ((modm               , xK_v        ) , selectWorkspace def)
+    , ((modm               , xK_b        ) , withWorkspace def (windows . W.shift))
+    , ((modm .|. shiftMask , xK_b        ) , withWorkspace def (windows . copy))
     -- Two dimensional navigation
     , ((mod4Mask , xK_l) , windowGo R True)
     , ((mod4Mask , xK_h) , windowGo L True)
@@ -197,13 +205,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
     -- Control the music player
-    , ((noModMask , xF86XK_AudioPlay), spawn "banshee --toggle-playing")
-    , ((noModMask , xF86XK_AudioNext), spawn "banshee --next")
-    , ((noModMask , xF86XK_AudioPrev), spawn "banshee --previous")
+    , ((modm , xK_u), spawn "banshee --toggle-playing")
+    , ((modm , xK_i), spawn "banshee --next")
+    , ((modm , xK_y), spawn "banshee --previous")
 
-    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2-")
-    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+")
-    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle")
+    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
     ]
     ++
     --
@@ -225,7 +233,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           -- Performs an infix search with caseless comparison
           mySearch = isInfixOf `on` map toLower
           -- XPConfig with an infix search, rather than prefix.
-          infixFindConfig = defaultXPConfig { searchPredicate = mySearch }
+          infixFindConfig = def { searchPredicate = mySearch }
           -- Executes a withNthWorkspace action 's' gased on the key using the
           -- mod key 'm' sending the result to workspace 'n'.
           workspaceAction m s key n = ((m, key), withNthWorkspace s n)
@@ -258,12 +266,23 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 -- which denotes layout choice.
 --
 
+-- Colors for text and backgrounds of each tab when in "Tabbed" layout.
+tabConfig = def
+  { activeBorderColor   = "#7C7C7C"
+  , activeTextColor     = "#CEFFAC"
+  , activeColor         = "#000000"
+  , inactiveBorderColor = "#7C7C7C"
+  , inactiveTextColor   = "#EEEEEE"
+  , inactiveColor       = "#000000"
+  }
+
 mainLayouts = onWorkspace "im" grids
-            $ tiled ||| mirror ||| Full ||| grids ||| emptyBSP
+            $ tiled ||| mirror ||| Full ||| grids ||| tabs ||| emptyBSP
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
     grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ reflectHoriz $ GridRatio (4 / 3)
+    tabs   = tabbed shrinkText tabConfig
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane
     nmaster = 1
@@ -316,8 +335,10 @@ myFocusFollowsMouse = True
 -- > logHook = dynamicLogDzen
 --
 
-xmobarConfig = xmobarPP { ppTitle  = xmobarColor "green" "" . shorten 75
-                        , ppLayout = takeWhile isAlpha . stripper }
+xmobarConfig = xmobarPP { ppTitle   = xmobarColor xmobarTitleColor "" . shorten 100
+                        , ppLayout  = takeWhile isAlpha . stripper
+                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+                        , ppSep     = " " }
 
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
@@ -344,15 +365,14 @@ myStartupHook = return ()
 --
 main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
 
-
-allHooks = [manageDocks, myManageHook, manageHook defaultConfig, manageSpawn]
+allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = defaultConfig
+defaults xmproc = def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse

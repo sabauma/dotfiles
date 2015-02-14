@@ -1,26 +1,22 @@
-Config { font     = "xft:gohufont:size=8:regular:antialias=true"
-       , bgColor  = "#181512"
-       , fgColor  = "#AFAC99"
-       , position = Top
-       , border = BottomB
-       , borderColor = "#646464"
-       -- general behavior
-       , lowerOnStart     = True -- send to bottom of window stack on start
-       , hideOnStart      = False -- start with window unmapped (hidden)
-       , allDesktops      = True -- show on all desktops
-       , overrideRedirect = True -- set the Override Redirect flag (Xlib)
-       , persistent       = True -- enable/disable hiding (True             = disabled)
-       , commands = [ Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Cpu ["-L","15","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%","--normal","green"] 10
-                    , Run Swap [] 10
-                    , Run Date "%x %X" "date" 10
-                    , Run Battery ["-t", "<left>%"] 10
-                    , Run Volume "default" "Master" [] 10
-                    , Run StdinReader
-                    ]
-       , sepChar = "%"
-       , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#DC143C>%cpu%</fc> | <fc=#7777FF>%memory% * %swap%</fc> | <fc=#CCFF00>%eth0%</fc> - <fc=#CCFF00>%wlan0%</fc> | <fc=#FFAA00>%date%</fc> | %battery% | %default:Master%"
-       }
+-- xmobar config used by Vic Fryzel
+-- Author: Vic Fryzel
+-- http://github.com/vicfryzel/xmonad-config
+Config {
+    font = "xft:Fixed-8",
+    bgColor = "#000000",
+    fgColor = "#ffffff",
+    position = Top
+    lowerOnStart = True,
+    commands = [
+        Run MultiCpu ["-t","cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10,
+        Run Memory ["-t","mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Swap ["-t","swap: <usedratio>%","-H","1024","-L","512","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Network "eth0" ["-t","eth: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Network "wlan0" ["-t","wlan: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Date "%a %b %_d %H:%M" "date" 10,
+        Run StdinReader
+    ],
+    sepChar = "%",
+    alignSep = "}{",
+    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %eth0%   %wlan0%   <fc=#FFFFCC>%date%</fc>"
+}

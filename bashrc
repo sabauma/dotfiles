@@ -86,9 +86,8 @@ alias l='ls -CF'
 
 alias update='sudo aptitude update'
 alias upgrade='sudo aptitude safe-upgrade'
-alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
-alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
-alias MD='cd ~/src/md/MdRewrite/'
+# alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
+# alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -121,3 +120,4 @@ set -o vi
 
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
 
+alias octave='LIBGL_ALWAYS_SOFTWARE=1 octave'

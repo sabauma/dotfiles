@@ -20,7 +20,7 @@ Bundle "https://github.com/scrooloose/nerdtree.git"
 Bundle "https://github.com/tpope/vim-repeat.git"
 Bundle "https://github.com/tpope/vim-surround.git"
 Bundle "https://github.com/zalun/vim-SyntaxFolds.git"
-Bundle "https://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex"
+Bundle "https://github.com/vim-latex/vim-latex.git"
 Bundle "python.vim"
 Bundle "taglist.vim"
 Bundle "vim-indent-object"
@@ -87,7 +87,7 @@ set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
-set breakindent
+" set breakindent
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -155,7 +155,7 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 " Spell checking for latex files
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
-set conceallevel=2
+set conceallevel=0
 "let g:tex_conceal="abmgs"
 "hi! link Conceal Operator
 
