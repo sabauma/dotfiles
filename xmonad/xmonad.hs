@@ -98,11 +98,8 @@ myWorkspaces    = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:musi
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#7c7c7c"
-myFocusedBorderColor = "#ffb6b0"
-
-{-myNormalBorderColor  = "#dddddd"-}
-{-myFocusedBorderColor = "#ff0000"-}
+myNormalBorderColor  = "#dddddd"
+myFocusedBorderColor = "#ff0000"
 
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFB6B0"
@@ -337,7 +334,7 @@ myFocusFollowsMouse = True
 xmobarConfig = xmobarPP { ppTitle   = xmobarColor xmobarTitleColor "" . shorten 100
                         , ppLayout  = takeWhile isAlpha . stripper
                         , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-                        , ppSep     = " " }
+                        , ppSep     = "   " }
 
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
