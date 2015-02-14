@@ -102,9 +102,9 @@ myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#FFB6B0"
+xmobarTitleColor = "#FFA6A0"
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
+xmobarCurrentWorkspaceColor = "#BEFF9C"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
@@ -330,10 +330,9 @@ myFocusFollowsMouse = True
 --
 -- > logHook = dynamicLogDzen
 --
-
 xmobarConfig = xmobarPP { ppTitle   = xmobarColor xmobarTitleColor "" . shorten 100
                         , ppLayout  = takeWhile isAlpha . stripper
-                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
                         , ppSep     = "   " }
 
 myLogHook xmproc = do
