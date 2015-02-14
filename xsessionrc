@@ -1,0 +1,23 @@
+#/bin/bash
+
+xrdb -merge ~/.Xresources &
+
+export WINDOW_MANAGER=xmonad
+
+xcompmgr &
+
+unity-settings-daemon &
+
+wicd &
+gnome-keyring-daemon &
+gnome-sceensaver &
+offlineimap &
+
+bash /home/spenser/bin/wallpaper.sh &
+
+# feh --bg-fill /home/spenser/Pictures/WPX7MHGC.jpg &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/hdwallpaperpc_com_Laughing_Man_Ghost_in_the_Shell_Dark_1920x1080.jpg) &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/Wallpapers/starry-night.jpeg) &
+#feh --bg-fill /home/spenser/Pictures/high-res/in_love_with_a_ferris_wheel_2560x1440.jpg &
+#(sleep 5 && feh --bg-fill /home/spenser/Pictures/Wallpapers/i-see-no-god-up-here.jpg) &
+

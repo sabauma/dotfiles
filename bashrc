@@ -86,9 +86,8 @@ alias l='ls -CF'
 
 alias update='sudo aptitude update'
 alias upgrade='sudo aptitude safe-upgrade'
-alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
-alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
-alias MD='cd ~/src/md/MdRewrite/'
+# alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
+# alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -121,3 +120,5 @@ set -o vi
 
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
 #PS1="\n\[\033[1;37m\]\342\224\214($(if [[ ${EUID} == 0 ]]; then echo '$bold${red}\u'; else echo '$bold${green}\u'; fi)\[\033[1;37m\])\342\224\200(\[\033[1;34m\]\#\[\033[1;37m\])\342\224\200(\[\033[1;33m\]\@ \d\[\033[1;37m\])\[\033[1;37m\]\n\342\224\224\342\224\200(\[\033[1;32m\]\w\[\033[1;37m\])\342\224\200(\[\033[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(ls -lah | grep -m 1 total | sed 's/total //')b\[\033[1;37m\])\342\224\200> \[\033[0m\]"
+
+alias octave='LIBGL_ALWAYS_SOFTWARE=1 octave'
