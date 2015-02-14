@@ -276,7 +276,7 @@ tabConfig = def
   , inactiveColor       = "#000000"
   }
 
-mainLayouts = onWorkspace "im" grids
+mainLayouts = onWorkspace "11:im" grids
             $ tiled ||| mirror ||| Full ||| grids ||| tabs ||| emptyBSP
   where
     tiled  = Tall nmaster delta ratio
@@ -295,7 +295,6 @@ myLayout = smartBorders . minimize . avoidStruts $ mainLayouts
 
 ------------------------------------------------------------------------
 -- Window rules:
-
 -- Execute arbitrary actions and WindowSet manipulations when managing
 -- a new window. You can use this to, for example, always float a
 -- particular program, or have a client always appear on a particular
@@ -314,10 +313,10 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
     , resource  =? "trayer"         --> doIgnore
-    , className =? "Firefox"        --> doShift "web"
-    , className =? "banshee"        --> doShift "music"
-    , className =? "Deluge"         --> doShift "torrents"
-    , className =? "Pidgin"         --> doShift "im"
+    , className =? "Firefox"        --> doShift "1:web"
+    , className =? "banshee"        --> doShift "10:music"
+    , className =? "Deluge"         --> doShift "12:torrents"
+    , className =? "Pidgin"         --> doShift "11:im"
     , isFullscreen                  --> doFullFloat ]
 
 -- Whether focus follows the mouse pointer.
