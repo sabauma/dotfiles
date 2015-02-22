@@ -122,3 +122,30 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n
 #PS1="\n\[\033[1;37m\]\342\224\214($(if [[ ${EUID} == 0 ]]; then echo '$bold${red}\u'; else echo '$bold${green}\u'; fi)\[\033[1;37m\])\342\224\200(\[\033[1;34m\]\#\[\033[1;37m\])\342\224\200(\[\033[1;33m\]\@ \d\[\033[1;37m\])\[\033[1;37m\]\n\342\224\224\342\224\200(\[\033[1;32m\]\w\[\033[1;37m\])\342\224\200(\[\033[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(ls -lah | grep -m 1 total | sed 's/total //')b\[\033[1;37m\])\342\224\200> \[\033[0m\]"
 
 alias octave='LIBGL_ALWAYS_SOFTWARE=1 octave'
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+
+    # Show the currently running command in the terminal title:
+    # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
+    show_command_in_title_bar()
+    {
+        case "$BASH_COMMAND" in
+            *\033]0*)
+                # The command is trying to set the title bar as well;
+                # this is most likely the execution of $PROMPT_COMMAND.
+                # In any case nested escapes confuse the terminal, so don't
+                # output them.
+                ;;
+            *)
+                echo -ne "\033]0;${USER}@${HOSTNAME}: ${BASH_COMMAND}\007"
+                ;;
+        esac
+    }
+    trap show_command_in_title_bar DEBUG
+    ;;
+*)
+    ;;
+esac
