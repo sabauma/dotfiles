@@ -32,6 +32,7 @@ Bundle "https://github.com/derekelkins/agda-vim.git"
 Bundle "https://github.com/wlangstroth/vim-racket.git"
 Bundle "https://github.com/ehamberg/vim-cute-python.git"
 Bundle "http://github.com/ardagnir/vimbed"
+Bundle "https://github.com/sjl/badwolf.git"
 
 " Colorscheme bundles
 Bundle "molokai"
