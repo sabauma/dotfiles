@@ -1,48 +1,44 @@
-"^ Bundle Configuration set rtp+=~/.vim/vundle.git
-call vundle#rc()
 
-" Bundles
+call plug#begin('~/.nvim/plugged')
 
-Bundle "gmarik/vundle"
-Bundle "FuzzyFinder"
-Bundle "L9"
-Bundle "SearchComplete"
-Bundle "a.vim"
-Bundle "buffergrep"
-Bundle "cecutil"
-Bundle "compview"
-Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
-Bundle "https://github.com/Shougo/vimproc.git"
-Bundle "https://github.com/eagletmt/ghcmod-vim.git"
-Bundle "https://github.com/godlygeek/tabular.git"
-Bundle "https://github.com/scrooloose/nerdcommenter.git"
-Bundle "https://github.com/scrooloose/nerdtree.git"
-Bundle "https://github.com/tpope/vim-repeat.git"
-Bundle "https://github.com/tpope/vim-surround.git"
-Bundle "https://github.com/zalun/vim-SyntaxFolds.git"
-Bundle "https://github.com/vim-latex/vim-latex.git"
-Bundle "python.vim"
-Bundle "taglist.vim"
-Bundle "vim-indent-object"
-Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
-Bundle "https://github.com/idris-hackers/idris-vim.git"
-Bundle "https://github.com/guns/vim-sexp.git"
-Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
-Bundle "https://github.com/derekelkins/agda-vim.git"
-Bundle "https://github.com/wlangstroth/vim-racket.git"
-Bundle "https://github.com/ehamberg/vim-cute-python.git"
-Bundle "http://github.com/ardagnir/vimbed"
-Bundle "https://github.com/rust-lang/rust.vim.git"
+Plug 'gmarik/vundle'
+Plug 'FuzzyFinder'
+Plug 'L9'
+Plug 'SearchComplete'
+Plug 'a.vim'
+Plug 'buffergrep'
+Plug 'cecutil'
+Plug 'compview'
+Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/Shougo/vimproc.git'
+Plug 'https://github.com/eagletmt/ghcmod-vim.git'
+Plug 'https://github.com/godlygeek/tabular.git'
+Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'https://github.com/tpope/vim-repeat.git'
+Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/vim-latex/vim-latex.git'
+Plug 'python.vim'
+Plug 'taglist.vim'
+Plug 'vim-indent-object'
+Plug 'https://github.com/coderifous/textobj-word-column.vim.git'
+Plug 'https://github.com/idris-hackers/idris-vim.git'
+Plug 'https://github.com/guns/vim-sexp.git'
+Plug 'https://github.com/kien/rainbow_parentheses.vim.git'
+Plug 'https://github.com/derekelkins/agda-vim.git'
+Plug 'https://github.com/wlangstroth/vim-racket.git'
+Plug 'https://github.com/ehamberg/vim-cute-python.git'
+Plug 'https://github.com/rust-lang/rust.vim.git'
 
 " Colorscheme bundles
-Bundle "molokai"
-Bundle "tir_black"
-Bundle "darkspectrum"
-Bundle "Sorcerer"
-Bundle "https://github.com/altercation/vim-colors-solarized.git"
-Bundle "https://github.com/toupeira/desertink.vim.git"
-Bundle "native"
-Bundle "https://github.com/nanotech/jellybeans.vim.git"
+Plug 'molokai'
+Plug 'tir_black'
+Plug 'darkspectrum'
+Plug 'Sorcerer'
+Plug 'https://github.com/altercation/vim-colors-solarized.git'
+Plug 'https://github.com/nanotech/jellybeans.vim.git'
+
+call plug#end()
 
 " Tab settings
 " set cindent
@@ -96,8 +92,8 @@ set nostartofline
 " set autochdir
 
 " Backup & Undo settings
-set undodir=~/.vim/undodir
-set backupdir=~/.vim/backup
+set undodir=~/.nvim/undodir
+set backupdir=~/.nvim/backup
 set undofile
 set undolevels=1000
 set undoreload=10000
@@ -139,9 +135,6 @@ map <leader>h <C-w>h
 map <leader>j <C-w>j
 map <leader>k <C-w>k
 map <leader>l <C-w>l
-
-" Use extra tag files for python
-autocmd FileType python set tags+=$HOME/.vim/tags/python.ctags
 
 " Some options for word processing
 autocmd BufRead *\.txt setlocal formatoptions+=l
@@ -192,18 +185,6 @@ let python_slow_sync = 1
 map <F2> :NERDTreeToggle<CR>
 " Use Y to copy until the end of the line. Use yy to copy the whole line.
 nnoremap Y y$
-
-" Some tricks for mutt
-" F1 through F3 re-wraps paragraphs in useful ways
-augroup MUTT
-    au BufRead ~/.mutt/temp/mutt* set spell " <-- vim 7 required
-    au BufRead ~/.mutt/temp/mutt* nmap  <F1>  gqap
-    au BufRead ~/.mutt/temp/mutt* nmap  <F2>  gqqj
-    au BufRead ~/.mutt/temp/mutt* nmap  <F3>  kgqj
-    au BufRead ~/.mutt/temp/mutt* map!  <F1>  <ESC>gqapi
-    au BufRead ~/.mutt/temp/mutt* map!  <F2>  <ESC>gqqji
-    au BufRead ~/.mutt/temp/mutt* map!  <F3>  <ESC>kgqji
-augroup END
 
 set statusline=
 set statusline +=%1*\ %n\ %*            "buffer number

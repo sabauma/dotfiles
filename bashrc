@@ -105,10 +105,15 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=$PATH:/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin
-export PATH=$PATH:/home/spenser/.local/bin
-export PATH=$PATH:/home/spenser/.local/bin:/home/spenser/bin/larceny
+export PATH=/home/spenser/src/graal/mxtool/:$PATH
+export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
+export PATH=/home/spenser/.local/bin:$PATH
+export PATH=/home/spenser/.local/bin:/home/spenser/bin/larceny:$PATH
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
+export JAVA_HOME=/home/spenser/bin/jdk1.8.0_31
+export EXTRA_JAVA_HOMES=/usr/lib/jvm/java-7-openjdk-amd64
+export GRAAL_HOME=/home/spenser/src/graal
+export TRUFFLE_DSL_JAR=/home/spenser/src/graal/graal/com.oracle.truffle.dsl.processor/ap/com.oracle.truffle.dsl.processor.jar
 
 TEXMF=/home/spenser/.latex
 
@@ -119,7 +124,6 @@ export VISUAL=vim
 set -o vi
 
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
-#PS1="\n\[\033[1;37m\]\342\224\214($(if [[ ${EUID} == 0 ]]; then echo '$bold${red}\u'; else echo '$bold${green}\u'; fi)\[\033[1;37m\])\342\224\200(\[\033[1;34m\]\#\[\033[1;37m\])\342\224\200(\[\033[1;33m\]\@ \d\[\033[1;37m\])\[\033[1;37m\]\n\342\224\224\342\224\200(\[\033[1;32m\]\w\[\033[1;37m\])\342\224\200(\[\033[1;32m\]\$(ls -1 | wc -l | sed 's: ::g') files, \$(ls -lah | grep -m 1 total | sed 's/total //')b\[\033[1;37m\])\342\224\200> \[\033[0m\]"
 
 alias octave='LIBGL_ALWAYS_SOFTWARE=1 octave'
 
