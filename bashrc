@@ -110,10 +110,6 @@ export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/
 export PATH=/home/spenser/.local/bin:$PATH
 export PATH=/home/spenser/.local/bin:/home/spenser/bin/larceny:$PATH
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
-export JAVA_HOME=/home/spenser/bin/jdk1.8.0_31
-export EXTRA_JAVA_HOMES=/usr/lib/jvm/java-7-openjdk-amd64
-export GRAAL_HOME=/home/spenser/src/graal
-export TRUFFLE_DSL_JAR=/home/spenser/src/graal/graal/com.oracle.truffle.dsl.processor/ap/com.oracle.truffle.dsl.processor.jar
 
 TEXMF=/home/spenser/.latex
 
@@ -153,3 +149,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+

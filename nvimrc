@@ -37,6 +37,7 @@ Plug 'darkspectrum'
 Plug 'Sorcerer'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
+Plug 'https://github.com/sjl/badwolf.git'
 
 call plug#end()
 
@@ -47,8 +48,6 @@ set smartindent
 set expandtab
 set tabstop=4
 set shiftwidth=4
-
-set t_Co=256
 
 syntax on
 filetype plugin on
@@ -203,9 +202,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-" Prefer C++11 over the standard C++ syntax file
-autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
 
 let g:sexp_enable_insert_mode_mappings = 0
 au BufNewFile,BufRead *.agda setf agda

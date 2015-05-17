@@ -206,9 +206,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm , xK_i), spawn "banshee --next")
     , ((modm , xK_y), spawn "banshee --previous")
 
-    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2-")
-    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+")
-    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle")
+    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
     ]
     ++
     --

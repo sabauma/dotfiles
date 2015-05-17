@@ -10,7 +10,7 @@ unity-settings-daemon &
 
 wicd &
 gnome-keyring-daemon &
-gnome-sceensaver &
+gnome-screensaver &
 offlineimap &
 
 bash /home/spenser/bin/wallpaper.sh &
