@@ -26,7 +26,6 @@ import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
 import           XMonad.Layout.BinarySpacePartition (emptyBSP)
 import           XMonad.Layout.Grid                 (Grid (..))
-import           XMonad.Layout.IM
 import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
@@ -273,12 +272,10 @@ tabConfig = def
   , inactiveColor       = "#000000"
   }
 
-mainLayouts = onWorkspace "11:im" grids
-            $ tiled ||| mirror ||| Full ||| grids ||| tabs ||| emptyBSP
+mainLayouts = tiled ||| mirror ||| Full ||| tabs
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
-    grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ reflectHoriz $ GridRatio (4 / 3)
     tabs   = tabbed shrinkText tabConfig
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane

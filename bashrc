@@ -84,8 +84,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias update='sudo aptitude update'
-alias upgrade='sudo aptitude safe-upgrade'
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get dist-upgrade'
+alias mktags='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
 # alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
 # alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
 

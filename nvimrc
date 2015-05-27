@@ -29,6 +29,8 @@ Plug 'https://github.com/derekelkins/agda-vim.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
+Plug 'https://github.com/Konfekt/FastFold.git'
+Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 
 " Colorscheme bundles
 Plug 'molokai'
@@ -68,7 +70,6 @@ set wildmenu
 set wildmode=list:longest
 set visualbell
 set cursorline
-set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
@@ -83,7 +84,6 @@ set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
-" set breakindent
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -110,9 +110,12 @@ map <leader>tl :tabnext<CR>
 map <leader>tn :tabnew<CR>
 map <leader>td :tabclose<CR>
 
+
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
 set foldmethod=syntax
+
+let g:fastfold_fold_command_suffixes = []
 
 " Hilight search
 set hlsearch
@@ -124,9 +127,6 @@ nnoremap ` '
 
 " Remove menu
 set go=c
-
-" Format using astyle
-map <leader>f :!astyle --style=allman --indent=spaces=4 -N -S -w --add-one-line-brackets --convert-tabs --indent-col1-comments -m0 %<CR>
 
 " Faster way to switch between splits
 map <leader>w <C-w>w
@@ -209,4 +209,7 @@ au BufNewFile,BufRead *.agda setf agda
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
+
+set tags=./tags;
+
 
