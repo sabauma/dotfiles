@@ -18,19 +18,15 @@ Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
-Plug 'python.vim'
 Plug 'taglist.vim'
 Plug 'vim-indent-object'
 Plug 'https://github.com/coderifous/textobj-word-column.vim.git'
 Plug 'https://github.com/idris-hackers/idris-vim.git'
-Plug 'https://github.com/guns/vim-sexp.git'
-Plug 'https://github.com/kien/rainbow_parentheses.vim.git'
-Plug 'https://github.com/derekelkins/agda-vim.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
-Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
+Plug 'https://github.com/Konfekt/FastFold.git', {'frozen': 1}
 
 " Colorscheme bundles
 Plug 'molokai'
@@ -42,6 +38,8 @@ Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'https://github.com/sjl/badwolf.git'
 
 call plug#end()
+
+let g:plug_shallow=0
 
 " Tab settings
 " set cindent
@@ -109,7 +107,6 @@ map <leader>th :tabprev<CR>
 map <leader>tl :tabnext<CR>
 map <leader>tn :tabnew<CR>
 map <leader>td :tabclose<CR>
-
 
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
@@ -203,13 +200,9 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-let g:sexp_enable_insert_mode_mappings = 0
-au BufNewFile,BufRead *.agda setf agda
-
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
 
 set tags=./tags;
-
 
