@@ -2,3 +2,6 @@
 *.hi
 bundle/
 plugged/
+backup/
+undodir/
+spell/
