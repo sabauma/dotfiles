@@ -114,8 +114,9 @@ export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
 
 TEXMF=/home/spenser/.latex
 
-export SVN_EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export SVN_EDITOR=nvim
+export VISUAL=nvim
 # wmname LG3D
 
 set -o vi
