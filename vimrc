@@ -34,6 +34,7 @@ Bundle "https://github.com/ehamberg/vim-cute-python.git"
 Bundle "http://github.com/ardagnir/vimbed"
 Bundle "https://github.com/sjl/badwolf.git"
 Bundle "https://github.com/rust-lang/rust.vim.git"
+Bundle "https://github.com/Konfekt/FastFold.git"
 
 " Colorscheme bundles
 Bundle "molokai"
