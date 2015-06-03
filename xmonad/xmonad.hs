@@ -113,9 +113,12 @@ xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
 
+myFont :: String
+myFont = "xft:Droid Sans Mono:size=12"
+
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig = def { font = "xft:Droid Sans Mono:size=12"
+myPromptConfig = def { font = myFont
                      , height = 24
                      , searchPredicate = mySearch }
   where
