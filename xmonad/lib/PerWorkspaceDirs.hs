@@ -1,5 +1,4 @@
 {-# LANGUAGE DeriveDataTypeable        #-}
-{-# LANGUAGE ImplicitParams            #-}
 {-# LANGUAGE MultiParamTypeClasses     #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 -------------------------------------------------------------------------------
