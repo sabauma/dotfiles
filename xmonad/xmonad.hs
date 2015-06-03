@@ -31,7 +31,8 @@ import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
 import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Layout.Tabbed
-import           XMonad.Prompt                      (XPConfig (..))
+import           XMonad.Layout.WorkspaceDir
+import           XMonad.Prompt                      (amberXPConfig, XPConfig (..))
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
@@ -112,6 +113,14 @@ xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
 
+-- XPConfig with an infix search, rather than prefix.
+myPromptConfig :: XPConfig
+myPromptConfig = def { font = "xft:Droid Sans Mono:size=12"
+                     , height = 24
+                     , searchPredicate = mySearch }
+  where
+    mySearch = isInfixOf `on` map toLower
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -171,18 +180,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Tag current window to an empty workspace and view it
     , ((modm .|. shiftMask, xK_n     ), tagToEmptyWorkspace)
     -- Run XMonad prompt
-    , ((modm,               xK_p     ), runOrRaisePrompt infixFindConfig)
+    , ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)
     -- Run Window prompt
-    , ((modm .|. shiftMask, xK_p     ), windowPromptGoto infixFindConfig)
+    , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
     -- Next Workspace
     , ((modm,               xK_Right ), nextWS)
     -- Previous Workspace
     , ((modm,               xK_Left  ), prevWS)
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
-    , ((modm               , xK_v        ) , selectWorkspace def)
-    , ((modm               , xK_b        ) , withWorkspace def (windows . W.shift))
-    , ((modm .|. shiftMask , xK_b        ) , withWorkspace def (windows . copy))
+    , ((modm               , xK_v        ) , selectWorkspace myPromptConfig)
+    , ((modm               , xK_b        ) , withWorkspace myPromptConfig (windows . W.shift))
+    , ((modm .|. shiftMask , xK_b        ) , withWorkspace myPromptConfig (windows . copy))
     -- Two dimensional navigation
     , ((mod4Mask , xK_l) , windowGo R True)
     , ((mod4Mask , xK_h) , windowGo L True)
@@ -208,6 +217,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
     , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
+    -- Set working directory for a workspace
+    , ((modm .|. shiftMask, xK_x), changeDir myPromptConfig)
     ]
     ++
     --
@@ -227,9 +238,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
           -- Performs an infix search with caseless comparison
-          mySearch = isInfixOf `on` map toLower
-          -- XPConfig with an infix search, rather than prefix.
-          infixFindConfig = def { searchPredicate = mySearch }
           -- Executes a withNthWorkspace action 's' gased on the key using the
           -- mod key 'm' sending the result to workspace 'n'.
           workspaceAction m s key n = ((m, key), withNthWorkspace s n)
@@ -272,10 +280,11 @@ tabConfig = def
   , inactiveColor       = "#000000"
   }
 
-mainLayouts = tiled ||| mirror ||| Full ||| tabs
+mainLayouts = workspaceDir "~" (tiled ||| mirror ||| grid ||| Full ||| tabs)
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
+    grid   = GridRatio (4 / 3)
     tabs   = tabbed shrinkText tabConfig
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane
