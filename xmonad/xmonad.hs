@@ -31,7 +31,8 @@ import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
 import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Layout.Tabbed
-import           XMonad.Prompt                      (amberXPConfig, XPConfig (..))
+import           XMonad.Prompt                      (XPConfig (..),
+                                                     amberXPConfig)
 import           XMonad.Prompt.Directory            (directoryPrompt)
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
@@ -44,7 +45,8 @@ import           Data.List                          (isInfixOf, stripPrefix)
 import           Data.Maybe                         (fromMaybe)
 import           Data.Monoid                        (appEndo)
 import           Data.Ratio                         ((%))
-import           PerWorkspaceDirs                   (changeDir, currentWorkspace, getDir)
+import           PerWorkspaceDirs                   (changeDir,
+                                                     currentWorkspace, getDir)
 import           System.Exit
 import           System.IO
 
@@ -119,21 +121,21 @@ myFont = "xft:Droid Sans Mono:size=12"
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig = def { font = myFont
-                     , height = 24
-                     , searchPredicate = mySearch }
-  where
-    mySearch = isInfixOf `on` map toLower
+myPromptConfig =
+  let mySearch = isInfixOf `on` map toLower
+  in def { font            = myFont
+         , height          = 24
+         , searchPredicate = mySearch }
 
 changeDir' :: X ()
 changeDir' = directoryPrompt myPromptConfig "Set working directory: "
            $ \d -> currentWorkspace >>= changeDir d
 
-spawnInDir :: String -> String -> X ()
-spawnInDir s c = spawnHere $ "cd " ++ s ++ "; " ++ c
-
 spawnInCurDir :: String -> X ()
 spawnInCurDir c = currentWorkspace >>= getDir >>= flip spawnInDir c
+  where
+    spawnInDir :: String -> String -> X ()
+    spawnInDir s c = spawnHere $ "cd " ++ s ++ "; " ++ c
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
