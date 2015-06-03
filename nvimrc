@@ -27,6 +27,7 @@ Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
+"Plug 'https://github.com/justmao945/vim-clang.git'
 
 " Colorscheme bundles
 Plug 'molokai'

@@ -31,8 +31,8 @@ import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
 import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Layout.Tabbed
-import           XMonad.Layout.WorkspaceDir
 import           XMonad.Prompt                      (amberXPConfig, XPConfig (..))
+import           XMonad.Prompt.Directory            (directoryPrompt)
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
@@ -44,6 +44,7 @@ import           Data.List                          (isInfixOf, stripPrefix)
 import           Data.Maybe                         (fromMaybe)
 import           Data.Monoid                        (appEndo)
 import           Data.Ratio                         ((%))
+import           PerWorkspaceDirs                   (changeDir, currentWorkspace, getDir)
 import           System.Exit
 import           System.IO
 
@@ -94,7 +95,7 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
+myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -124,12 +125,22 @@ myPromptConfig = def { font = myFont
   where
     mySearch = isInfixOf `on` map toLower
 
+changeDir' :: X ()
+changeDir' = directoryPrompt myPromptConfig "Set working directory: "
+           $ \d -> currentWorkspace >>= changeDir d
+
+spawnInDir :: String -> String -> X ()
+spawnInDir s c = spawnHere $ "cd " ++ s ++ "; " ++ c
+
+spawnInCurDir :: String -> X ()
+spawnInCurDir c = currentWorkspace >>= getDir >>= flip spawnInDir c
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawnHere $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill1)
      -- Rotate through the available layout algorithms
@@ -221,7 +232,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
     -- Set working directory for a workspace
-    , ((modm .|. shiftMask, xK_x), changeDir myPromptConfig)
+    , ((modm .|. shiftMask, xK_x), changeDir')
     ]
     ++
     --
@@ -283,7 +294,7 @@ tabConfig = def
   , inactiveColor       = "#000000"
   }
 
-mainLayouts = workspaceDir "~" (tiled ||| mirror ||| grid ||| Full ||| tabs)
+mainLayouts = tiled ||| mirror ||| grid ||| Full ||| tabs
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
