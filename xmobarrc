@@ -2,7 +2,7 @@
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
 Config {
-    font = "xft:Fixed-8",
+    font = "xft:Fixed:size=10",
     bgColor = "#000000",
     fgColor = "#ffffff",
     position = Top
