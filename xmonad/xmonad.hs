@@ -39,6 +39,7 @@ import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
 
 -- General libraries
+import           Control.Applicative
 import           Data.Char                          (isAlpha, toLower)
 import           Data.Function                      (on)
 import           Data.List                          (isInfixOf, stripPrefix)
@@ -234,7 +235,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
     -- Set working directory for a workspace
-    , ((modm .|. shiftMask, xK_x), changeDir')
+    , ((modm, xK_d), changeDir')
     ]
     ++
     --
@@ -412,7 +413,7 @@ defaults xmproc = def
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
       ((mod4Mask                , xK_F1 ) , spawn "firefox"                   ) ,
       ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"             ) ,
-      ((mod4Mask                , xK_F3 ) , spawnHere "nautilus --no-desktop" ) ,
+      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop" ) ,
       ((mod4Mask                , xK_F4 ) , spawn "gvim"                      ) ,
       ((mod4Mask                , xK_F5 ) , spawn "banshee"                   ) ,
       ((mod4Mask                , xK_F6 ) , spawn "pidgin"                    ) ]
