@@ -234,6 +234,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
     , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
+    , ((modm .|. shiftMask, xK_i), spawn "/home/spenser/bin/toggle")
     -- Set working directory for a workspace
     , ((modm, xK_d), changeDir')
     ]
