@@ -1,13 +1,9 @@
 
 call plug#begin('~/.nvim/plugged')
 
-Plug 'FuzzyFinder'
 Plug 'L9'
-Plug 'SearchComplete'
 Plug 'a.vim'
 Plug 'buffergrep'
-Plug 'cecutil'
-Plug 'compview'
 Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
 Plug 'https://github.com/Shougo/vimproc.git'
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
@@ -17,10 +13,7 @@ Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
-Plug 'taglist.vim'
-Plug 'vim-indent-object'
-Plug 'https://github.com/coderifous/textobj-word-column.vim.git'
-Plug 'https://github.com/idris-hackers/idris-vim.git'
+Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
@@ -36,10 +29,9 @@ Plug 'Sorcerer'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'https://github.com/sjl/badwolf.git'
+Plug 'https://github.com/flazz/vim-colorschemes.git'
 
 call plug#end()
-
-let g:plug_shallow=0
 
 " Tab settings
 " set cindent

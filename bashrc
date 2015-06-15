@@ -110,7 +110,7 @@ export PATH=/home/spenser/src/graal/mxtool/:$PATH
 export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
 export PATH=/home/spenser/.local/bin:/home/spenser/bin/larceny:$PATH
-export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
+export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex
 

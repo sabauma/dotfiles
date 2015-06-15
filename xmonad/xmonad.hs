@@ -26,7 +26,6 @@ import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
 import           XMonad.Layout.BinarySpacePartition (emptyBSP)
 import           XMonad.Layout.Grid                 (Grid (..))
-import           XMonad.Layout.Minimize
 import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.PerWorkspace         (onWorkspace)
 import           XMonad.Layout.Reflect              (reflectHoriz)
@@ -101,10 +100,11 @@ myNumlockMask   = mod2Mask
 myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
---
+myNormalBorderColor, myFocusedBorderColor :: String
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
+xmobarTitleColor, xmobarCurrentWorkspaceColor :: String
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFA6A0"
 -- Color of current workspace in xmobar.
@@ -122,11 +122,8 @@ myFont = "xft:Droid Sans Mono:size=12"
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig =
-  let mySearch = isInfixOf `on` map toLower
-  in def { font            = myFont
-         , height          = 24
-         , searchPredicate = mySearch }
+myPromptConfig = def { font = myFont, height = 24, searchPredicate = mySearch }
+  where mySearch = isInfixOf `on` map toLower
 
 changeDir' :: X ()
 changeDir' = directoryPrompt myPromptConfig "Set working directory: "
@@ -178,10 +175,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
     -- Restart xmonad
     , ((modm              , xK_q     ), restartXMonad)
-    -- Minimize focused window
-    , ((modm              , xK_m     ), withFocused minimizeWindow)
-    -- Restore next minimized window
-    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
     -- Cycle recent workspaces
     , ((modm              , xK_Tab   ), toggleWS)
     -- Move current window to previous workspace
@@ -247,11 +240,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ++
     -- Bindings to shift the view to workspaces using the workspace keys
     [((modm, key), withNthWorkspace W.greedyView n)
-        | (key, n) <- zip workspaceKeys [0..] ]
+        | (key, n) <- zip workspaceKeys [0 ..] ]
     ++
     -- Bindings to shift the current window to a different workspace
     [((modm .|. shiftMask, key), withNthWorkspace W.shift n)
-        | (key, n) <- zip workspaceKeys [0..] ]
+        | (key, n) <- zip workspaceKeys [0 ..] ]
 
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
@@ -289,6 +282,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 --
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
+tabConfig :: Theme
 tabConfig = def
   { activeBorderColor   = "#7C7C7C"
   , activeTextColor     = xmobarCurrentWorkspaceColor
@@ -298,7 +292,7 @@ tabConfig = def
   , inactiveColor       = "#000000"
   }
 
-mainLayouts = tiled ||| mirror ||| grid ||| Full ||| tabs
+mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full ||| tabs
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
@@ -311,8 +305,6 @@ mainLayouts = tiled ||| mirror ||| grid ||| Full ||| tabs
     ratio   = 1 / 2
     -- Percent of screen to increment by when resizing panes
     delta   = 3 / 100
-
-myLayout = smartBorders . minimize . avoidStruts $ mainLayouts
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -382,8 +374,10 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
 
+allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 
 -- A structure containing your configuration settings, overriding
@@ -406,7 +400,7 @@ defaults xmproc = def
     , keys               = myKeys
     , mouseBindings      = myMouseBindings
       -- hooks, layouts
-    , layoutHook         = myLayout
+    , layoutHook         = mainLayouts
     , manageHook         = foldr1 (<+>) allHooks
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
@@ -414,7 +408,7 @@ defaults xmproc = def
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
       ((mod4Mask                , xK_F1 ) , spawn "firefox"                   ) ,
       ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"             ) ,
-      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop" ) ,
+      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ." ) ,
       ((mod4Mask                , xK_F4 ) , spawn "gvim"                      ) ,
       ((mod4Mask                , xK_F5 ) , spawn "banshee"                   ) ,
       ((mod4Mask                , xK_F6 ) , spawn "pidgin"                    ) ]
