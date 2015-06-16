@@ -24,28 +24,19 @@ import           XMonad.Hooks.ManageHelpers
 import           XMonad.Util.EZConfig               (additionalKeys)
 import           XMonad.Util.Run                    (spawnPipe)
  -- Layouts
-import           XMonad.Layout.BinarySpacePartition (emptyBSP)
 import           XMonad.Layout.Grid                 (Grid (..))
 import           XMonad.Layout.NoBorders            (smartBorders)
-import           XMonad.Layout.PerWorkspace         (onWorkspace)
-import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Layout.Tabbed
-import           XMonad.Prompt                      (XPConfig (..),
-                                                     amberXPConfig)
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
 
 -- General libraries
-import           Control.Applicative
-import           Data.Char                          (isAlpha, toLower)
-import           Data.Function                      (on)
-import           Data.List                          (isInfixOf, stripPrefix)
+import           Data.Char                          (isAlpha)
+import           Data.List                          (stripPrefix)
 import           Data.Maybe                         (fromMaybe)
 import           Data.Monoid                        (appEndo)
-import           Data.Ratio                         ((%))
-import           PerWorkspaceDirs                   (changeDir,
-                                                     currentWorkspace, getDir)
+import           PerWorkspaceDirs                   (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
 import           System.IO
@@ -93,6 +84,7 @@ myNumlockMask   = mod2Mask
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
 --
+myWorkspaces :: [String]
 myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -108,10 +100,10 @@ restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
 
 spawnInCurDir :: String -> X ()
-spawnInCurDir c = currentWorkspace >>= getDir >>= flip spawnInDir c
+spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
   where
     spawnInDir :: String -> String -> X ()
-    spawnInDir s c = spawnHere $ "cd " ++ s ++ "; " ++ c
+    spawnInDir command s = spawnHere $ "cd " ++ s ++ "; " ++ command
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
