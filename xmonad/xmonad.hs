@@ -32,7 +32,6 @@ import           XMonad.Layout.Reflect              (reflectHoriz)
 import           XMonad.Layout.Tabbed
 import           XMonad.Prompt                      (XPConfig (..),
                                                      amberXPConfig)
-import           XMonad.Prompt.Directory            (directoryPrompt)
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
@@ -47,6 +46,7 @@ import           Data.Monoid                        (appEndo)
 import           Data.Ratio                         ((%))
 import           PerWorkspaceDirs                   (changeDir,
                                                      currentWorkspace, getDir)
+import           PromptConfig
 import           System.Exit
 import           System.IO
 
@@ -93,10 +93,6 @@ myNumlockMask   = mod2Mask
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
 --
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
 myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -104,30 +100,12 @@ myNormalBorderColor, myFocusedBorderColor :: String
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-xmobarTitleColor, xmobarCurrentWorkspaceColor :: String
--- Color of current window title in xmobar.
-xmobarTitleColor = "#FFA6A0"
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#8EFF6C"
-
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
 xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
 
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
-
-myFont :: String
-myFont = "xft:Droid Sans Mono:size=12"
-
--- XPConfig with an infix search, rather than prefix.
-myPromptConfig :: XPConfig
-myPromptConfig = def { font = myFont, height = 24, searchPredicate = mySearch }
-  where mySearch = isInfixOf `on` map toLower
-
-changeDir' :: X ()
-changeDir' = directoryPrompt myPromptConfig "Set working directory: "
-           $ \d -> currentWorkspace >>= changeDir d
 
 spawnInCurDir :: String -> X ()
 spawnInCurDir c = currentWorkspace >>= getDir >>= flip spawnInDir c
@@ -229,7 +207,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
     , ((modm .|. shiftMask, xK_i), spawn "/home/spenser/bin/toggle")
     -- Set working directory for a workspace
-    , ((modm, xK_d), changeDir')
+    , ((modm, xK_d), changeDirPrompt)
     ]
     ++
     --
@@ -258,7 +236,7 @@ fullFloatFocused =
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
---
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w)
@@ -272,16 +250,6 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 ------------------------------------------------------------------------
 -- Layouts:
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
-
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig :: Theme
 tabConfig = def
   { activeBorderColor   = "#7C7C7C"
@@ -307,19 +275,8 @@ mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full ||
     delta   = 3 / 100
 
 ------------------------------------------------------------------------
--- Window rules:
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
+-- Window rules
+
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -339,17 +296,16 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'DynamicLog' extension for examples.
---
--- To emulate dwm's status bar
---
--- > logHook = dynamicLogDzen
---
-xmobarConfig = xmobarPP { ppTitle   = xmobarColor xmobarTitleColor "" . shorten 100
-                        , ppLayout  = takeWhile isAlpha . stripper
-                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
-                        , ppSep     = "   " }
+xmobarConfig = xmobarPP
+             { ppTitle   = title
+             , ppLayout  = layout
+             , ppCurrent = current
+             , ppSep     = sep }
+  where
+    title   = xmobarColor xmobarTitleColor "" . shorten 100
+    layout  = takeWhile isAlpha . stripper
+    current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
+    sep     = "   "
 
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
