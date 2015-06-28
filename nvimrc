@@ -18,8 +18,9 @@ Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-Plug 'https://github.com/Konfekt/FastFold.git'
+Plug 'https://github.com/sabauma/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
+Plug 'https://github.com/raichoo/haskell-vim.git'
 
 " Colorscheme bundles
 Plug 'molokai'
@@ -28,7 +29,6 @@ Plug 'darkspectrum'
 Plug 'Sorcerer'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
-Plug 'https://github.com/sjl/badwolf.git'
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 
 call plug#end()
@@ -44,6 +44,7 @@ set shiftwidth=4
 syntax on
 filetype plugin on
 filetype indent on
+set synmaxcol=120
 
 colorscheme losh_molokai
 
@@ -197,4 +198,13 @@ digraph !? 8253
 digraph ?! 8253
 
 set tags=./tags;
+
+" Haskell configuration
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_infent_if = 0
+let g:haskell_indent_case = 2
+let g:haskell_indent_where = 2
+let g:haskell_indent_do = 2
+let g:haskell_indent_in = 0
 
