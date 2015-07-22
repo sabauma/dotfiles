@@ -20,6 +20,8 @@ highlight HintElem background-color: rgba(0,0,0,0) !important;
 
 imap -builtin <C-i> -javascript editExternallyWithFiletype()
 
+style -name ublick * #nav-bar * { visibility: visible; }
+
 javascript <<EOF
 function editExternallyWithFiletype() {
     var save_editor = options["editor"];

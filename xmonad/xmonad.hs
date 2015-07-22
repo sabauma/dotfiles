@@ -16,6 +16,7 @@ import           XMonad.Actions.GridSelect
 import           XMonad.Actions.Navigation2D
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
+import           XMonad.Actions.TopicSpace
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
@@ -23,7 +24,7 @@ import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
 import           XMonad.Util.EZConfig               (additionalKeys)
 import           XMonad.Util.Run                    (spawnPipe)
- -- Layouts
+-- Layouts
 import           XMonad.Layout.Grid                 (Grid (..))
 import           XMonad.Layout.NoBorders            (smartBorders)
 import           XMonad.Layout.Tabbed
@@ -189,11 +190,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    -- Control the music player
-    , ((modm , xK_u), spawn "banshee --toggle-playing")
-    , ((modm , xK_i), spawn "banshee --next")
-    , ((modm , xK_y), spawn "banshee --previous")
-
     , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
     , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
     , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
@@ -236,7 +232,6 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     , ((modMask, button2), \w -> focus w >> windows W.swapMaster)
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w)
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 ------------------------------------------------------------------------
@@ -271,10 +266,8 @@ mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full ||
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
-    , resource  =? "trayer"         --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
     , className =? "banshee"        --> doShift "10:music"
     , className =? "Deluge"         --> doShift "12:torrents"
@@ -295,7 +288,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = takeWhile isAlpha . stripper
+    layout  = takeWhile isAlpha
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
     sep     = "   "
 
@@ -303,9 +296,6 @@ myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
     updatePointer (0.5, 0.5) (0, 0)
-
-stripper :: String -> String
-stripper g = fromMaybe g $ stripPrefix "Minimize " g
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -354,10 +344,10 @@ defaults xmproc = def
     , startupHook        = myStartupHook
     } `additionalKeys`
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
-      ((mod4Mask                , xK_F1 ) , spawn "firefox"                   ) ,
-      ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"             ) ,
-      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ." ) ,
-      ((mod4Mask                , xK_F4 ) , spawn "gvim"                      ) ,
-      ((mod4Mask                , xK_F5 ) , spawn "banshee"                   ) ,
-      ((mod4Mask                , xK_F6 ) , spawn "pidgin"                    ) ]
+      ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,
+      ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"                    ) ,
+      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ,
+      ((mod4Mask                , xK_F4 ) , spawn "gvim"                             ) ,
+      ((mod4Mask                , xK_F5 ) , spawn "banshee"                          ) ,
+      ((mod4Mask                , xK_F6 ) , spawn "pidgin"                           ) ]
 

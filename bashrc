@@ -86,7 +86,7 @@ alias l='ls -CF'
 
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get dist-upgrade'
-alias mktags='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
+alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
 # alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
 # alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
 
@@ -106,10 +106,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=/home/spenser/src/graal/mxtool/:$PATH
 export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
-export PATH=/home/spenser/.local/bin:/home/spenser/bin/larceny:$PATH
+export PATH=.cabal-sandbox/bin:$PATH
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex

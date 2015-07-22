@@ -5,7 +5,7 @@ Plug 'L9'
 Plug 'a.vim'
 Plug 'buffergrep'
 Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
-Plug 'https://github.com/Shougo/vimproc.git'
+Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
 Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
@@ -18,7 +18,7 @@ Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-Plug 'https://github.com/sabauma/FastFold.git'
+Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/raichoo/haskell-vim.git'
 
@@ -30,6 +30,7 @@ Plug 'Sorcerer'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'https://github.com/flazz/vim-colorschemes.git'
+Plug 'https://github.com/chriskempson/base16-vim.git'
 
 call plug#end()
 
@@ -46,7 +47,7 @@ filetype plugin on
 filetype indent on
 set synmaxcol=120
 
-colorscheme losh_molokai
+colorscheme badwolf
 
 set incsearch
 set ignorecase
@@ -67,7 +68,6 @@ set laststatus=2
 set number
 set virtualedit=all
 
-set nocompatible
 set modelines=0
 set wrap
 set textwidth=80
