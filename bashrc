@@ -87,8 +87,8 @@ alias l='ls -CF'
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get dist-upgrade'
 alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
-# alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
-# alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
+
+alias :q='exit'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

@@ -9,5 +9,6 @@ all:
 	ln -s $(top)/pentadactylrc ~/.pentadactylrc || true
 	ln -s $(top)/xmobarrc ~/.xmobarrc || true
 	ln -s $(top)/xsessionrc ~/.xsessionrc || true
+	ln -s $(top)/haskeline ~/.haskeline || true
 	mv ~/.bashrc ~/.bashrc.bak
 	ln -s $(top)/bashrc ~/.bashrc || true
