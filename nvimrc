@@ -21,6 +21,7 @@ Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/raichoo/haskell-vim.git'
+Plug 'https://github.com/bitc/vim-hdevtools.git'
 
 " Colorscheme bundles
 Plug 'molokai'

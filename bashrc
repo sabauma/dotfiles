@@ -116,6 +116,8 @@ TEXMF=/home/spenser/.latex
 export EDITOR=nvim
 export SVN_EDITOR=nvim
 export VISUAL=nvim
+
+export CCACHE_COMPRESS=yes
 # wmname LG3D
 
 set -o vi
