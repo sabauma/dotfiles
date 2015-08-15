@@ -50,6 +50,8 @@ set synmaxcol=120
 
 colorscheme badwolf
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal
+
 set incsearch
 set ignorecase
 set smartcase

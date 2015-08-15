@@ -22,6 +22,7 @@ import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Util.EZConfig               (additionalKeys)
 import           XMonad.Util.Run                    (spawnPipe)
 -- Layouts
@@ -344,6 +345,7 @@ defaults xmproc = def
     , manageHook         = foldr1 (<+>) allHooks
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
+    , handleEventHook    = handleEventHook def <+> fullscreenEventHook
     } `additionalKeys`
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
       ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,

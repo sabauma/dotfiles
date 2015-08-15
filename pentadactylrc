@@ -7,6 +7,8 @@ set hintkeys=asdfghjkl
 set hlfind
 set incfind
 
+set editor='xterm -e nvim -f +<line> +"sil! call cursor(0, <column>)" <file>'
+
 " Move 5 units up or down
 map -b j 5j
 map -b k 5k

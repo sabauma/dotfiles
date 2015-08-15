@@ -13,3 +13,4 @@ all:
 	ln -s $(top)/ghci ~/.ghci || true
 	mv ~/.bashrc ~/.bashrc.bak
 	ln -s $(top)/bashrc ~/.bashrc || true
+	ln -s $(top)/Xresources ~/.Xresources || true
