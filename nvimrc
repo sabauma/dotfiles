@@ -1,9 +1,9 @@
 
 call plug#begin('~/.nvim/plugged')
 
-Plug 'L9'
-Plug 'a.vim'
-Plug 'buffergrep'
+Plug 'https://github.com/vim-scripts/buffergrep.git'
+Plug 'https://github.com/vim-scripts/a.vim.git'
+Plug 'https://github.com/eparreno/vim-l9.git'
 Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
 Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
@@ -24,12 +24,6 @@ Plug 'https://github.com/raichoo/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 
 " Colorscheme bundles
-Plug 'molokai'
-Plug 'tir_black'
-Plug 'darkspectrum'
-Plug 'Sorcerer'
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
-Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
 
