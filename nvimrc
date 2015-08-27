@@ -40,7 +40,7 @@ set shiftwidth=4
 syntax on
 filetype plugin on
 filetype indent on
-set synmaxcol=120
+set synmaxcol=200
 
 colorscheme badwolf
 
