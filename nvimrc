@@ -4,7 +4,7 @@ call plug#begin('~/.nvim/plugged')
 Plug 'https://github.com/vim-scripts/buffergrep.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/eparreno/vim-l9.git'
-Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
 Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
 Plug 'https://github.com/godlygeek/tabular.git'
