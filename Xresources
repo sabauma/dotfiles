@@ -1,0 +1,95 @@
+URxvt.buffered:         true
+URxvt.background:       black
+URxvt.foreground:       white
+URxvt.cursorColor:      green
+URxvt.underlineColor:   yellow
+URxvt.perl-ext-common:  default
+URxvt.title:            terminal
+URxvt*scrollstyle:rxvt
+URxvt*scrollBar: false
+URxvt*scrollTtyKeypress:  true
+URxvt*scrollTtyOutput:  false
+URxvt*scrollWithBuffer:  false
+URxvt*fading:  30
+URxvt*font: xft:Droid\ Sans\ Mono:size=12
+URxvt*boldFont: xft:Droid\ Sans\ Mono\ Bold:size=11
+URxvt*faceName: xft:Droid\ Sans\ Mono:size=11
+!URxvt*font:  -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:pixelsize:12
+!URxvt*boldFont:  -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:bold:pixelsize:12
+!URxvt*italicFont:  xft:Bitstream Vera Sans Mono:italic:autohint=true:pixelsize=12
+!URxvt*boldItalicFont:  xft:Bitstream Vera Sans Mono:bold:italic:autohint=true:pixelsize=12
+
+xterm*font: xft:Droid\ Sans\ Mono:size=12
+xterm*boldFont: xft:Droid\ Sans\ Mono\ Bold:size=11
+xterm*faceName: xft:Droid\ Sans\ Mono:size=11
+xterm*vt100*geometry: 80x50
+xterm*saveLines: 10000
+xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+xterm*termName: xterm-color
+!xterm*eightBitInput: false
+! X11 colors pieced together by Dmitry Medvinsky.
+! Based on Vim colorscheme "badwolf" pieced together by Steve Losh.
+! vim: fdm=marker
+
+! Colors definition {{{
+#define   plain            #f8f6f2
+#define   snow             #ffffff
+#define   coal             #000000
+
+#define   brightgravel     #d9cec3
+#define   lightgravel      #998f84
+#define   gravel           #857f78
+#define   mediumgravel     #666462
+#define   deepgravel       #45413b
+#define   deepergravel     #35322d
+#define   darkgravel       #242321
+#define   blackgravel      #1c1b1a
+#define   blackestgravel   #141413
+
+#define   dalespale        #fade3e
+#define   dirtyblonde      #f4cf86
+#define   taffy            #ff2c4b
+#define   saltwatertaffy   #8cffba
+#define   tardis           #0a9dff
+#define   orange           #ffa724
+#define   lime             #aeee00
+#define   dress            #ff9eb8
+#define   toffee           #b88853
+#define   coffee           #c7915b
+#define   darkroast        #88633f
+! }}}
+
+
+! Resourses {{{
+*background:  blackgravel
+*foreground:  plain
+*cursorColor: lime
+*scrollColor: deepgravel
+*fadeColor:   snow
+*fading:      20
+
+!        black
+*color0:      blackestgravel
+*color8:      coal
+!        red
+*color1:      taffy
+*color9:      taffy
+!        green
+*color2:      lime
+*color10:     lime
+!        yellow
+*color3:      dalespale
+*color11:     orange
+!        blue
+*color4:      tardis
+*color12:     tardis
+!        magenta
+*color5:      dress
+*color13:     dress
+!        cyan
+*color6:      saltwatertaffy
+*color14:     saltwatertaffy
+!        white
+*color7:      brightgravel
+*color15:     snow
+! }}}
