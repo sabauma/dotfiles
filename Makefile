@@ -14,3 +14,5 @@ all:
 	mv ~/.bashrc ~/.bashrc.bak
 	ln -s $(top)/bashrc ~/.bashrc || true
 	ln -s $(top)/Xresources ~/.Xresources || true
+	mkdir ~/bin || true
+	ln -s $(top)/wallpaper.sh ~/bin/wallpaper.sh || true
