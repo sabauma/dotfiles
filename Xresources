@@ -10,10 +10,10 @@ URxvt*scrollBar: false
 URxvt*scrollTtyKeypress:  true
 URxvt*scrollTtyOutput:  false
 URxvt*scrollWithBuffer:  false
-URxvt*fading:  30
-URxvt*font: xft:Droid\ Sans\ Mono:size=12
-URxvt*boldFont: xft:Droid\ Sans\ Mono\ Bold:size=11
-URxvt*faceName: xft:Droid\ Sans\ Mono:size=11
+URxvt*fading:  0
+URxvt*font: xft:Droid Sans Mono:size=12
+URxvt*boldFont: xft:Droid Sans Mono Bold:size=11
+URxvt*faceName: xft:Droid Sans Mono:size=11
 !URxvt*font:  -xos4-terminus-medium-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:pixelsize:12
 !URxvt*boldFont:  -xos4-terminus-bold-*-*-*-14-*-*-*-*-*-iso8859-15,xft:terminus:bold:pixelsize:12
 !URxvt*italicFont:  xft:Bitstream Vera Sans Mono:italic:autohint=true:pixelsize=12
@@ -61,35 +61,35 @@ xterm*termName: xterm-color
 
 
 ! Resourses {{{
-*background:  blackgravel
-*foreground:  plain
-*cursorColor: lime
-*scrollColor: deepgravel
-*fadeColor:   snow
-*fading:      20
+xterm*background:  blackgravel
+xterm*foreground:  plain
+xterm*cursorColor: lime
+xterm*scrollColor: deepgravel
+xterm*fadeColor:   snow
+xterm*fading:      20
 
 !        black
-*color0:      blackestgravel
-*color8:      coal
+xterm*color0:      blackestgravel
+xterm*color8:      coal
 !        red
-*color1:      taffy
-*color9:      taffy
+xterm*color1:      taffy
+xterm*color9:      taffy
 !        green
-*color2:      lime
-*color10:     lime
+xterm*color2:      lime
+xterm*color10:     lime
 !        yellow
-*color3:      dalespale
-*color11:     orange
+xterm*color3:      dalespale
+xterm*color11:     orange
 !        blue
-*color4:      tardis
-*color12:     tardis
+xterm*color4:      tardis
+xterm*color12:     tardis
 !        magenta
-*color5:      dress
-*color13:     dress
+xterm*color5:      dress
+xterm*color13:     dress
 !        cyan
-*color6:      saltwatertaffy
-*color14:     saltwatertaffy
+xterm*color6:      saltwatertaffy
+xterm*color14:     saltwatertaffy
 !        white
-*color7:      brightgravel
-*color15:     snow
+xterm*color7:      brightgravel
+xterm*color15:     snow
 ! }}}

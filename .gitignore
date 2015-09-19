@@ -5,3 +5,5 @@ plugged/
 backup/
 undodir/
 spell/
+plug.vim
+plug.vim.old

@@ -15,7 +15,6 @@ Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
-Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
@@ -40,7 +39,6 @@ set shiftwidth=4
 syntax on
 filetype plugin on
 filetype indent on
-set synmaxcol=200
 
 colorscheme badwolf
 
@@ -160,10 +158,6 @@ set completeopt=menu,menuone,longest
 
 " Limit popup menu height
 set pumheight=15
-
-" Show clang errors in the quickfix window
-let python_highlight_all = 1
-let python_slow_sync = 1
 
 " Key Maps
 " --------
