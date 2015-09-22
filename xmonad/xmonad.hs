@@ -279,7 +279,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = takeWhile isAlpha
+    layout  = xmobarColor xmobarLayoutColor "" . takeWhile isAlpha
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
     sep     = "   "
 

@@ -2,10 +2,10 @@
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
 Config {
-    font = "xft:Fixed:size=10",
+    font = "xft:Fira Sans:size=11",
     bgColor = "#1d2021",
     fgColor = "#ebdbb2",
-    alpha = 240,
+    alpha = 230,
     position = Top
     lowerOnStart = True,
     commands = [
