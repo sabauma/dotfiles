@@ -15,7 +15,7 @@ Config {
         Run Network "eth0" ["-t","Eth: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
         Run Network "wlan0" ["-t","Wlan: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
         Run Date "%a %b %_d %H:%M" "date" 10,
-        Run Volume "default" "Master" [] 10,
+        Run Volume "default" "Master" ["-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
         Run Battery ["-t", "<left>%","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
         Run StdinReader
     ],
