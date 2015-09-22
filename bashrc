@@ -155,3 +155,5 @@ esac
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
+[ -n "$XTERM_VERSION" ] && transset -a 0.95 >/dev/null
+

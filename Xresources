@@ -1,10 +1,12 @@
-xterm*font: xft:Fira Mono:size=11
-xterm*boldFont: xft:Fira Mono Bold:size=11
-xterm*faceName: xft:Fira Mono:size=11
-xterm*vt100*geometry: 80x50
-xterm*saveLines: 10000
-xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
-xterm*termName: xterm-color
+XTerm*font: xft:Fira Mono:size=11
+XTerm*boldFont: xft:Fira Mono Bold:size=11
+XTerm*faceName: xft:Fira Mono:size=11
+XTerm*vt100*geometry: 80x50
+XTerm*saveLines: 10000
+XTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+XTerm*termName: xterm-color
+XTerm*fastScroll: true
+XTerm*locale: true
 
 !hard contrast:
 xterm*background: #1d2021

@@ -3,22 +3,23 @@
 -- http://github.com/vicfryzel/xmonad-config
 Config {
     font = "xft:Fixed:size=10",
-    bgColor = "#000000",
-    fgColor = "#ffffff",
+    bgColor = "#1d2021",
+    fgColor = "#ebdbb2",
+    alpha = 240,
     position = Top
     lowerOnStart = True,
     commands = [
-        Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10,
-        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
-        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
-        Run Network "eth0" ["-t","Eth: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
-        Run Network "wlan0" ["-t","Wlan: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2","-w","3"] 10,
+        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
+        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
+        Run Network "eth0" ["-t","Eth: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
+        Run Network "wlan0" ["-t","Wlan: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
         Run Date "%a %b %_d %H:%M" "date" 10,
         Run Volume "default" "Master" [] 10,
-        Run Battery ["-t", "<left>%"] 10,
+        Run Battery ["-t", "<left>%","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %eth0%   %wlan0%   Bat: %battery%   %default:Master%   <fc=#FFFFCC>%date%</fc>"
+    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %eth0%   %wlan0%   Bat: %battery%   %default:Master%   <fc=#ebdbb2>%date%</fc>"
 }

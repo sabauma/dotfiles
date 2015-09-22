@@ -28,7 +28,6 @@ import           XMonad.Util.Run                    (spawnPipe)
 -- Layouts
 import           XMonad.Layout.Grid                 (Grid (..))
 import           XMonad.Layout.NoBorders            (smartBorders)
-import           XMonad.Layout.Tabbed
 
 import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
 import           XMonad.Prompt.Window               (windowPromptGoto)
@@ -52,7 +51,7 @@ import qualified XMonad.StackSet                    as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "gnome-terminal"
+myTerminal      = "xterm"
 
 
 -- Width of the window border in pixels.
@@ -240,22 +239,11 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 ------------------------------------------------------------------------
 -- Layouts:
 
-tabConfig :: Theme
-tabConfig = def
-  { activeBorderColor   = "#7C7C7C"
-  , activeTextColor     = xmobarCurrentWorkspaceColor
-  , activeColor         = "#000000"
-  , inactiveBorderColor = "#7C7C7C"
-  , inactiveTextColor   = "#EEEEEE"
-  , inactiveColor       = "#000000"
-  }
-
-mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full ||| tabs
+mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
     grid   = GridRatio (4 / 3)
-    tabs   = tabbed shrinkText tabConfig
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane
     nmaster = 1

@@ -14,9 +14,9 @@ myFont = "xft:Droid Sans Mono:size=12"
 
 xmobarTitleColor, xmobarCurrentWorkspaceColor :: String
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#FFA6A0"
+xmobarTitleColor = "#fb4934"
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#8EFF6C"
+xmobarCurrentWorkspaceColor = "#458588"
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
