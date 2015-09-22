@@ -16,3 +16,4 @@ all:
 	ln -s $(top)/Xresources ~/.Xresources || true
 	mkdir ~/bin || true
 	ln -s $(top)/wallpaper.sh ~/bin/wallpaper.sh || true
+

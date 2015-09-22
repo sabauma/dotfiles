@@ -25,6 +25,7 @@ Plug 'https://github.com/bitc/vim-hdevtools.git'
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
+Plug 'https://github.com/morhetz/gruvbox.git'
 
 call plug#end()
 
@@ -40,9 +41,14 @@ syntax on
 filetype plugin on
 filetype indent on
 
-colorscheme badwolf
-
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal
+
+let g:gruvbox_italics=1
+let g:gruvbox_invert_selection=0
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='soft'
+colorscheme gruvbox
+set background=dark
 
 set incsearch
 set ignorecase
