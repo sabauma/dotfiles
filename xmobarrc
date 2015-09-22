@@ -9,14 +9,14 @@ Config {
     position = Top
     lowerOnStart = True,
     commands = [
-        Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2","-w","3"] 10,
-        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
-        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
-        Run Network "eth0" ["-t","Eth: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
-        Run Network "wlan0" ["-t","Wlan: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
+        Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#fb4934","-l","#b8bb26","-n","#458588","-w","3"] 10,
+        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
+        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
+        Run Network "eth0" ["-t","Eth: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
+        Run Network "wlan0" ["-t","Wlan: <rx>, <tx>","-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
         Run Date "%a %b %_d %H:%M" "date" 10,
         Run Volume "default" "Master" ["-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
-        Run Battery ["-t", "<left>%","-h","#fb4934","-l","#b8bb26","-n","#ebdbb2"] 10,
+        Run Battery ["-t", "<left>%","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
         Run StdinReader
     ],
     sepChar = "%",
