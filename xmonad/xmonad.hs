@@ -90,9 +90,10 @@ myWorkspaces :: [String]
 myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
+-- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myNormalBorderColor  = "#ebdbb2"
+myFocusedBorderColor = "#fb4934"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
