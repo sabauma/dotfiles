@@ -20,32 +20,33 @@ import           XMonad.Actions.TopicSpace
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Util.EZConfig               (additionalKeys)
-import           XMonad.Util.Run                    (spawnPipe)
+import           XMonad.Util.EZConfig              (additionalKeys)
+import           XMonad.Util.Run                   (spawnPipe)
 -- Layouts
-import           XMonad.Layout.Grid                 (Grid (..))
-import           XMonad.Layout.NoBorders            (smartBorders)
+import           XMonad.Layout.Grid                (Grid (..))
+import           XMonad.Layout.NoBorders           (smartBorders)
 
-import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
-import           XMonad.Prompt.Window               (windowPromptGoto)
+import           XMonad.Layout.Spacing             (smartSpacing)
+import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
+import           XMonad.Prompt.Window              (windowPromptGoto)
 
 -- General libraries
-import           Data.Char                          (isAlpha)
-import           Data.List                          (stripPrefix)
-import           Data.Maybe                         (fromMaybe)
-import           Data.Monoid                        (appEndo)
-import           PerWorkspaceDirs                   (currentWorkspace, getDir)
+import           Data.Char                         (isAlpha)
+import           Data.List                         (stripPrefix)
+import           Data.Maybe                        (fromMaybe)
+import           Data.Monoid                       (appEndo)
+import           PerWorkspaceDirs                  (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
 import           System.IO
 
 import           Graphics.X11.ExtraTypes.XF86
 
-import qualified Data.Map                           as M
-import qualified XMonad.StackSet                    as W
+import qualified Data.Map                          as M
+import qualified XMonad.StackSet                   as W
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -239,7 +240,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
 ------------------------------------------------------------------------
 -- Layouts:
 
-mainLayouts = smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
+mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
@@ -272,6 +273,10 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
+-- Index function with a default value in the event of a short list
+safeIndex :: a -> Int -> [a] -> a
+safeIndex def i = foldr const def . drop i
+
 xmobarConfig = xmobarPP
              { ppTitle   = title
              , ppLayout  = layout
@@ -279,7 +284,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = xmobarColor xmobarLayoutColor "" . takeWhile isAlpha
+    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
     sep     = "   "
 
