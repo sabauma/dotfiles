@@ -1,12 +1,4 @@
---
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
--- Usefuly XMonad operations
+
 import           XMonad
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleWS
@@ -192,14 +184,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2- -c 1")
-    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+ -c 1")
-    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle -c 1")
-    , ((noModMask , xF86XK_MonBrightnessDown),  spawn "xbacklight -dec 10")
-    , ((noModMask , xF86XK_MonBrightnessUp),  spawn "xbacklight -inc 10")
-    , ((modm .|. shiftMask, xK_i), spawn "/home/spenser/bin/toggle")
+    , ((noModMask , xF86XK_AudioLowerVolume) , spawn "amixer set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume) , spawn "amixer set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute)        , spawn "amixer set Master toggle -c 1")
+    , ((noModMask , xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10")
+    , ((noModMask , xF86XK_MonBrightnessUp)  , spawn "xbacklight -inc 10")
     -- Set working directory for a workspace
-    , ((modm, xK_d), changeDirPrompt)
+    , ((modm      , xK_d) , changeDirPrompt)
     ]
     ++
     --
@@ -343,9 +334,5 @@ defaults xmproc = def
     } `additionalKeys`
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
       ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,
-      ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"                    ) ,
-      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ,
-      ((mod4Mask                , xK_F4 ) , spawn "gvim"                             ) ,
-      ((mod4Mask                , xK_F5 ) , spawn "banshee"                          ) ,
-      ((mod4Mask                , xK_F6 ) , spawn "pidgin"                           ) ]
+      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ]
 
