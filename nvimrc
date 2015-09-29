@@ -76,6 +76,8 @@ set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
+set splitright
+set splitbelow
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -204,4 +206,8 @@ let g:haskell_indent_case = 2
 let g:haskell_indent_where = 2
 let g:haskell_indent_do = 2
 let g:haskell_indent_in = 0
+
+tnoremap <Leader><ESC> <C-\><C-n>
+tnoremap <Leader>w <C-\><C-n><C-w>w
+highlight TermCursor ctermfg=red guifg=red
 
