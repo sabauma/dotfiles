@@ -20,7 +20,7 @@ xmobarTitleColor = "#fb4934"
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#458588"
 -- Color of the layout field
-xmobarLayoutColor = "#98971a"
+xmobarLayoutColor = "#b8bb26"
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig

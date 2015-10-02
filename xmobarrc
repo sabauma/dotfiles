@@ -5,7 +5,6 @@ Config {
     font = "xft:Fira Sans:size=11",
     bgColor = "#1d2021",
     fgColor = "#ebdbb2",
---    alpha = 240,
     position = Top,
     lowerOnStart = True,
     commands = [
