@@ -84,10 +84,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias update='sudo aptitude update'
-alias upgrade='sudo aptitude safe-upgrade'
-# alias hibernate='sudo s2disk && gnome-screensaver-command --lock'
-# alias suspend='sudo pm-suspend && gnome-screensaver-command --lock'
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get dist-upgrade'
+alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
+
+alias :q='exit'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -105,20 +106,18 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=/home/spenser/src/graal/mxtool/:$PATH
 export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
-export PATH=/home/spenser/.local/bin:/home/spenser/bin/larceny:$PATH
-export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pypy
-export JAVA_HOME=/home/spenser/bin/jdk1.8.0_31
-export EXTRA_JAVA_HOMES=/usr/lib/jvm/java-7-openjdk-amd64
-export GRAAL_HOME=/home/spenser/src/graal
-export TRUFFLE_DSL_JAR=/home/spenser/src/graal/graal/com.oracle.truffle.dsl.processor/ap/com.oracle.truffle.dsl.processor.jar
+export PATH=.cabal-sandbox/bin:$PATH
+export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex
 
+export EDITOR=nvim
 export SVN_EDITOR=nvim
 export VISUAL=nvim
+
+export CCACHE_COMPRESS=yes
 # wmname LG3D
 
 set -o vi
@@ -155,4 +154,6 @@ xterm*|rxvt*)
 esac
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+[ -n "$XTERM_VERSION" ] && transset -a 0.95 >/dev/null
 

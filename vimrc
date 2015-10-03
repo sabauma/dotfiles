@@ -32,7 +32,9 @@ Bundle "https://github.com/derekelkins/agda-vim.git"
 Bundle "https://github.com/wlangstroth/vim-racket.git"
 Bundle "https://github.com/ehamberg/vim-cute-python.git"
 Bundle "http://github.com/ardagnir/vimbed"
+Bundle "https://github.com/sjl/badwolf.git"
 Bundle "https://github.com/rust-lang/rust.vim.git"
+Bundle "https://github.com/Konfekt/FastFold.git"
 
 " Colorscheme bundles
 Bundle "molokai"
@@ -43,6 +45,7 @@ Bundle "https://github.com/altercation/vim-colors-solarized.git"
 Bundle "https://github.com/toupeira/desertink.vim.git"
 Bundle "native"
 Bundle "https://github.com/nanotech/jellybeans.vim.git"
+Bundle 'https://github.com/morhetz/gruvbox.git'
 
 " Tab settings
 " set cindent
@@ -58,7 +61,13 @@ syntax on
 filetype plugin on
 filetype indent on
 
-colorscheme losh_molokai
+"colorscheme losh_molokai
+let g:gruvbox_italics=1
+let g:gruvbox_invert_selection=0
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='soft'
+colorscheme gruvbox
+set background=dark
 
 set incsearch
 set ignorecase

@@ -1,12 +1,4 @@
---
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
--- Usefuly XMonad operations
+
 import           XMonad
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleWS
@@ -16,41 +8,37 @@ import           XMonad.Actions.GridSelect
 import           XMonad.Actions.Navigation2D
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
+import           XMonad.Actions.TopicSpace
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Util.EZConfig               (additionalKeys)
-import           XMonad.Util.Run                    (spawnPipe)
- -- Layouts
-import           XMonad.Layout.BinarySpacePartition (emptyBSP)
-import           XMonad.Layout.Grid                 (Grid (..))
-import           XMonad.Layout.IM
-import           XMonad.Layout.Minimize
-import           XMonad.Layout.NoBorders            (smartBorders)
-import           XMonad.Layout.PerWorkspace         (onWorkspace)
-import           XMonad.Layout.Reflect              (reflectHoriz)
-import           XMonad.Layout.Tabbed
-import           XMonad.Prompt                      (XPConfig (..))
+import           XMonad.Util.EZConfig              (additionalKeys)
+import           XMonad.Util.Run                   (spawnPipe)
+-- Layouts
+import           XMonad.Layout.Grid                (Grid (..))
+import           XMonad.Layout.NoBorders           (smartBorders)
 
-import           XMonad.Prompt.RunOrRaise           (runOrRaisePrompt)
-import           XMonad.Prompt.Window               (windowPromptGoto)
+import           XMonad.Layout.Spacing             (smartSpacing)
+import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
+import           XMonad.Prompt.Window              (windowPromptGoto)
 
 -- General libraries
-import           Data.Char                          (isAlpha, toLower)
-import           Data.Function                      (on)
-import           Data.List                          (isInfixOf, stripPrefix)
-import           Data.Maybe                         (fromMaybe)
-import           Data.Monoid                        (appEndo)
-import           Data.Ratio                         ((%))
+import           Data.Char                         (isAlpha)
+import           Data.List                         (stripPrefix)
+import           Data.Maybe                        (fromMaybe)
+import           Data.Monoid                       (appEndo)
+import           PerWorkspaceDirs                  (currentWorkspace, getDir)
+import           PromptConfig
 import           System.Exit
 import           System.IO
 
 import           Graphics.X11.ExtraTypes.XF86
 
-import qualified Data.Map                           as M
-import qualified XMonad.StackSet                    as W
+import qualified Data.Map                          as M
+import qualified XMonad.StackSet                   as W
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -90,21 +78,14 @@ myNumlockMask   = mod2Mask
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
 --
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
-myWorkspaces    = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
+myWorkspaces :: [String]
+myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
 
 -- Border colors for unfocused and focused windows, respectively.
---
-myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
-
--- Color of current window title in xmobar.
-xmobarTitleColor = "#FFA6A0"
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#8EFF6C"
+-- Based off of the gruvbox color scheme
+myNormalBorderColor, myFocusedBorderColor :: String
+myNormalBorderColor  = "#ebdbb2"
+myFocusedBorderColor = "#fb4934"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
@@ -113,12 +94,18 @@ xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
 
+spawnInCurDir :: String -> X ()
+spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
+  where
+    spawnInDir :: String -> String -> X ()
+    spawnInDir command s = spawnHere $ "cd " ++ s ++ "; " ++ command
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawnHere $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill1)
      -- Rotate through the available layout algorithms
@@ -153,10 +140,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
     -- Restart xmonad
     , ((modm              , xK_q     ), restartXMonad)
-    -- Minimize focused window
-    , ((modm              , xK_m     ), withFocused minimizeWindow)
-    -- Restore next minimized window
-    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
     -- Cycle recent workspaces
     , ((modm              , xK_Tab   ), toggleWS)
     -- Move current window to previous workspace
@@ -172,18 +155,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Tag current window to an empty workspace and view it
     , ((modm .|. shiftMask, xK_n     ), tagToEmptyWorkspace)
     -- Run XMonad prompt
-    , ((modm,               xK_p     ), runOrRaisePrompt infixFindConfig)
+    , ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)
     -- Run Window prompt
-    , ((modm .|. shiftMask, xK_p     ), windowPromptGoto infixFindConfig)
+    , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
     -- Next Workspace
     , ((modm,               xK_Right ), nextWS)
     -- Previous Workspace
     , ((modm,               xK_Left  ), prevWS)
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
-    , ((modm               , xK_v        ) , selectWorkspace def)
-    , ((modm               , xK_b        ) , withWorkspace def (windows . W.shift))
-    , ((modm .|. shiftMask , xK_b        ) , withWorkspace def (windows . copy))
+    , ((modm               , xK_v        ) , selectWorkspace myPromptConfig)
+    , ((modm               , xK_b        ) , withWorkspace myPromptConfig (windows . W.shift))
+    , ((modm .|. shiftMask , xK_b        ) , withWorkspace myPromptConfig (windows . copy))
     -- Two dimensional navigation
     , ((mod4Mask , xK_l) , windowGo R True)
     , ((mod4Mask , xK_h) , windowGo L True)
@@ -201,14 +184,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    -- Control the music player
-    , ((modm , xK_u), spawn "banshee --toggle-playing")
-    , ((modm , xK_i), spawn "banshee --next")
-    , ((modm , xK_y), spawn "banshee --previous")
-
-    , ((noModMask , xF86XK_AudioLowerVolume), spawn "amixer set Master 2-")
-    , ((noModMask , xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+")
-    , ((noModMask , xF86XK_AudioMute),        spawn "amixer set Master toggle")
+    , ((noModMask , xF86XK_AudioLowerVolume) , spawn "amixer set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume) , spawn "amixer set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute)        , spawn "amixer set Master toggle -c 1")
+    , ((noModMask , xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10")
+    , ((noModMask , xF86XK_MonBrightnessUp)  , spawn "xbacklight -inc 10")
+    -- Set working directory for a workspace
+    , ((modm      , xK_d) , changeDirPrompt)
     ]
     ++
     --
@@ -219,18 +201,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ++
     -- Bindings to shift the view to workspaces using the workspace keys
     [((modm, key), withNthWorkspace W.greedyView n)
-        | (key, n) <- zip workspaceKeys [0..] ]
+        | (key, n) <- zip workspaceKeys [0 ..] ]
     ++
     -- Bindings to shift the current window to a different workspace
     [((modm .|. shiftMask, key), withNthWorkspace W.shift n)
-        | (key, n) <- zip workspaceKeys [0..] ]
+        | (key, n) <- zip workspaceKeys [0 ..] ]
 
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
           -- Performs an infix search with caseless comparison
-          mySearch = isInfixOf `on` map toLower
-          -- XPConfig with an infix search, rather than prefix.
-          infixFindConfig = def { searchPredicate = mySearch }
           -- Executes a withNthWorkspace action 's' gased on the key using the
           -- mod key 'm' sending the result to workspace 'n'.
           workspaceAction m s key n = ((m, key), withNthWorkspace s n)
@@ -240,7 +219,7 @@ fullFloatFocused =
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
---
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w)
@@ -248,38 +227,16 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     , ((modMask, button2), \w -> focus w >> windows W.swapMaster)
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w)
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 ------------------------------------------------------------------------
 -- Layouts:
 
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
-
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
-tabConfig = def
-  { activeBorderColor   = "#7C7C7C"
-  , activeTextColor     = xmobarCurrentWorkspaceColor
-  , activeColor         = "#000000"
-  , inactiveBorderColor = "#7C7C7C"
-  , inactiveTextColor   = "#EEEEEE"
-  , inactiveColor       = "#000000"
-  }
-
-mainLayouts = onWorkspace "11:im" grids
-            $ tiled ||| mirror ||| Full ||| grids ||| tabs ||| emptyBSP
+mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
-    grids  = reflectHoriz $ withIM (1 % 7) (Role "buddy_list") $ reflectHoriz $ GridRatio (4 / 3)
-    tabs   = tabbed shrinkText tabConfig
+    grid   = GridRatio (4 / 3)
     -- default tiling algorithm partitions the screen into two panes
     -- The default number of windows in the master pane
     nmaster = 1
@@ -288,28 +245,13 @@ mainLayouts = onWorkspace "11:im" grids
     -- Percent of screen to increment by when resizing panes
     delta   = 3 / 100
 
-myLayout = smartBorders . minimize . avoidStruts $ mainLayouts
-
 ------------------------------------------------------------------------
--- Window rules:
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
+-- Window rules
+
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
-    , resource  =? "trayer"         --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
     , className =? "banshee"        --> doShift "10:music"
     , className =? "Deluge"         --> doShift "12:torrents"
@@ -323,25 +265,25 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'DynamicLog' extension for examples.
---
--- To emulate dwm's status bar
---
--- > logHook = dynamicLogDzen
---
-xmobarConfig = xmobarPP { ppTitle   = xmobarColor xmobarTitleColor "" . shorten 100
-                        , ppLayout  = takeWhile isAlpha . stripper
-                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
-                        , ppSep     = "   " }
+-- Index function with a default value in the event of a short list
+safeIndex :: a -> Int -> [a] -> a
+safeIndex def i = foldr const def . drop i
+
+xmobarConfig = xmobarPP
+             { ppTitle   = title
+             , ppLayout  = layout
+             , ppCurrent = current
+             , ppSep     = sep }
+  where
+    title   = xmobarColor xmobarTitleColor "" . shorten 100
+    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
+    current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "[" "]"
+    sep     = "   "
 
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
     updatePointer (0.5, 0.5) (0, 0)
-
-stripper :: String -> String
-stripper g = fromMaybe g $ stripPrefix "Minimize " g
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -358,8 +300,10 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
 
+allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 
 -- A structure containing your configuration settings, overriding
@@ -382,16 +326,13 @@ defaults xmproc = def
     , keys               = myKeys
     , mouseBindings      = myMouseBindings
       -- hooks, layouts
-    , layoutHook         = myLayout
+    , layoutHook         = mainLayouts
     , manageHook         = foldr1 (<+>) allHooks
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
+    , handleEventHook    = handleEventHook def <+> fullscreenEventHook
     } `additionalKeys`
     [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
-      ((mod4Mask                , xK_F1 ) , spawn "firefox"                   ) ,
-      ((mod4Mask                , xK_F2 ) , spawn "gnome-terimal"             ) ,
-      ((mod4Mask                , xK_F3 ) , spawnHere "nautilus --no-desktop" ) ,
-      ((mod4Mask                , xK_F4 ) , spawn "gvim"                      ) ,
-      ((mod4Mask                , xK_F5 ) , spawn "banshee"                   ) ,
-      ((mod4Mask                , xK_F6 ) , spawn "pidgin"                    ) ]
+      ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,
+      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ]
 

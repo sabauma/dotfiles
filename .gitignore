@@ -1,3 +1,14 @@
 *.o
 *.hi
 bundle/
+plugged/
+backup/
+undodir/
+spell/
+plug.vim
+plug.vim.old
+xmonad/history
+xmonad/xmonad-x86_64-linux
+xmonad/xmonad.errors
+vim/vim
+nvim/nvim

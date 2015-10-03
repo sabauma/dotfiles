@@ -1,16 +1,11 @@
 
 call plug#begin('~/.nvim/plugged')
 
-Plug 'gmarik/vundle'
-Plug 'FuzzyFinder'
-Plug 'L9'
-Plug 'SearchComplete'
-Plug 'a.vim'
-Plug 'buffergrep'
-Plug 'cecutil'
-Plug 'compview'
-Plug 'git://github.com/nathanaelkane/vim-indent-guides.git'
-Plug 'https://github.com/Shougo/vimproc.git'
+Plug 'https://github.com/vim-scripts/buffergrep.git'
+Plug 'https://github.com/vim-scripts/a.vim.git'
+Plug 'https://github.com/eparreno/vim-l9.git'
+Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
 Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
@@ -18,26 +13,19 @@ Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
-Plug 'python.vim'
-Plug 'taglist.vim'
-Plug 'vim-indent-object'
-Plug 'https://github.com/coderifous/textobj-word-column.vim.git'
-Plug 'https://github.com/idris-hackers/idris-vim.git'
-Plug 'https://github.com/guns/vim-sexp.git'
-Plug 'https://github.com/kien/rainbow_parentheses.vim.git'
-Plug 'https://github.com/derekelkins/agda-vim.git'
+Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
-Plug 'https://github.com/ehamberg/vim-cute-python.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
+Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
+Plug 'https://github.com/Konfekt/FastFold.git'
+Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
+Plug 'https://github.com/raichoo/haskell-vim.git'
+Plug 'https://github.com/bitc/vim-hdevtools.git'
 
 " Colorscheme bundles
-Plug 'molokai'
-Plug 'tir_black'
-Plug 'darkspectrum'
-Plug 'Sorcerer'
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
-Plug 'https://github.com/nanotech/jellybeans.vim.git'
-Plug 'https://github.com/sjl/badwolf.git'
+Plug 'https://github.com/flazz/vim-colorschemes.git'
+Plug 'https://github.com/chriskempson/base16-vim.git'
+Plug 'https://github.com/morhetz/gruvbox.git'
 
 call plug#end()
 
@@ -53,7 +41,14 @@ syntax on
 filetype plugin on
 filetype indent on
 
-colorscheme losh_molokai
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal
+
+let g:gruvbox_italics=1
+let g:gruvbox_invert_selection=0
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='soft'
+colorscheme gruvbox
+set background=dark
 
 set incsearch
 set ignorecase
@@ -68,14 +63,12 @@ set wildmenu
 set wildmode=list:longest
 set visualbell
 set cursorline
-set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set number
 set virtualedit=all
 
-set nocompatible
 set modelines=0
 set wrap
 set textwidth=80
@@ -83,7 +76,8 @@ set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
-" set breakindent
+set splitright
+set splitbelow
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -91,8 +85,8 @@ set nostartofline
 " set autochdir
 
 " Backup & Undo settings
-set undodir=~/.nvim/undodir
-set backupdir=~/.nvim/backup
+set undodir=~/.nvim/undodir//
+set backupdir=~/.nvim/backup//
 set undofile
 set undolevels=1000
 set undoreload=10000
@@ -114,6 +108,8 @@ map <leader>td :tabclose<CR>
 set foldnestmax=1
 set foldmethod=syntax
 
+let g:fastfold_fold_command_suffixes = []
+
 " Hilight search
 set hlsearch
 
@@ -124,9 +120,6 @@ nnoremap ` '
 
 " Remove menu
 set go=c
-
-" Format using astyle
-map <leader>f :!astyle --style=allman --indent=spaces=4 -N -S -w --add-one-line-brackets --convert-tabs --indent-col1-comments -m0 %<CR>
 
 " Faster way to switch between splits
 map <leader>w <C-w>w
@@ -174,10 +167,6 @@ set completeopt=menu,menuone,longest
 " Limit popup menu height
 set pumheight=15
 
-" Show clang errors in the quickfix window
-let python_highlight_all = 1
-let python_slow_sync = 1
-
 " Key Maps
 " --------
 " Toggle NERDTree with F2
@@ -203,13 +192,22 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" Prefer C++11 over the standard C++ syntax file
-autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
-
-let g:sexp_enable_insert_mode_mappings = 0
-au BufNewFile,BufRead *.agda setf agda
-
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
+
+set tags=./tags;
+
+" Haskell configuration
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_infent_if = 0
+let g:haskell_indent_case = 2
+let g:haskell_indent_where = 2
+let g:haskell_indent_do = 2
+let g:haskell_indent_in = 0
+
+tnoremap <Leader><ESC> <C-\><C-n>
+tnoremap <Leader>w <C-\><C-n><C-w>w
+highlight TermCursor ctermfg=red guifg=red
 
