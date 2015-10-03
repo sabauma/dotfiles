@@ -37,6 +37,7 @@ Plug 'darkspectrum'
 Plug 'Sorcerer'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
+Plug 'https://github.com/sjl/badwolf.git'
 
 call plug#end()
 
@@ -47,8 +48,6 @@ set smartindent
 set expandtab
 set tabstop=4
 set shiftwidth=4
-
-set t_Co=256
 
 syntax on
 filetype plugin on

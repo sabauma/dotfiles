@@ -117,8 +117,8 @@ export TRUFFLE_DSL_JAR=/home/spenser/src/graal/graal/com.oracle.truffle.dsl.proc
 
 TEXMF=/home/spenser/.latex
 
-export SVN_EDITOR=vim
-export VISUAL=vim
+export SVN_EDITOR=nvim
+export VISUAL=nvim
 # wmname LG3D
 
 set -o vi
@@ -153,3 +153,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+
