@@ -20,6 +20,6 @@ all:
 	mkdir ~/bin || true
 	ln -s $(top)/wallpaper.sh ~/bin/wallpaper.sh || true
 	# Link pictures into the user's Pictures directory
-	mkdir -p ~/Pictures/high-res
+	mkdir -p ~/Pictures/
 	ln -s $(top)/high-res ~/Pictures/high-res || true
 
