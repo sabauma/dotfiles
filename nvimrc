@@ -227,3 +227,4 @@ let g:terminal_color_15 = '#ebdbb2'
 tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d
+

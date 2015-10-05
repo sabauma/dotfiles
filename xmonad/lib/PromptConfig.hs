@@ -22,9 +22,18 @@ xmobarCurrentWorkspaceColor = "#458588"
 -- Color of the layout field
 xmobarLayoutColor = "#b8bb26"
 
+backgroundColor = "#1d2021"
+foregroundColor = "#ebdbb2"
+
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig = def { font = myFont, height = 24, searchPredicate = mySearch }
+myPromptConfig = def { bgColor = backgroundColor
+                     , fgColor = foregroundColor
+                     , bgHLight = foregroundColor
+                     , fgHLight = backgroundColor
+                     , font = myFont
+                     , height = 24
+                     , searchPredicate = mySearch }
   where mySearch = isInfixOf `on` map toLower
 
 changeDirPrompt :: X ()
