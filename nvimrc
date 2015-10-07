@@ -223,6 +223,7 @@ let g:terminal_color_12 = '#83a598'
 let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
+let g:terminal_scrollback_buffer_size=100000
 
 tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
