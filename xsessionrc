@@ -14,7 +14,7 @@ gnome-screensaver &
 offlineimap &
 
 bash /home/spenser/bin/wallpaper.sh &
-setxkbmap -option "caps:swapescape"
+sleep 5 && setxkbmap -option "caps:swapescape"
 
 # feh --bg-fill /home/spenser/Pictures/WPX7MHGC.jpg &
 #(sleep 5 && feh --bg-fill /home/spenser/Pictures/hdwallpaperpc_com_Laughing_Man_Ghost_in_the_Shell_Dark_1920x1080.jpg) &
