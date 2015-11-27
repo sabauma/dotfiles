@@ -87,6 +87,7 @@ alias l='ls -CF'
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get dist-upgrade'
 alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
+alias untar='tar -xzvf'
 
 alias :q='exit'
 
