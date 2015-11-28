@@ -19,7 +19,7 @@ Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/raichoo/haskell-vim.git'
+Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/vim-scripts/scribble.vim.git'
 
@@ -202,6 +202,10 @@ set tags=./tags;
 " Haskell configuration
 let g:haskell_enable_quantification = 1
 let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+let g:haskell_enable_static_pointers = 1
 let g:haskell_infent_if = 0
 let g:haskell_indent_case = 2
 let g:haskell_indent_where = 2
@@ -224,6 +228,7 @@ let g:terminal_color_12 = '#83a598'
 let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
+let g:terminal_scrollback_buffer_size=100000
 
 tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
