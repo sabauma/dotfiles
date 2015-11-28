@@ -106,7 +106,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
+export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/local/bin/:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
 export PATH=.cabal-sandbox/bin:$PATH
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
@@ -155,5 +155,34 @@ esac
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-[ -n "$XTERM_VERSION" ] && transset -a 0.95 >/dev/null
+function plt() {
+BASEDIR="/home/spenser/local/racket-"
+   if [[ $# == 0 ]]; then
+       echo "PLTHOME = $PLTHOME"
+   elif [[ $# -ge 1 ]]; then
+       if [[ -d "$BASEDIR$1" ]]; then
+           DIR=`cd "$BASEDIR$1"; pwd -P`
+           shift
+       else
+           echo "ERROR: '$BASEDIR$1' does not exist."
+           false
+       fi
+       if [[ $# == 0 ]]; then
+           export PLTHOME="$DIR"
+           export TEXINPUTS="$PLTHOME"/pkgs/slatex:
+           export MANPATH=$MANPATH:$PLTHOME/man
+           export PLTPLANETDIR="$PLTHOME"/add-on/planet
+           export PLTADDONDIR="$PLTHOME"/add-on
+       elif [[ $# -gt 0 ]]; then
+           (PLTHOME="$DIR"
+            TEXINPUTS="$PLTHOME"/pkgs/slatex:
+            MANPATH=$MANPATH:$PLTHOME/man
+            PLTPLANETDIR="$PLTHOME"/add-on/planet
+            PLTADDONDIR="$PLTHOME"/add-on
+            eval "$@")
+       fi
+   fi
+}
+
+plt head
 

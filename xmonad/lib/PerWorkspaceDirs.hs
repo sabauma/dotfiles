@@ -2,6 +2,7 @@
 {-# LANGUAGE ImplicitParams            #-}
 {-# LANGUAGE MultiParamTypeClasses     #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
+{-# OPTIONS_GHC -O2 #-}
 -------------------------------------------------------------------------------
 -- | Allows per workspace working directories
 -- ----------------------------------------------------------------------------
