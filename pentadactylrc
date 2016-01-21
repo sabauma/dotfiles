@@ -6,6 +6,7 @@ set scroll=80
 set hintkeys=asdfghjkl
 set hlfind
 set incfind
+set defsearch=duckduckgo
 
 set editor='xterm -e nvim -f +<line> +"sil! call cursor(0, <column>)" <file>'
 

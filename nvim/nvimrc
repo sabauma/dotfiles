@@ -9,19 +9,18 @@ Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
 Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
-Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/wlangstroth/vim-racket.git'
+Plug 'https://github.com/sabauma/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
-Plug 'https://github.com/vim-scripts/scribble.vim.git'
+Plug 'https://github.com/tpope/vim-vinegar.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -158,8 +157,6 @@ endfun
 
 map <silent> <leader>s :call StripTrailingWhitespaces() <CR>
 
-" Remove trailing whitespace before saving
-
 let g:proj_flags="imstvcg"
 
 " Complete options (disable preview scratch window)
@@ -170,8 +167,6 @@ set pumheight=15
 
 " Key Maps
 " --------
-" Toggle NERDTree with F2
-map <F2> :NERDTreeToggle<CR>
 " Use Y to copy until the end of the line. Use yy to copy the whole line.
 nnoremap Y y$
 
@@ -234,3 +229,6 @@ tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d
 
+let g:netrw_liststyle=3
+let g:netrw_winsize=10
+let g:netrw_alto=1
