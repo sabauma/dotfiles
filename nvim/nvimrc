@@ -21,6 +21,7 @@ Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
+Plug 'https://github.com/Shougo/deoplete.nvim.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -232,3 +233,4 @@ highlight TermCursor guifg=#cc241d
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
+
