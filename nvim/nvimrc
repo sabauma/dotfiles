@@ -16,12 +16,13 @@ Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/sabauma/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-Plug 'https://github.com/Konfekt/FastFold.git'
+"Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
+Plug 'https://github.com/mbbill/undotree.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -47,7 +48,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='soft'
+let g:gruvbox_contrast_light='hard'
 colorscheme gruvbox
 set background=dark
 
@@ -145,7 +146,7 @@ autocmd BufRead *\.tex setlocal spell spelllang=en_us
 " Load latex even for empty files
 let g:tex_flavor='latex'
 autocmd BufRead *\.tex set iskeyword+=:
-map ,p :!xelatex -shell-escape %<CR>
+map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
 map ,b :!bibtex %<CR>
 
 " Remove trailing whitespace
@@ -194,19 +195,6 @@ digraph !? 8253
 digraph ?! 8253
 
 set tags=./tags;
-
-" Haskell configuration
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_typeroles = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_infent_if = 0
-let g:haskell_indent_case = 2
-let g:haskell_indent_where = 2
-let g:haskell_indent_do = 2
-let g:haskell_indent_in = 0
 
 let g:terminal_color_0  = '#282828'
 let g:terminal_color_1  = '#cc241d'

@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -O2 #-}
 
 import           XMonad
 import           XMonad.Actions.CopyWindow
