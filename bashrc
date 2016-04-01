@@ -90,6 +90,8 @@ alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --ex
 alias untar='tar -xzvf'
 
 alias :q='exit'
+alias sync-downloads='rsync -avz spenser@68.45.75.93:/home/spenser/Torrents/Complete /home/spenser/Torrents'
+alias sync-downloads-home='rsync -avz spenser@192.168.1.210:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -155,3 +157,13 @@ esac
 
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
+#[ -n "$XTERM_VERSION" ] && transset -a 0.95 >/dev/null
+
+function rfc() {
+  cd `racket -l find-collection/run -- $@`
+}
+
+# interactive version
+function rfci() {
+  cd `racket -l find-collection/run -- -i $@`
+}
