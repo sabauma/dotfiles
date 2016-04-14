@@ -24,6 +24,6 @@ all:
 	mkdir -p ~/Pictures/
 	ln -s $(top)/high-res ~/Pictures/high-res || true
 	# Download vim-plug for vim and neovim
-	curl -fLo ~/.vim/autoload/plug.vim 		   --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	curl -fLo ~/.vim/autoload/plug.vim         --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
