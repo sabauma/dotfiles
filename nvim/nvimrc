@@ -23,6 +23,8 @@ Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/Shougo/deoplete.nvim.git'
 Plug 'https://github.com/mbbill/undotree.git'
+Plug 'https://github.com/guns/vim-sexp.git'
+Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'

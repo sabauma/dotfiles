@@ -1,51 +1,35 @@
 "^ Bundle Configuration set rtp+=~/.vim/vundle.git
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-" Bundles
-
-Bundle "gmarik/vundle"
-Bundle "FuzzyFinder"
-Bundle "L9"
-Bundle "SearchComplete"
-Bundle "a.vim"
-Bundle "buffergrep"
-Bundle "cecutil"
-Bundle "compview"
-Bundle "git://github.com/nathanaelkane/vim-indent-guides.git"
-Bundle "https://github.com/Shougo/vimproc.git"
-Bundle "https://github.com/eagletmt/ghcmod-vim.git"
-Bundle "https://github.com/godlygeek/tabular.git"
-Bundle "https://github.com/scrooloose/nerdcommenter.git"
-Bundle "https://github.com/scrooloose/nerdtree.git"
-Bundle "https://github.com/tpope/vim-repeat.git"
-Bundle "https://github.com/tpope/vim-surround.git"
-Bundle "https://github.com/zalun/vim-SyntaxFolds.git"
-Bundle "https://github.com/vim-latex/vim-latex.git"
-Bundle "python.vim"
-Bundle "taglist.vim"
-Bundle "vim-indent-object"
-Bundle "https://github.com/coderifous/textobj-word-column.vim.git"
-Bundle "https://github.com/idris-hackers/idris-vim.git"
-Bundle "https://github.com/guns/vim-sexp.git"
-Bundle "https://github.com/kien/rainbow_parentheses.vim.git"
-Bundle "https://github.com/derekelkins/agda-vim.git"
-Bundle "https://github.com/wlangstroth/vim-racket.git"
-Bundle "https://github.com/ehamberg/vim-cute-python.git"
-Bundle "http://github.com/ardagnir/vimbed"
-Bundle "https://github.com/sjl/badwolf.git"
-Bundle "https://github.com/rust-lang/rust.vim.git"
-Bundle "https://github.com/Konfekt/FastFold.git"
+Plug 'https://github.com/vim-scripts/buffergrep.git'
+Plug 'https://github.com/vim-scripts/a.vim.git'
+Plug 'https://github.com/eparreno/vim-l9.git'
+Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
+Plug 'https://github.com/eagletmt/ghcmod-vim.git'
+Plug 'https://github.com/godlygeek/tabular.git'
+Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/tpope/vim-repeat.git'
+Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/vim-latex/vim-latex.git'
+Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
+Plug 'https://github.com/wlangstroth/vim-racket.git'
+Plug 'https://github.com/rust-lang/rust.vim.git'
+Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
+"Plug 'https://github.com/Konfekt/FastFold.git'
+Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
+Plug 'https://github.com/neovimhaskell/haskell-vim.git'
+Plug 'https://github.com/bitc/vim-hdevtools.git'
+Plug 'https://github.com/tpope/vim-vinegar.git'
+Plug 'https://github.com/Shougo/deoplete.nvim.git'
+Plug 'https://github.com/mbbill/undotree.git'
 
 " Colorscheme bundles
-Bundle "molokai"
-Bundle "tir_black"
-Bundle "darkspectrum"
-Bundle "Sorcerer"
-Bundle "https://github.com/altercation/vim-colors-solarized.git"
-Bundle "https://github.com/toupeira/desertink.vim.git"
-Bundle "native"
-Bundle "https://github.com/nanotech/jellybeans.vim.git"
-Bundle 'https://github.com/morhetz/gruvbox.git'
+Plug 'https://github.com/flazz/vim-colorschemes.git'
+Plug 'https://github.com/chriskempson/base16-vim.git'
+Plug 'https://github.com/morhetz/gruvbox.git'
+
+call plug#end()
 
 " Tab settings
 " set cindent
