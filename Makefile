@@ -6,6 +6,7 @@ all:
 	ln -s $(top)/vim ~/.vim || true
 	ln -s $(top)/vimrc ~/.vimrc || true
 	ln -s $(top)/nvim ~/.config/nvim || true
+	ln -s $(top)/ranger ~/.ranger/ranger || true
 	# This symlink is just for convenience. Neovim looks in the above directory
 	ln -s $(top)/nvimrc ~/.nvimrc || true
 	ln -s $(top)/pentadactylrc ~/.pentadactylrc || true
