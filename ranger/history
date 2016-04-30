@@ -1,8 +1,0 @@
-open_with jhjjjjq
-open_with zathura
-search Torr
-prompt_metadata 
-
-delete
-open_with nvim
-search Thawt
