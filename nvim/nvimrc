@@ -1,4 +1,8 @@
 
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
 call plug#begin('~/.nvim/plugged')
 
 Plug 'https://github.com/vim-scripts/buffergrep.git'
@@ -13,7 +17,7 @@ Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/sabauma/vim-racket.git'
+Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 "Plug 'https://github.com/Konfekt/FastFold.git'
@@ -21,7 +25,7 @@ Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
-Plug 'https://github.com/Shougo/deoplete.nvim.git'
+Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
 
 " Colorscheme bundles
@@ -221,4 +225,6 @@ highlight TermCursor guifg=#cc241d
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
+
+let g:deoplete#enable_at_startup = 1
 

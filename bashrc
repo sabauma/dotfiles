@@ -92,6 +92,7 @@ alias untar='tar -xzvf'
 alias :q='exit'
 alias sync-downloads='rsync -avz spenser@68.45.75.93:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.210:/home/spenser/Torrents/Complete /home/spenser/Torrents'
+alias qutebrowser="python3 -m qutebrowser"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
