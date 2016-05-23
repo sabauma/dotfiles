@@ -5,7 +5,6 @@ endfunction
 
 call plug#begin('~/.nvim/plugged')
 
-Plug 'https://github.com/vim-scripts/buffergrep.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/eparreno/vim-l9.git'
 Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
@@ -27,6 +26,7 @@ Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
+Plug 'https://github.com/tpope/vim-obsession.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -47,7 +47,7 @@ syntax on
 filetype plugin on
 filetype indent on
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1 " True gui colors in terminal
+set termguicolors
 
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
@@ -227,4 +227,9 @@ let g:netrw_winsize=10
 let g:netrw_alto=1
 
 let g:deoplete#enable_at_startup = 1
+
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gB :ls<CR>:sbuffer<Space>
+nnoremap ,b :buffer *
+nnoremap ,B :sbuffer *
 
