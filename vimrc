@@ -1,7 +1,6 @@
-"^ Bundle Configuration set rtp+=~/.vim/vundle.git
+
 call plug#begin('~/.vim/plugged')
 
-Plug 'https://github.com/vim-scripts/buffergrep.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/eparreno/vim-l9.git'
 Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
@@ -16,13 +15,14 @@ Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-"Plug 'https://github.com/Konfekt/FastFold.git'
+Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
-Plug 'https://github.com/Shougo/deoplete.nvim.git'
+"Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
+Plug 'https://github.com/tpope/vim-obsession.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -30,6 +30,8 @@ Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 
 call plug#end()
+
+set termguicolors
 
 " Tab settings
 " set cindent
