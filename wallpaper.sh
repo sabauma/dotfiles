@@ -9,7 +9,7 @@ fi
 
 SetBG () {
 TotalFiles=$( ls -1 "$Dir" | wc -l )
-RandomNumber=$(( $RANDOM % $TotalFiles ))
+RandomNumber=$(( $RANDOM % ($TotalFiles + 1) ))
 test ! $RandomNumber = 0 || RandomNumber=1
 
 RandomFile="$( ls -1 $Dir | head -n $RandomNumber | tail -n 1)"
