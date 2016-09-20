@@ -164,8 +164,6 @@ endfun
 
 map <silent> <leader>s :call StripTrailingWhitespaces() <CR>
 
-let g:proj_flags="imstvcg"
-
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
 

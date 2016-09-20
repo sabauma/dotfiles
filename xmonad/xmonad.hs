@@ -202,7 +202,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (i, k) <- zip myWorkspaces workspaceKeys]
     ++
     -- Bindings to shift the view to workspaces using the workspace keys
-    [((modm, key), withNthWorkspace W.view n)
+    [((modm, key), withNthWorkspace W.greedyView n)
         | (key, n) <- zip workspaceKeys [0 ..] ]
     ++
     -- Bindings to shift the current window to a different workspace

@@ -39,7 +39,7 @@ set autoindent
 set smartindent
 set expandtab
 set tabstop=4
-set shiftwidth=4
+set shiftwidth=4 softtabstop=4
 
 set t_Co=256
 
@@ -88,6 +88,8 @@ set lazyredraw
 " Don't move the cursor to the first column during row traversals
 set nostartofline
 
+" No delay for escape key
+set timeoutlen=1000 ttimeoutlen=0
 " set autochdir
 
 " Backup & Undo settings
@@ -105,10 +107,10 @@ map j gj
 map k gk
 
 " Quick navigation of tabs
-map <leader>th :tabprev<CR>
-map <leader>tl :tabnext<CR>
-map <leader>tn :tabnew<CR>
-map <leader>td :tabclose<CR>
+map <Leader>th :tabprev<CR>
+map <Leader>tl :tabnext<CR>
+map <Leader>tn :tabnew<CR>
+map <Leader>td :tabclose<CR>
 
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
@@ -126,14 +128,14 @@ nnoremap ` '
 set go=c
 
 " Format using astyle
-map <leader>f :!astyle --style=allman --indent=spaces=4 -N -S -w --add-one-line-brackets --convert-tabs --indent-col1-comments -m0 %<CR>
+map <Leader>f :!astyle --style=allman --indent=spaces=4 -N -S -w --add-one-line-brackets --convert-tabs --indent-col1-comments -m0 %<CR>
 
 " Faster way to switch between splits
-map <leader>w <C-w>w
-map <leader>h <C-w>h
-map <leader>j <C-w>j
-map <leader>k <C-w>k
-map <leader>l <C-w>l
+map <Leader>w <C-w>w
+map <Leader>h <C-w>h
+map <Leader>j <C-w>j
+map <Leader>k <C-w>k
+map <Leader>l <C-w>l
 
 " Use extra tag files for python
 autocmd FileType python set tags+=$HOME/.vim/tags/python.ctags
@@ -167,19 +169,11 @@ endfun
 
 map <silent> <leader>s :call StripTrailingWhitespaces() <CR>
 
-" Remove trailing whitespace before saving
-
-let g:proj_flags="imstvcg"
-
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
 
 " Limit popup menu height
 set pumheight=15
-
-" Show clang errors in the quickfix window
-let python_highlight_all = 1
-let python_slow_sync = 1
 
 " Key Maps
 " --------
@@ -227,4 +221,27 @@ au BufNewFile,BufRead *.agda setf agda
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
+
+let g:netrw_liststyle=3
+let g:netrw_winsize=10
+let g:netrw_alto=1
+
+let g:deoplete#enable_at_startup = 1
+
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gB :ls<CR>:sbuffer<Space>
+nnoremap ,b :buffer *
+nnoremap ,B :sbuffer *
+
+let g:haskell_indent_where = 2
+let g:haskell_indent_if = 0
+let g:haskell_indent_in = 0
+let g:haskell_indent_guard = 2
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+let g:haskell_enable_static_pointers = 1
+let g:haskell_classic_highlighting = 1
 
