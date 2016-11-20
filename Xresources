@@ -9,33 +9,94 @@ XTerm*fastScroll: true
 XTerm*jumpScroll: true
 XTerm*locale: true
 
+/* colors */
+#define bg   #1d2021
+#define fg   #ebdbb2
+#define blk  #282828
+#define bblk #928374
+#define dred #cc241d
+#define red  #fb4934
+#define dgrn #98971a
+#define grn  #b8bb26
+#define dylw #d79921
+#define ylw  #fabd2f
+#define dblu #458588
+#define blu  #83a598
+#define dmag #b16286
+#define mag  #d3869b
+#define dcyn #689d6a
+#define cyn  #8ec07c
+#define dwht #a89984
+#define wht #ebdbb2
+
 !hard contrast:
-xterm*background: #1d2021
+xterm*background: bg
 !xterm*background: #282828
 ! soft contrast: *background: #32302f
-xterm*foreground: #ebdbb2
+xterm*foreground: fg
 ! Black + DarkGrey
-xterm*color0:  #282828
-xterm*color8:  #928374
+xterm*color0:  blk
+xterm*color8:  bblk
 ! DarkRed + Red
-xterm*color1:  #cc241d
-xterm*color9:  #fb4934
+xterm*color1:  dred
+xterm*color9:  red
 ! DarkGreen + Green
-xterm*color2:  #98971a
-xterm*color10: #b8bb26
+xterm*color2:  dgrn
+xterm*color10: grn
 ! DarkYellow + Yellow
-xterm*color3:  #d79921
-xterm*color11: #fabd2f
+xterm*color3:  dylw
+xterm*color11: ylw
 ! DarkBlue + Blue
-xterm*color4:  #458588
-xterm*color12: #83a598
+xterm*color4:  dblu
+xterm*color12: blu
 ! DarkMagenta + Magenta
-xterm*color5:  #b16286
-xterm*color13: #d3869b
+xterm*color5:  dmag
+xterm*color13: mag
 ! DarkCyan + Cyan
-xterm*color6:  #689d6a
-xterm*color14: #8ec07c
+xterm*color6:  dcyn
+xterm*color14: cyn
 ! LightGrey + White
-xterm*color7:  #a89984
-xterm*color15: #ebdbb2
+xterm*color7:  dwht
+xterm*color15: wht
 
+rofi.lines:           8
+rofi.columns:         2
+rofi.eh:              1
+rofi.location:        0
+rofi.width:           15
+rofi.padding:         15
+rofi.fullscreen:      false
+rofi.opacity:         90
+rofi.bw:              1
+rofi.sidebar-mode:    false
+rofi.separator-style: dash
+rofi.hide-scrollbar:  true
+rofi.color-enabled:   true
+rofi.line-margin:     10
+
+rofi.color-normal: bg, fg, bg, bg, ylw
+rofi.color-urgent: bg, fg, bg, bg, ylw
+rofi.color-active: bg, fg, bg, bg, ylw
+rofi.color-window: bg, bblk, bblk
+
+ /* colors */
+*background:  bg
+*foreground:  fg
+*cursorColor: bblk
+
+*color0:   blk
+*color8:   bblk
+*color1:   dred
+*color9:   red
+*color2:   dgrn
+*color10:  grn
+*color3:   dylw
+*color11:  ylw
+*color4:   dblu
+*color12:  blu
+*color5:   dmag
+*color13:  mag
+*color6:   dcyn
+*color14:  cyn
+*color7:   dwht
+*color15:  wht
