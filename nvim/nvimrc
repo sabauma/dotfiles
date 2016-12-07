@@ -19,7 +19,7 @@ Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-Plug 'https://github.com/Konfekt/FastFold.git'
+"Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
@@ -54,8 +54,8 @@ let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_contrast_light='hard'
-colorscheme gruvbox
 set background=dark
+colorscheme gruvbox
 
 set incsearch
 set ignorecase
