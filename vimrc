@@ -41,8 +41,6 @@ set expandtab
 set tabstop=4
 set shiftwidth=4 softtabstop=4
 
-set t_Co=256
-
 syntax on
 filetype plugin on
 filetype indent on

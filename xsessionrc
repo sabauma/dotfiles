@@ -11,7 +11,6 @@ unity-settings-daemon &
 wicd &
 gnome-keyring-daemon &
 gnome-screensaver &
-offlineimap &
 
 bash /home/spenser/bin/wallpaper.sh &
 #feh --bg-fill /home/spenser/Pictures/high-res/Air___Exo-3840x1200.jpg &
