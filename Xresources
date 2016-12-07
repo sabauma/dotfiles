@@ -63,7 +63,7 @@ rofi.lines:           8
 rofi.columns:         2
 rofi.eh:              1
 rofi.location:        0
-rofi.width:           15
+rofi.width:           20
 rofi.padding:         15
 rofi.fullscreen:      false
 rofi.opacity:         90

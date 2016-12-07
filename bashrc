@@ -90,6 +90,7 @@ alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --ex
 alias untar='tar -xzvf'
 
 alias :q='exit'
+alias :e='nvim'
 alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
