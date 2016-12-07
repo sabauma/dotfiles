@@ -219,6 +219,9 @@ let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 let g:terminal_scrollback_buffer_size=100000
 
+" Cursor shape
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d

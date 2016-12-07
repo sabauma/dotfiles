@@ -23,7 +23,7 @@ Plug 'https://github.com/tpope/vim-vinegar.git'
 "Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'maralla/completor.vim'
+Plug 'https://github.com/osyo-manga/vim-agrep.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
