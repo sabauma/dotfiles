@@ -28,6 +28,7 @@ Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote')
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/reedes/vim-wordy.git'
+Plug 'https://github.com/tpope/vim-fugitive.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -183,7 +184,7 @@ set statusline +=%4*\ %<%F%*            "full path
 set statusline +=%2*%m%*                "modified flag
 set statusline +=%1*%=%5l%*             "current line
 set statusline +=%2*/%L%*               "total lines
-set statusline +=%1*%4v\ %*             "virtual column number
+set statusline +=%1*%6v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
 highlight ExtraWhitespace ctermbg=red guibg=red
