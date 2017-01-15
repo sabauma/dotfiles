@@ -200,6 +200,7 @@ digraph ?! 8253
 
 set tags=./tags;
 
+" {{{ Terminal mode configuration
 let g:terminal_color_0  = '#282828'
 let g:terminal_color_1  = '#cc241d'
 let g:terminal_color_2  = '#98971a'
@@ -217,18 +218,21 @@ let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 let g:terminal_scrollback_buffer_size=100000
+tnoremap <Leader><ESC> <C-\><C-n>
+tnoremap <Leader>w <C-\><C-n><C-w>w
+highlight TermCursor guifg=#cc241d
+" }}}
 
 " Cursor shape
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-tnoremap <Leader><ESC> <C-\><C-n>
-tnoremap <Leader>w <C-\><C-n><C-w>w
-highlight TermCursor guifg=#cc241d
-
+" {{{ netrw configuration
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
+" }}}
 
+" Deoplete configuration
 let g:deoplete#enable_at_startup = 1
 
 nnoremap gb :ls<CR>:buffer<Space>
@@ -236,6 +240,7 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 nnoremap ,b :buffer *
 nnoremap ,B :sbuffer *
 
+" {{{ Haskell configuration
 let g:haskell_indent_where = 2
 let g:haskell_indent_if = 0
 let g:haskell_indent_in = 0
@@ -247,4 +252,6 @@ let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_typeroles = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_classic_highlighting = 1
+let g:haskell_indent_disable = 1
+" }}}
 

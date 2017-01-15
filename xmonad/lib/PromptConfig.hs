@@ -4,6 +4,7 @@ module PromptConfig where
 import           Data.Char
 import           Data.Function           (on)
 import           Data.List               (isInfixOf)
+import           Gruvbox                 as Colors
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Prompt.Directory (directoryPrompt)
@@ -17,14 +18,14 @@ myFont = "xft:Fira Mono:size=12"
 -- See the .Xresources file for more color information.
 xmobarTitleColor, xmobarCurrentWorkspaceColor, xmobarLayoutColor :: String
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#fb4934"
+xmobarTitleColor = Colors.red
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#458588"
+xmobarCurrentWorkspaceColor = Colors.darkBlue
 -- Color of the layout field
-xmobarLayoutColor = "#b8bb26"
+xmobarLayoutColor = Colors.green
 
-backgroundColor = "#1d2021"
-foregroundColor = "#ebdbb2"
+backgroundColor = Colors.background
+foregroundColor = Colors.foreground
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig

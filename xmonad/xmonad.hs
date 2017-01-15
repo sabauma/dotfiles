@@ -31,6 +31,7 @@ import           Data.Char                         (isAlpha)
 import           Data.List                         (stripPrefix)
 import           Data.Maybe                        (fromMaybe)
 import           Data.Monoid                       (appEndo)
+import           Gruvbox                           as Colors
 import           PerWorkspaceDirs                  (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
@@ -85,8 +86,8 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor  = "#ebdbb2"
-myFocusedBorderColor = "#fb4934"
+myNormalBorderColor  = Colors.foreground
+myFocusedBorderColor = Colors.red
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
