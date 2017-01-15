@@ -22,7 +22,7 @@ xmobarTitleColor = Colors.red
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = Colors.darkBlue
 -- Color of the layout field
-xmobarLayoutColor = Colors.green
+xmobarLayoutColor = Colors.yellow
 
 backgroundColor = Colors.background
 foregroundColor = Colors.foreground

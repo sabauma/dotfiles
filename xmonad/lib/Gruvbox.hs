@@ -19,3 +19,4 @@ darkCyan    = "#689d6a"
 cyan        = "#8ec07c"
 darkWhite   = "#a89984"
 white       = "#ebdbb2"
+

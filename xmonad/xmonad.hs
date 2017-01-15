@@ -87,7 +87,7 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
 myNormalBorderColor  = Colors.foreground
-myFocusedBorderColor = Colors.red
+myFocusedBorderColor = Colors.darkRed
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
