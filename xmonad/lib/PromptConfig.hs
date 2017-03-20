@@ -18,7 +18,7 @@ myFont = "xft:Fira Mono:size=12"
 -- See the .Xresources file for more color information.
 xmobarTitleColor, xmobarCurrentWorkspaceColor, xmobarLayoutColor :: String
 -- Color of current window title in xmobar.
-xmobarTitleColor = Colors.red
+xmobarTitleColor = Colors.darkMagenta
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = Colors.darkBlue
 -- Color of the layout field

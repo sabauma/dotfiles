@@ -18,18 +18,16 @@ import           XMonad.Core
 import           XMonad.StackSet             (currentTag)
 import qualified XMonad.Util.ExtensibleState as XS
 
-data WorkingDirs = WD { unWD :: [(WorkspaceId, String)] } deriving Typeable
+data WorkingDirs = WD { unWD :: [(WorkspaceId, String)] } deriving (Read, Show, Typeable)
 
 instance ExtensionClass WorkingDirs where
-  initialValue = WD []
+  initialValue  = WD []
+  extensionType = PersistentExtension
 
 changeDir :: String -> WorkspaceId -> X ()
 changeDir dir ws = do
   WD cdirs <- XS.get
   XS.put . WD $ (ws, dir) : filter ((/= ws) . fst) cdirs
-
-changeDir' :: String -> WorkspaceId -> X ()
-changeDir' dir ws = XS.modify $ WD . ((ws, dir) :) . filter ((/= ws) . fst) . unWD
 
 getDir :: WorkspaceId -> X String
 getDir ws = do

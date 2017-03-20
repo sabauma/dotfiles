@@ -314,7 +314,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = def
+defaults xmproc = docks $ def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
