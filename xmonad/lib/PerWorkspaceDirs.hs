@@ -27,14 +27,10 @@ instance ExtensionClass WorkingDirs where
   extensionType = PersistentExtension
 
 changeDir :: String -> WorkspaceId -> X ()
-changeDir dir ws = do
-  WD cdirs <- XS.get
-  XS.put (WD $ M.insert ws dir cdirs)
+changeDir dir ws = XS.modify (WD . M.insert ws dir . unWD)
 
 getDir :: WorkspaceId -> X String
-getDir ws = do
-  WD dirs <- XS.get
-  return $ fromMaybe "~/" (M.lookup ws dirs)
+getDir ws = fromMaybe "~/" . M.lookup ws . unWD <$> XS.get
 
 currentWorkspace :: X WorkspaceId
 currentWorkspace = withWindowSet (return . currentTag)
