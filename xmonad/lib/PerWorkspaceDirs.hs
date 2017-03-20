@@ -1,8 +1,5 @@
-{-# OPTIONS_GHC -O2                    #-}
-{-# LANGUAGE DeriveDataTypeable        #-}
-{-# LANGUAGE ImplicitParams            #-}
-{-# LANGUAGE MultiParamTypeClasses     #-}
-{-# LANGUAGE NoMonomorphismRestriction #-}
+{-# OPTIONS_GHC -O2                     #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 -------------------------------------------------------------------------------
 -- | Allows per workspace working directories
 -- ----------------------------------------------------------------------------
