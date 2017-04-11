@@ -4,7 +4,7 @@ xrdb -merge ~/.Xresources &
 
 export WINDOW_MANAGER=xmonad
 
-xcompmgr &
+compton -bCG
 
 unity-settings-daemon &
 

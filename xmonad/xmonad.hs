@@ -1,3 +1,4 @@
+{-# LANGUAGE OverlappingInstances #-}
 {-# OPTIONS_GHC -O2 #-}
 
 import           XMonad
@@ -102,6 +103,9 @@ spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
     spawnInDir :: String -> String -> X ()
     spawnInDir command s = spawnHere $ "cd " ++ s ++ "; " ++ command
 
+gridSelectConfig :: GSConfig Window
+gridSelectConfig = def {gs_font="xft:Fira Mono:size=10", gs_colorizer=Colors.colorizer}
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -149,7 +153,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Fullscreen apps
     , ((modm, xK_f                   ), fullFloatFocused)
     -- Grid Select Binding
-    , ((modm              , xK_g     ), goToSelected def)
+    , ((modm              , xK_g     ), goToSelected gridSelectConfig)
     -- Put cursor in upper left hand corner of the screen
     , ((modm, xK_o                   ), banish UpperLeft)
     -- Find an empty workspace
