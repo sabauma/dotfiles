@@ -216,10 +216,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
-          -- Performs an infix search with caseless comparison
-          -- Executes a withNthWorkspace action 's' gased on the key using the
-          -- mod key 'm' sending the result to workspace 'n'.
-          workspaceAction m s key n = ((m, key), withNthWorkspace s n)
 
           amixer :: (MonadIO m) => String -> m ()
           amixer = spawn . printf "amixer %s"
