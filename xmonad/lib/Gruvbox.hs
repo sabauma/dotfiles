@@ -3,7 +3,7 @@ module Gruvbox where
 
 import           Data.Hashable
 import qualified Data.Vector   as V
-import           XMonad        (X ())
+import           XMonad        (X (), Window, runQuery, title)
 
 background  = "#1d2021"
 foreground  = "#ebdbb2"
@@ -38,10 +38,11 @@ allColors = V.fromList [ darkRed     , red
 numColors :: Int
 numColors = V.length allColors
 
-colorizer :: (Hashable a, Monad m) => a -> Bool -> m (String, String)
+colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
-  | otherwise = return (bgcolor   , background)
-  where
-    bgcolor = allColors V.! (hash s `rem` numColors)
+  | otherwise = do
+    name <- runQuery title s
+    let bgcolor = allColors V.! (hash name `mod` numColors)
+    return (bgcolor, background)
 
