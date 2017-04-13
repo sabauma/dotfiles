@@ -3,7 +3,7 @@ module Gruvbox where
 
 import           Data.Hashable
 import qualified Data.Vector   as V
-import           XMonad        (X (), Window, runQuery, title)
+import           XMonad        (Window, X (), runQuery, title)
 
 background  = "#1d2021"
 foreground  = "#ebdbb2"
@@ -33,7 +33,8 @@ allColors = V.fromList [ darkRed     , red
                        , darkBlue    , blue
                        , darkMagenta , magenta
                        , darkOrange  , orange
-                       , darkCyan    , cyan ]
+                       , darkCyan    , cyan
+                       , darkWhite   , white ]
 
 numColors :: Int
 numColors = V.length allColors

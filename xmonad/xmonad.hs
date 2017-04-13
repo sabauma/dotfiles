@@ -1,4 +1,3 @@
-{-# LANGUAGE OverlappingInstances #-}
 {-# OPTIONS_GHC -O2 #-}
 
 import           XMonad
@@ -37,6 +36,7 @@ import           PerWorkspaceDirs                  (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
 import           System.IO
+import           Text.Printf                       (printf)
 
 import           Graphics.X11.ExtraTypes.XF86
 
@@ -191,11 +191,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((noModMask , xF86XK_AudioLowerVolume) , spawn "amixer set Master 2- -c 1")
-    , ((noModMask , xF86XK_AudioRaiseVolume) , spawn "amixer set Master 2+ -c 1")
-    , ((noModMask , xF86XK_AudioMute)        , spawn "amixer set Master toggle -c 1")
-    , ((noModMask , xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10")
-    , ((noModMask , xF86XK_MonBrightnessUp)  , spawn "xbacklight -inc 10")
+    , ((noModMask , xF86XK_AudioLowerVolume) , amixer "set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume) , amixer "set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute)        , amixer "set Master toggle -c 1")
+    , ((noModMask , xF86XK_MonBrightnessDown), backlight "-dec 10")
+    , ((noModMask , xF86XK_MonBrightnessUp)  , backlight "-inc 10")
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
     ]
@@ -220,6 +220,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           -- Executes a withNthWorkspace action 's' gased on the key using the
           -- mod key 'm' sending the result to workspace 'n'.
           workspaceAction m s key n = ((m, key), withNthWorkspace s n)
+
+          amixer :: (MonadIO m) => String -> m ()
+          amixer = spawn . printf "amixer %s"
+
+          backlight :: (MonadIO m) => String -> m ()
+          backlight = spawn . printf "xbacklight %s"
 
 fullFloatFocused =
     withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
