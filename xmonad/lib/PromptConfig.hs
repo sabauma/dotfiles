@@ -31,8 +31,8 @@ foregroundColor = Colors.foreground
 myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor = backgroundColor
                      , fgColor = foregroundColor
-                     , bgHLight = foregroundColor
-                     , fgHLight = backgroundColor
+                     , bgHLight = backgroundColor
+                     , fgHLight = Colors.darkMagenta
                      , font = myFont
                      , height = 24
                      , searchPredicate = mySearch }

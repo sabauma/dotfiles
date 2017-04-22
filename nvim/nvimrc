@@ -14,7 +14,8 @@ Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/vim-latex/vim-latex.git'
+"Plug 'https://github.com/vim-latex/vim-latex.git'
+Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
@@ -150,8 +151,9 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
 " Load latex even for empty files
-let g:tex_flavor='latex'
-autocmd BufRead *\.tex set iskeyword+=:
+let g:vimtex_fold_enabled=1
+let g:vimtex_view_method='zathura'
+autocmd BufRead *\.tex setlocal iskeyword+=:
 map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
 map ,b :!bibtex %<CR>
 
