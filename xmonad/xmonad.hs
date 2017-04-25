@@ -4,12 +4,10 @@ import           XMonad
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.DynamicWorkspaces
-import           XMonad.Actions.FindEmptyWorkspace
 import           XMonad.Actions.GridSelect
 import           XMonad.Actions.Navigation2D
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
-import           XMonad.Actions.TopicSpace
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
@@ -27,10 +25,9 @@ import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
 import           XMonad.Prompt.Window              (windowPromptGoto)
 
 -- General libraries
-import           Data.Char                         (isAlpha)
-import           Data.List                         (stripPrefix)
 import           Data.Maybe                        (fromMaybe)
 import           Data.Monoid                       (appEndo)
+import           FindEmptyWorkspace
 import           Gruvbox                           as Colors
 import           PerWorkspaceDirs                  (currentWorkspace, getDir)
 import           PromptConfig
