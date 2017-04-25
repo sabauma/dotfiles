@@ -14,9 +14,7 @@ import XMonad.StackSet
 
 type Shuffle x = [x] -> [x]
 
-findEmptyWorkspace' :: Shuffle (Workspace i l a)
-                    -> StackSet i l a s sd
-                    -> Maybe (Workspace i l a)
+findEmptyWorkspace' :: Shuffle (Workspace i l a) -> StackSet i l a s sd -> Maybe (Workspace i l a)
 findEmptyWorkspace' wssort = find (isNothing . stack) . wssort . allWorkspaces
   where
     allWorkspaces ss = (workspace . current) ss :
