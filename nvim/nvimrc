@@ -14,7 +14,6 @@ Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-"Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
@@ -59,9 +58,12 @@ let g:gruvbox_contrast_light='hard'
 set background=dark
 colorscheme gruvbox
 
+" Search options
+set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set inccommand=nosplit
 
 set encoding=utf-8
 set scrolloff=3
@@ -118,9 +120,6 @@ set foldnestmax=1
 set foldmethod=syntax
 
 let g:fastfold_fold_command_suffixes = []
-
-" Hilight search
-set hlsearch
 
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -224,9 +223,6 @@ tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d
 " }}}
-
-" Cursor shape
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " {{{ netrw configuration
 let g:netrw_liststyle=3

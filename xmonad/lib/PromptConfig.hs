@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -O2 #-}
+{-# OPTIONS_GHC -O2 -Wall #-}
 module PromptConfig where
 
 import           Data.Char
@@ -32,13 +32,13 @@ myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor = backgroundColor
                      , fgColor = foregroundColor
                      , bgHLight = backgroundColor
-                     , fgHLight = Colors.darkMagenta
+                     , fgHLight = Colors.yellow
                      , font = myFont
                      , height = 24
                      , searchPredicate = mySearch }
   where mySearch = isInfixOf `on` map toLower
 
 changeDirPrompt :: X ()
-changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: "
-                $ \d -> currentWorkspace >>= changeDir d
+changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
+  where setWorkspace d = currentWorkspace >>= changeDir d
 

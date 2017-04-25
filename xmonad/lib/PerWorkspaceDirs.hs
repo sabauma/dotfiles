@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -O2                     #-}
+{-# OPTIONS_GHC -O2 -Wall               #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 -------------------------------------------------------------------------------
 -- | Allows per workspace working directories

@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -O2 -Wall #-}
 
 module Gruvbox where
 
@@ -36,14 +37,12 @@ allColors = V.fromList [ darkRed     , red
                        , darkCyan    , cyan
                        , darkWhite   , white ]
 
-numColors :: Int
-numColors = V.length allColors
-
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
   | otherwise = do
     name <- runQuery title s
-    let bgcolor = allColors V.! (hash name `mod` numColors)
+    let index   = hash name `mod` (V.length allColors)
+        bgcolor = V.unsafeIndex allColors index
     return (bgcolor, background)
 
