@@ -99,10 +99,10 @@ spawnInCurDir :: String -> X ()
 spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
   where
     spawnInDir :: String -> String -> X ()
-    spawnInDir command s = spawnHere $ "cd " ++ s ++ "; " ++ command
+    spawnInDir command s = spawnHere $ printf "cd %s ; %s" s command
 
 gridSelectConfig :: GSConfig Window
-gridSelectConfig = def {gs_font="xft:Fira Mono:size=10", gs_colorizer=Colors.colorizer}
+gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -116,8 +116,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_space ), sendMessage NextLayout)
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-    -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
     -- Move focus to the previous window
