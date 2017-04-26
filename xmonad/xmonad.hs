@@ -260,9 +260,6 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
-    , className =? "banshee"        --> doShift "10:music"
-    , className =? "Deluge"         --> doShift "12:torrents"
-    , className =? "Pidgin"         --> doShift "11:im"
     , isFullscreen                  --> doFullFloat ]
 
 -- Whether focus follows the mouse pointer.
