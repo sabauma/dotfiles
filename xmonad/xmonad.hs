@@ -269,9 +269,8 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
--- Index function with a default value in the event of a short list
-safeIndex :: a -> Int -> [a] -> a
-safeIndex def i = foldr const def . drop i
+lastOrAll :: String -> String
+lastOrAll x = case words x of { [] -> x ; ys -> last ys }
 
 xmobarConfig = xmobarPP
              { ppTitle   = title
@@ -280,7 +279,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
+    layout  = xmobarColor xmobarLayoutColor "" . lastOrAll
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     sep     = "   "
 
