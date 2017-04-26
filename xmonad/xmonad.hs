@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -O2 -Wall #-}
+module Main where
 
 import           XMonad
 import           XMonad.Actions.CopyWindow

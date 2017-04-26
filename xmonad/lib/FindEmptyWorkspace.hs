@@ -3,14 +3,20 @@
 -- An improvement on XMonad.Actions.FindEmptyWorkspace which scans the set of
 -- available workspaces in a user definable order, rather than as they appear in
 -- the StackSet.
-module FindEmptyWorkspace where
+module FindEmptyWorkspace
+  ( findEmptyWorkspace
+  , findEmptyWorkspace'
+  , viewEmptyWorkspace
+  , tagToEmptyWorkspace
+  , sendToEmptyWorkspace
+  ) where
 
-import Data.List
-import Data.Maybe (isNothing)
-import XMonad.Util.WorkspaceCompare
+import           Data.List
+import           Data.Maybe                   (isNothing)
+import           XMonad.Util.WorkspaceCompare
 
-import XMonad
-import XMonad.StackSet
+import           XMonad
+import           XMonad.StackSet
 
 type Shuffle x = [x] -> [x]
 
