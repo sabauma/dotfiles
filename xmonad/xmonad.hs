@@ -117,6 +117,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     -- Move focus to the next window
+    , ((modm,               xK_Tab   ), windows W.focusDown)
+    -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
@@ -267,8 +269,9 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
-lastOrAll :: String -> String
-lastOrAll x = case words x of { [] -> x ; ys -> last ys }
+-- Index function with a default value in the event of a short list
+safeIndex :: a -> Int -> [a] -> a
+safeIndex def i = foldr const def . drop i
 
 xmobarConfig = xmobarPP
              { ppTitle   = title
@@ -277,7 +280,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = xmobarColor xmobarLayoutColor "" . lastOrAll
+    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     sep     = "   "
 
