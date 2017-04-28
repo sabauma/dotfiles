@@ -15,31 +15,33 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Util.EZConfig              (additionalKeys)
-import           XMonad.Util.Run                   (spawnPipe)
+import           XMonad.Util.EZConfig             (additionalKeys)
+import           XMonad.Util.Run                  (spawnPipe)
 -- Layouts
-import           XMonad.Layout.Grid                (Grid (..))
-import           XMonad.Layout.NoBorders           (smartBorders)
+import           XMonad.Layout.Grid               (Grid (..))
+import           XMonad.Layout.NoBorders          (smartBorders)
 
-import           XMonad.Layout.Spacing             (smartSpacing)
-import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
-import           XMonad.Prompt.Window              (windowPromptGoto)
+import           XMonad.Layout.Spacing            (smartSpacing)
+import           XMonad.Prompt.RunOrRaise         (runOrRaisePrompt)
+import           XMonad.Prompt.Window             (windowPromptGoto)
 
 -- General libraries
-import           Data.Maybe                        (fromMaybe)
-import           Data.Monoid                       (appEndo)
+import           Data.Char
+import           Data.List                        ((\\))
+import           Data.Maybe                       (fromMaybe)
+import           Data.Monoid                      (appEndo)
 import           FindEmptyWorkspace
-import           Gruvbox                           as Colors
-import           PerWorkspaceDirs                  (currentWorkspace, getDir)
+import           Gruvbox                          as Colors
+import           PerWorkspaceDirs                 (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
 import           System.IO
-import           Text.Printf                       (printf)
+import           Text.Printf                      (printf)
 
 import           Graphics.X11.ExtraTypes.XF86
 
-import qualified Data.Map                          as M
-import qualified XMonad.StackSet                   as W
+import qualified Data.Map                         as M
+import qualified XMonad.StackSet                  as W
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -269,9 +271,12 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
--- Index function with a default value in the event of a short list
-safeIndex :: a -> Int -> [a] -> a
-safeIndex def i = foldr const def . drop i
+isJunk :: String -> Bool
+isJunk x = x == "SmartSpacing" || all isNumber x
+
+cleanupLayout :: String -> String
+cleanupLayout s = foldr const s $ filter (not . isJunk) ss
+  where ss = words s
 
 xmobarConfig = xmobarPP
              { ppTitle   = title
@@ -280,7 +285,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
+    layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     sep     = "   "
 
