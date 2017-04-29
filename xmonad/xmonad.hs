@@ -272,7 +272,7 @@ myFocusFollowsMouse = True
 -- Status bars and logging
 
 isJunk :: String -> Bool
-isJunk x = x == "SmartSpacing" || all isNumber x
+isJunk x = x == "SmartSpacing" || any isNumber x
 
 cleanupLayout :: String -> String
 cleanupLayout s = foldr const s $ filter (not . isJunk) ss
