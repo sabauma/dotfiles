@@ -15,6 +15,7 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.UrgencyHook
 import           XMonad.Util.EZConfig             (additionalKeys)
 import           XMonad.Util.Run                  (spawnPipe)
 -- Layouts
@@ -278,17 +279,21 @@ cleanupLayout :: String -> String
 cleanupLayout s = foldr const s $ filter (not . isJunk) ss
   where ss = words s
 
+xmobarConfig :: PP
 xmobarConfig = xmobarPP
              { ppTitle   = title
              , ppLayout  = layout
              , ppCurrent = current
-             , ppSep     = sep }
+             , ppSep     = sep
+             , ppUrgent  = urgent }
   where
     title   = xmobarColor xmobarTitleColor "" . shorten 100
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
+    urgent  = xmobarColor Colors.darkRed ""
     sep     = "   "
 
+myLogHook :: Handle -> X ()
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
@@ -320,7 +325,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = docks $ def
+defaults xmproc = docks $ withUrgencyHook NoUrgencyHook $ def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse

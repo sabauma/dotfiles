@@ -8,6 +8,8 @@ XTerm*termName: xterm-color
 XTerm*fastScroll: true
 XTerm*jumpScroll: true
 XTerm*locale: true
+XTerm*bellIsUrgent: true
+urxvt.urgentOnBell: true
 
 /* colors */
 #define bg   #1d2021
