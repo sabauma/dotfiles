@@ -162,8 +162,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Tag current window to an empty workspace and view it
     , ((modm .|. shiftMask, xK_n     ), tagToEmptyWorkspace)
     -- Run XMonad prompt
-    , ((modm,               xK_p     ), spawn "rofi -show run")
-    {-, ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)-}
+    {-, ((modm,               xK_p     ), spawn "rofi -show run")-}
+    , ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)
     -- Run Window prompt
     , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
     -- Next Workspace

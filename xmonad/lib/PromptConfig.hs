@@ -3,7 +3,7 @@ module PromptConfig where
 
 import           Data.Char
 import           Data.Function           (on)
-import           Data.List               (isInfixOf)
+import           Data.List               (isPrefixOf)
 import           Gruvbox                 as Colors
 import           Text.Printf
 import           XMonad
@@ -28,16 +28,19 @@ xmobarLayoutColor = Colors.yellow
 backgroundColor = Colors.background
 foregroundColor = Colors.foreground
 
+
+
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig = def { bgColor = backgroundColor
-                     , fgColor = foregroundColor
-                     , bgHLight = backgroundColor
-                     , fgHLight = Colors.yellow
-                     , font = myFont 12
-                     , height = 24
+myPromptConfig = def { bgColor         = backgroundColor
+                     , fgColor         = foregroundColor
+                     , bgHLight        = backgroundColor
+                     , fgHLight        = Colors.yellow
+                     , alwaysHighlight = True
+                     , font            = myFont 12
+                     , height          = 24
                      , searchPredicate = mySearch }
-  where mySearch = isInfixOf `on` map toLower
+  where mySearch = isPrefixOf `on` map toLower
 
 changeDirPrompt :: X ()
 changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
