@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -O2 -Wall #-}
-module Main where
+module Main (main) where
 
 import           XMonad
 import           XMonad.Actions.CopyWindow
@@ -110,7 +110,7 @@ gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
@@ -219,10 +219,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
 
           amixer :: (MonadIO m) => String -> m ()
-          amixer = spawn . printf "amixer %s"
+          amixer args = spawn $ "amixer " ++ args
 
           backlight :: (MonadIO m) => String -> m ()
-          backlight = spawn . printf "xbacklight %s"
+          backlight args = spawn $ "xbacklight " ++ args
 
 fullFloatFocused =
     withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
@@ -230,7 +230,7 @@ fullFloatFocused =
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
+myMouseBindings XConfig{XMonad.modMask = modMask} = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w)
     -- mod-button2, Raise the window to the top of the stack

@@ -3,9 +3,8 @@ module PromptConfig where
 
 import           Data.Char
 import           Data.Function           (on)
-import           Data.List               (isPrefixOf)
+import           Data.List               (isInfixOf)
 import           Gruvbox                 as Colors
-import           Text.Printf
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Prompt.Directory (directoryPrompt)
@@ -13,7 +12,7 @@ import           XMonad.Prompt.Directory (directoryPrompt)
 import           PerWorkspaceDirs        (changeDir, currentWorkspace)
 
 myFont :: Int -> String
-myFont = printf "xft:Fira Mono:size=%d"
+myFont size = "xft:Fira Mono:size=" ++ show size
 
 -- These color were taken from the the gruvbox color scheme.
 -- See the .Xresources file for more color information.
@@ -28,8 +27,6 @@ xmobarLayoutColor = Colors.yellow
 backgroundColor = Colors.background
 foregroundColor = Colors.foreground
 
-
-
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor         = backgroundColor
@@ -40,7 +37,7 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , font            = myFont 12
                      , height          = 24
                      , searchPredicate = mySearch }
-  where mySearch = isPrefixOf `on` map toLower
+  where mySearch = isInfixOf `on` map toLower
 
 changeDirPrompt :: X ()
 changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
