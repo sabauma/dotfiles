@@ -315,7 +315,7 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main :: IO ()
-main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
+main = xmonad . defaults =<< spawnPipe "$HOME/.cabal/bin/xmobar"
 
 allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
