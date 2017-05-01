@@ -31,8 +31,8 @@ foregroundColor = Colors.foreground
 myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor         = backgroundColor
                      , fgColor         = foregroundColor
-                     , bgHLight        = backgroundColor
-                     , fgHLight        = Colors.yellow
+                     , bgHLight        = foregroundColor
+                     , fgHLight        = backgroundColor
                      , alwaysHighlight = True
                      , font            = myFont 12
                      , height          = 24
