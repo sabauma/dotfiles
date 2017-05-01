@@ -45,15 +45,15 @@ darkOrange'  = "#af3a03"
 darkWhite'   = "#7c6f64"
 
 allColors :: V.Vector String
-allColors = V.fromList [ darkRed     , darkRed'     , red
-                       , darkGreen   , darkGreen'   , green
-                       , darkYellow  , darkYellow'  , yellow
-                       , darkBlue    , darkBlue'    , blue
-                       , darkMagenta , darkMagenta' , magenta
-                       , darkOrange  , darkOrange'  , orange
-                       , darkCyan    , darkCyan'    , cyan
-                       , darkWhite   , darkWhite'   , white
-                       , gray0       , gray1        , gray2
+allColors = V.fromList [ darkRed     , red
+                       , darkGreen   , green
+                       , darkYellow  , yellow
+                       , darkBlue    , blue
+                       , darkMagenta , magenta
+                       , darkOrange  , orange
+                       , darkCyan    , cyan
+                       , darkWhite   , white
+                       , gray0
                        ]
 
 colorizer :: Window -> Bool -> X (String, String)
