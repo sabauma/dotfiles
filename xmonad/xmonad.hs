@@ -15,8 +15,6 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Hooks.UrgencyHook
-import           XMonad.Util.EZConfig             (additionalKeys)
 import           XMonad.Util.Run                  (spawnPipe)
 -- Layouts
 import           XMonad.Layout.Grid               (Grid (..))
@@ -199,6 +197,10 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((noModMask , xF86XK_MonBrightnessUp)  , backlight "-inc 10")
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
+
+    , ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" )
+    , ((mod4Mask                , xK_F1 ) , spawn "firefox"                          )
+    , ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  )
     ]
     ++
     --
@@ -273,7 +275,7 @@ myFocusFollowsMouse = True
 -- Status bars and logging
 
 isJunk :: String -> Bool
-isJunk x = x == "SmartSpacing" || any isNumber x
+isJunk x = x == "SmartSpacing" || all isNumber x
 
 cleanupLayout :: String -> String
 cleanupLayout s = foldr const s $ filter (not . isJunk) ss
@@ -287,7 +289,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep
              , ppUrgent  = urgent }
   where
-    title   = xmobarColor xmobarTitleColor "" . shorten 100
+    title   = xmobarColor xmobarTitleColor ""  . shorten 100
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     urgent  = xmobarColor Colors.darkRed ""
@@ -325,7 +327,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = docks $ withUrgencyHook NoUrgencyHook $ def
+defaults xmproc = docks $ def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
@@ -345,8 +347,5 @@ defaults xmproc = docks $ withUrgencyHook NoUrgencyHook $ def
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
     , handleEventHook    = handleEventHook def <+> fullscreenEventHook
-    } `additionalKeys`
-    [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
-      ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,
-      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ]
+    }
 

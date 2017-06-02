@@ -17,13 +17,11 @@ Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
 "Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
-Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'https://github.com/osyo-manga/vim-agrep.git'
+Plug 'https://github.com/maralla/completor.vim.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'

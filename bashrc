@@ -118,6 +118,7 @@ export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex
 
+export XDG_CURRENT_DESKTOP=Unity
 export EDITOR=nvim
 export SVN_EDITOR=nvim
 export VISUAL=nvim

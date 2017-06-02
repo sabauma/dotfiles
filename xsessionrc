@@ -1,12 +1,16 @@
 #/bin/bash
 
+source ~/.bashrc
+
 xrdb -merge ~/.Xresources &
 
 export WINDOW_MANAGER=xmonad
 
-compton -bCG
+# For some reason compton does not work well on 16.10 with mulitple monitors
+compton -bCG --backend glx --paint-on-overlay --vsync opengl-swc
+# xcompmgr &
 
-(sleep 5 && unity-settings-daemon) &
+(sleep 1 && unity-settings-daemon) &
 
 wicd &
 gnome-keyring-daemon &

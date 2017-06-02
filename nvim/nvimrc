@@ -29,6 +29,8 @@ Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/reedes/vim-wordy.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'https://github.com/zchee/deoplete-jedi.git'
+Plug 'https://github.com/davidhalter/jedi-vim.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
