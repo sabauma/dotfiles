@@ -11,7 +11,7 @@ all:
 	ln -s $(top)/nvimrc ~/.nvimrc || true
 	ln -s $(top)/pentadactylrc ~/.pentadactylrc || true
 	ln -s $(top)/xmobarrc ~/.xmobarrc || true
-	ln -s $(top)/xsessionrc ~/.xsessionrc || true
+	# ln -s $(top)/xsessionrc ~/.xsessionrc || true
 	ln -s $(top)/haskeline ~/.haskeline || true
 	ln -s $(top)/ghci ~/.ghci || true
 	# Backup things which might exists

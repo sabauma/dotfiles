@@ -90,7 +90,7 @@ myFocusedBorderColor = "#fb4934"
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
-xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
+xmonadExecutable = "/home/sbauman/.cabal/bin/xmonad"
 
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
@@ -156,8 +156,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Tag current window to an empty workspace and view it
     , ((modm .|. shiftMask, xK_n     ), tagToEmptyWorkspace)
     -- Run XMonad prompt
-    , ((modm,               xK_p     ), spawn "rofi -show run")
-    {-, ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)-}
+    {-, ((modm,               xK_p     ), spawn "rofi -show run")-}
+    , ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)
     -- Run Window prompt
     , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
     -- Next Workspace
@@ -303,7 +303,7 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main :: IO ()
-main = xmonad . defaults =<< spawnPipe "/home/spenser/.cabal/bin/xmobar"
+main = xmonad . defaults =<< spawnPipe "/home/sbauman/.cabal/bin/xmobar"
 
 allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]

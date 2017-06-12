@@ -111,8 +111,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin/:$PATH
-export PATH=/home/spenser/.local/bin:$PATH
+export PATH=$HOME/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin/:$PATH
+export PATH=$HOME/.local/bin:$PATH
 export PATH=.cabal-sandbox/bin:$PATH
 export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
