@@ -1,16 +1,20 @@
 #/bin/bash
 
+source ~/.bashrc
+
 xrdb -merge ~/.Xresources &
 
 export WINDOW_MANAGER=xmonad
 
+# For some reason compton does not work well on 16.10 with mulitple monitors
+# compton -bCG --backend glx --paint-on-overlay --vsync opengl-swc
 # xcompmgr &
 
-# unity-settings-daemon &
+(sleep 1 && unity-settings-daemon) &
 
-# wicd &
-# gnome-keyring-daemon &
-# gnome-screensaver &
+gnome-settings-daemon &
+gnome-keyring-daemon &
+gnome-screensaver &
 
 bash $HOME/bin/wallpaper.sh &
 #feh --bg-fill /home/spenser/Pictures/high-res/Air___Exo-3840x1200.jpg &

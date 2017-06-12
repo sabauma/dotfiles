@@ -14,7 +14,7 @@ Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/vim-latex/vim-latex.git'
+Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
@@ -28,6 +28,9 @@ Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote')
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/reedes/vim-wordy.git'
+Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'https://github.com/zchee/deoplete-jedi.git'
+Plug 'https://github.com/davidhalter/jedi-vim.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -57,9 +60,12 @@ let g:gruvbox_contrast_light='hard'
 set background=dark
 colorscheme gruvbox
 
+" Search options
+set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set inccommand=nosplit
 
 set encoding=utf-8
 set scrolloff=3
@@ -117,9 +123,6 @@ set foldmethod=syntax
 
 let g:fastfold_fold_command_suffixes = []
 
-" Hilight search
-set hlsearch
-
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 nnoremap ' `
@@ -149,8 +152,9 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
 " Load latex even for empty files
-let g:tex_flavor='latex'
-autocmd BufRead *\.tex set iskeyword+=:
+let g:vimtex_fold_enabled=1
+let g:vimtex_view_method='zathura'
+autocmd BufRead *\.tex setlocal iskeyword+=:
 map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
 map ,b :!bibtex %<CR>
 
@@ -183,7 +187,7 @@ set statusline +=%4*\ %<%F%*            "full path
 set statusline +=%2*%m%*                "modified flag
 set statusline +=%1*%=%5l%*             "current line
 set statusline +=%2*/%L%*               "total lines
-set statusline +=%1*%4v\ %*             "virtual column number
+set statusline +=%1*%6v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -201,6 +205,7 @@ digraph ?! 8253
 
 set tags=./tags;
 
+" {{{ Terminal mode configuration
 let g:terminal_color_0  = '#282828'
 let g:terminal_color_1  = '#cc241d'
 let g:terminal_color_2  = '#98971a'
@@ -218,18 +223,18 @@ let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
 let g:terminal_scrollback_buffer_size=100000
-
-" Cursor shape
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
 tnoremap <Leader><ESC> <C-\><C-n>
 tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d
+" }}}
 
+" {{{ netrw configuration
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
+" }}}
 
+" Deoplete configuration
 let g:deoplete#enable_at_startup = 1
 
 nnoremap gb :ls<CR>:buffer<Space>
@@ -237,6 +242,7 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 nnoremap ,b :buffer *
 nnoremap ,B :sbuffer *
 
+" {{{ Haskell configuration
 let g:haskell_indent_where = 2
 let g:haskell_indent_if = 0
 let g:haskell_indent_in = 0
@@ -248,4 +254,6 @@ let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_typeroles = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_classic_highlighting = 1
+let g:haskell_indent_disable = 1
+" }}}
 

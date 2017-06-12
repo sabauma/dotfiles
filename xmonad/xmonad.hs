@@ -1,45 +1,46 @@
-{-# OPTIONS_GHC -O2 #-}
+{-# OPTIONS_GHC -O2 -Wall #-}
+module Main (main) where
 
 import           XMonad
 import           XMonad.Actions.CopyWindow
 import           XMonad.Actions.CycleWS
 import           XMonad.Actions.DynamicWorkspaces
-import           XMonad.Actions.FindEmptyWorkspace
 import           XMonad.Actions.GridSelect
 import           XMonad.Actions.Navigation2D
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
-import           XMonad.Actions.TopicSpace
 import           XMonad.Actions.UpdatePointer
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
-import           XMonad.Util.EZConfig              (additionalKeys)
-import           XMonad.Util.Run                   (spawnPipe)
+import           XMonad.Util.Run                  (spawnPipe)
 -- Layouts
-import           XMonad.Layout.Grid                (Grid (..))
-import           XMonad.Layout.NoBorders           (smartBorders)
+import           XMonad.Layout.Grid               (Grid (..))
+import           XMonad.Layout.NoBorders          (smartBorders)
 
-import           XMonad.Layout.Spacing             (smartSpacing)
-import           XMonad.Prompt.RunOrRaise          (runOrRaisePrompt)
-import           XMonad.Prompt.Window              (windowPromptGoto)
+import           XMonad.Layout.Spacing            (smartSpacing)
+import           XMonad.Prompt.RunOrRaise         (runOrRaisePrompt)
+import           XMonad.Prompt.Window             (windowPromptGoto)
 
 -- General libraries
-import           Data.Char                         (isAlpha)
-import           Data.List                         (stripPrefix)
-import           Data.Maybe                        (fromMaybe)
-import           Data.Monoid                       (appEndo)
-import           PerWorkspaceDirs                  (currentWorkspace, getDir)
+import           Data.Char
+import           Data.List                        ((\\))
+import           Data.Maybe                       (fromMaybe)
+import           Data.Monoid                      (appEndo)
+import           FindEmptyWorkspace
+import           Gruvbox                          as Colors
+import           PerWorkspaceDirs                 (currentWorkspace, getDir)
 import           PromptConfig
 import           System.Exit
 import           System.IO
+import           Text.Printf                      (printf)
 
 import           Graphics.X11.ExtraTypes.XF86
 
-import qualified Data.Map                          as M
-import qualified XMonad.StackSet                   as W
+import qualified Data.Map                         as M
+import qualified XMonad.StackSet                  as W
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -85,8 +86,8 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor  = "#ebdbb2"
-myFocusedBorderColor = "#fb4934"
+myNormalBorderColor  = Colors.foreground
+myFocusedBorderColor = Colors.darkRed
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
@@ -99,12 +100,15 @@ spawnInCurDir :: String -> X ()
 spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
   where
     spawnInDir :: String -> String -> X ()
-    spawnInDir command s = spawnHere $ "cd " ++ s ++ "; " ++ command
+    spawnInDir command s = spawnHere $ printf "cd %s ; %s" s command
+
+gridSelectConfig :: GSConfig Window
+gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
@@ -148,7 +152,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Fullscreen apps
     , ((modm, xK_f                   ), fullFloatFocused)
     -- Grid Select Binding
-    , ((modm              , xK_g     ), goToSelected def)
+    , ((modm              , xK_g     ), goToSelected gridSelectConfig)
     -- Put cursor in upper left hand corner of the screen
     , ((modm, xK_o                   ), banish UpperLeft)
     -- Find an empty workspace
@@ -186,13 +190,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((noModMask , xF86XK_AudioLowerVolume) , spawn "amixer set Master 2- -c 1")
-    , ((noModMask , xF86XK_AudioRaiseVolume) , spawn "amixer set Master 2+ -c 1")
-    , ((noModMask , xF86XK_AudioMute)        , spawn "amixer set Master toggle -c 1")
-    , ((noModMask , xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10")
-    , ((noModMask , xF86XK_MonBrightnessUp)  , spawn "xbacklight -inc 10")
+    , ((noModMask , xF86XK_AudioLowerVolume) , amixer "set Master 2- -c 1")
+    , ((noModMask , xF86XK_AudioRaiseVolume) , amixer "set Master 2+ -c 1")
+    , ((noModMask , xF86XK_AudioMute)        , amixer "set Master toggle -c 1")
+    , ((noModMask , xF86XK_MonBrightnessDown), backlight "-dec 10")
+    , ((noModMask , xF86XK_MonBrightnessUp)  , backlight "-inc 10")
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
+
+    , ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" )
+    , ((mod4Mask                , xK_F1 ) , spawn "firefox"                          )
+    , ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  )
     ]
     ++
     --
@@ -211,10 +219,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
-          -- Performs an infix search with caseless comparison
-          -- Executes a withNthWorkspace action 's' gased on the key using the
-          -- mod key 'm' sending the result to workspace 'n'.
-          workspaceAction m s key n = ((m, key), withNthWorkspace s n)
+
+          amixer :: (MonadIO m) => String -> m ()
+          amixer args = spawn $ "amixer " ++ args
+
+          backlight :: (MonadIO m) => String -> m ()
+          backlight args = spawn $ "xbacklight " ++ args
 
 fullFloatFocused =
     withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
@@ -222,7 +232,7 @@ fullFloatFocused =
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
+myMouseBindings XConfig{XMonad.modMask = modMask} = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w)
     -- mod-button2, Raise the window to the top of the stack
@@ -255,9 +265,6 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
-    , className =? "banshee"        --> doShift "10:music"
-    , className =? "Deluge"         --> doShift "12:torrents"
-    , className =? "Pidgin"         --> doShift "11:im"
     , isFullscreen                  --> doFullFloat ]
 
 -- Whether focus follows the mouse pointer.
@@ -267,21 +274,28 @@ myFocusFollowsMouse = True
 ------------------------------------------------------------------------
 -- Status bars and logging
 
--- Index function with a default value in the event of a short list
-safeIndex :: a -> Int -> [a] -> a
-safeIndex def i = foldr const def . drop i
+isJunk :: String -> Bool
+isJunk x = x == "SmartSpacing" || all isNumber x
 
+cleanupLayout :: String -> String
+cleanupLayout s = foldr const s $ filter (not . isJunk) ss
+  where ss = words s
+
+xmobarConfig :: PP
 xmobarConfig = xmobarPP
              { ppTitle   = title
              , ppLayout  = layout
              , ppCurrent = current
-             , ppSep     = sep }
+             , ppSep     = sep
+             , ppUrgent  = urgent }
   where
-    title   = xmobarColor xmobarTitleColor "" . shorten 100
-    layout  = xmobarColor xmobarLayoutColor "" . safeIndex "error" 2 . words
+    title   = xmobarColor xmobarTitleColor ""  . shorten 100
+    layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
+    urgent  = xmobarColor Colors.darkRed ""
     sep     = "   "
 
+myLogHook :: Handle -> X ()
 myLogHook xmproc = do
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
@@ -313,7 +327,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = def
+defaults xmproc = docks $ def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
@@ -333,8 +347,5 @@ defaults xmproc = def
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
     , handleEventHook    = handleEventHook def <+> fullscreenEventHook
-    } `additionalKeys`
-    [ ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" ) ,
-      ((mod4Mask                , xK_F1 ) , spawn "firefox"                          ) ,
-      ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  ) ]
+    }
 

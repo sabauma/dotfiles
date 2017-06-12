@@ -8,14 +8,14 @@ if [ ! -d "$Dir" ]; then
 fi
 
 SetBG () {
-TotalFiles=$( ls -1 "$Dir" | wc -l )
-RandomNumber=$(( $RANDOM % ($TotalFiles + 1) ))
-test ! $RandomNumber = 0 || RandomNumber=1
+    TotalFiles=$( ls -1 "$Dir" | wc -l )
+    RandomNumber=$(( $RANDOM % ($TotalFiles + 1) ))
+    test ! $RandomNumber = 0 || RandomNumber=1
 
-RandomFile="$( ls -1 $Dir | head -n $RandomNumber | tail -n 1)"
+    RandomFile="$( ls -1 $Dir | head -n $RandomNumber | tail -n 1)"
 
-#echo "Selected File: $RandomFile"
-feh --bg-fill "${Dir%/}/${RandomFile}"
+    #echo "Selected File: $RandomFile"
+    feh --bg-fill "${Dir%/}/${RandomFile}"
 }
 
 while true; do

@@ -1,43 +1,45 @@
-{-# OPTIONS_GHC -O2 #-}
+{-# OPTIONS_GHC -O2 -Wall #-}
 module PromptConfig where
 
 import           Data.Char
 import           Data.Function           (on)
 import           Data.List               (isInfixOf)
+import           Gruvbox                 as Colors
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Prompt.Directory (directoryPrompt)
 
 import           PerWorkspaceDirs        (changeDir, currentWorkspace)
 
-myFont :: String
-myFont = "xft:Fira Mono:size=12"
+myFont :: Int -> String
+myFont size = "xft:Fira Mono:size=" ++ show size
 
 -- These color were taken from the the gruvbox color scheme.
 -- See the .Xresources file for more color information.
 xmobarTitleColor, xmobarCurrentWorkspaceColor, xmobarLayoutColor :: String
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#fb4934"
+xmobarTitleColor = Colors.darkMagenta
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#458588"
+xmobarCurrentWorkspaceColor = Colors.darkBlue
 -- Color of the layout field
-xmobarLayoutColor = "#b8bb26"
+xmobarLayoutColor = Colors.yellow
 
-backgroundColor = "#1d2021"
-foregroundColor = "#ebdbb2"
+backgroundColor = Colors.background
+foregroundColor = Colors.foreground
 
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
-myPromptConfig = def { bgColor = backgroundColor
-                     , fgColor = foregroundColor
-                     , bgHLight = foregroundColor
-                     , fgHLight = backgroundColor
-                     , font = myFont
-                     , height = 24
+myPromptConfig = def { bgColor         = backgroundColor
+                     , fgColor         = foregroundColor
+                     , bgHLight        = foregroundColor
+                     , fgHLight        = backgroundColor
+                     , alwaysHighlight = True
+                     , font            = myFont 12
+                     , height          = 24
                      , searchPredicate = mySearch }
   where mySearch = isInfixOf `on` map toLower
 
 changeDirPrompt :: X ()
-changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: "
-                $ \d -> currentWorkspace >>= changeDir d
+changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
+  where setWorkspace d = currentWorkspace >>= changeDir d
 

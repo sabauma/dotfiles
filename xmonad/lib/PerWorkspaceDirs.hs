@@ -1,9 +1,5 @@
-{-# OPTIONS_GHC -O2                    #-}
-{-# LANGUAGE DeriveDataTypeable        #-}
-{-# LANGUAGE ImplicitParams            #-}
-{-# LANGUAGE MultiParamTypeClasses     #-}
-{-# LANGUAGE NoMonomorphismRestriction #-}
-{-# OPTIONS_GHC -O2 #-}
+{-# OPTIONS_GHC -O2 -Wall               #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 -------------------------------------------------------------------------------
 -- | Allows per workspace working directories
 -- ----------------------------------------------------------------------------
@@ -14,28 +10,24 @@ module PerWorkspaceDirs
   , getDir
   ) where
 
+import           Data.Map                    as M
 import           Data.Maybe                  (fromMaybe)
 import           XMonad.Core
 import           XMonad.StackSet             (currentTag)
 import qualified XMonad.Util.ExtensibleState as XS
 
-data WorkingDirs = WD { unWD :: [(WorkspaceId, String)] } deriving Typeable
+newtype WorkingDirs = WD { unWD :: M.Map WorkspaceId String }
+  deriving (Read, Show, Typeable)
 
 instance ExtensionClass WorkingDirs where
-  initialValue = WD []
+  initialValue  = WD M.empty
+  extensionType = PersistentExtension
 
 changeDir :: String -> WorkspaceId -> X ()
-changeDir dir ws = do
-  WD cdirs <- XS.get
-  XS.put . WD $ (ws, dir) : filter ((/= ws) . fst) cdirs
-
-changeDir' :: String -> WorkspaceId -> X ()
-changeDir' dir ws = XS.modify $ WD . ((ws, dir) :) . filter ((/= ws) . fst) . unWD
+changeDir dir ws = XS.modify (WD . M.insert ws dir . unWD)
 
 getDir :: WorkspaceId -> X String
-getDir ws = do
-  WD dirs <- XS.get
-  return $ fromMaybe "~/" (lookup ws dirs)
+getDir ws = fromMaybe "~/" . M.lookup ws . unWD <$> XS.get
 
 currentWorkspace :: X WorkspaceId
 currentWorkspace = withWindowSet (return . currentTag)
