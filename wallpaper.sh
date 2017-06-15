@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Dir="/home/spenser/Pictures/high-res"
+Dir="$HOME/Pictures/high-res"
 
 if [ ! -d "$Dir" ]; then
     echo "Not Exist $Dir"

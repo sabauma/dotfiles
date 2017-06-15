@@ -1,5 +1,5 @@
 
-set runtimepath=/home/spenser/.pentadactyl
+set runtimepath=/home/sbauman/.pentadactyl
 set scroll=80
 
 "Use letters instead of numbers for hints

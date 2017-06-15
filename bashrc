@@ -94,6 +94,7 @@ alias :e='nvim'
 alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
+alias ssd="cd /local-ssd/sbauman"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -111,10 +112,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=$HOME/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin/:$PATH
+export PATH=$HOME/.cabal/bin:$HOME/bin:$HOME/bin/racket/bin/:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=.cabal-sandbox/bin:$PATH
-export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex
 
@@ -157,17 +157,4 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
-export NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-#[ -n "$XTERM_VERSION" ] && transset -a 0.95 >/dev/null
-
-function rfc() {
-  cd `racket -l find-collection/run -- $@`
-}
-
-# interactive version
-function rfci() {
-  cd `racket -l find-collection/run -- -i $@`
-}
 

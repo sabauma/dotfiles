@@ -51,7 +51,7 @@ syntax on
 filetype plugin on
 filetype indent on
 
-" set termguicolors
+set termguicolors
 
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
@@ -257,3 +257,4 @@ let g:haskell_classic_highlighting = 1
 let g:haskell_indent_disable = 1
 " }}}
 
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1

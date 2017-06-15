@@ -15,6 +15,7 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers
+import           XMonad.Hooks.SetWMName
 import           XMonad.Util.Run                  (spawnPipe)
 -- Layouts
 import           XMonad.Layout.Grid               (Grid (..))
@@ -190,11 +191,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((noModMask , xF86XK_AudioLowerVolume) , amixer "set Master 2- -c 1")
-    , ((noModMask , xF86XK_AudioRaiseVolume) , amixer "set Master 2+ -c 1")
-    , ((noModMask , xF86XK_AudioMute)        , amixer "set Master toggle -c 1")
-    , ((noModMask , xF86XK_MonBrightnessDown), backlight "-dec 10")
-    , ((noModMask , xF86XK_MonBrightnessUp)  , backlight "-inc 10")
+    , ((mod4Mask , xK_F11) , amixer "set Master 2- -c 0")
+    , ((mod4Mask , xK_F12) , amixer "set Master 2+ -c 0")
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
 
@@ -309,7 +307,7 @@ myLogHook xmproc = do
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+myStartupHook = setWMName "LG3D" -- return ()
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.

@@ -1,24 +1,22 @@
-#/bin/bash
+# -*-shell-script-*-
 
-source ~/.bashrc
+# Setup minimal sbtools environment (sets PATH, LOCATION, HOST, USER, ...)
+. /mathworks/hub/share/sbtools/bash_setup_env.bash
 
 xrdb -merge ~/.Xresources &
 
 export WINDOW_MANAGER=xmonad
 
-# For some reason compton does not work well on 16.10 with mulitple monitors
-# compton -bCG --backend glx --paint-on-overlay --vsync opengl-swc
-# xcompmgr &
+xcompmgr &
 
-(sleep 1 && unity-settings-daemon) &
-
-gnome-settings-daemon &
 gnome-keyring-daemon &
 gnome-screensaver &
+gnome-settings-daemon &
 
 bash $HOME/bin/wallpaper.sh &
 #feh --bg-fill /home/spenser/Pictures/high-res/Air___Exo-3840x1200.jpg &
 sleep 2 && setxkbmap -option "caps:swapescape"
+xset b off
 
 # feh --bg-fill /home/spenser/Pictures/WPX7MHGC.jpg &
 #(sleep 5 && feh --bg-fill /home/spenser/Pictures/hdwallpaperpc_com_Laughing_Man_Ghost_in_the_Shell_Dark_1920x1080.jpg) &
