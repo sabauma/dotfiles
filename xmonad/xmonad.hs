@@ -109,7 +109,7 @@ gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
+myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
@@ -191,8 +191,11 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((mod4Mask , xK_F11) , amixer "set Master 2- -c 0")
-    , ((mod4Mask , xK_F12) , amixer "set Master 2+ -c 0")
+    , ((mod4Mask  , xK_F11)                  , amixer "set Master 2- -c 0")
+    , ((mod4Mask  , xK_F12)                  , amixer "set Master 2+ -c 0")
+    , ((noModMask , xF86XK_AudioLowerVolume) , amixer "set Master 2- -c 0")
+    , ((noModMask , xF86XK_AudioRaiseVolume) , amixer "set Master 2+ -c 0")
+
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
 
