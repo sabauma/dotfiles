@@ -104,7 +104,7 @@ spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
     spawnInDir command s = spawnHere $ printf "cd %s ; %s" s command
 
 gridSelectConfig :: GSConfig Window
-gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
+gridSelectConfig = def {gs_font=myFont 9, gs_colorizer=Colors.colorizer}
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.

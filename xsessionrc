@@ -10,8 +10,8 @@ export WINDOW_MANAGER=xmonad
 xcompmgr &
 
 gnome-keyring-daemon &
-gnome-screensaver &
 gnome-settings-daemon &
+(sleep 5 && gnome-screensaver) &
 
 bash $HOME/bin/wallpaper.sh &
 #feh --bg-fill /home/spenser/Pictures/high-res/Air___Exo-3840x1200.jpg &
