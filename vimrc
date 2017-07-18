@@ -22,6 +22,7 @@ Plug 'https://github.com/tpope/vim-vinegar.git'
 "Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/maralla/completor.vim.git'
+Plug 'https://github.com/lyuts/vim-rtags.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -219,6 +220,8 @@ au BufNewFile,BufRead *.agda setf agda
 digraph !? 8253
 digraph ?! 8253
 
+set tags=./tags;
+
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
@@ -242,3 +245,5 @@ let g:haskell_enable_typeroles = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_classic_highlighting = 1
 
+let g:rtagsRcCmd = "rc --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"
+let g:rtagsRdmCmd = "rdm --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"

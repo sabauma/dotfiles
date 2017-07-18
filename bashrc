@@ -79,6 +79,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Set bash to use vi based interaction mode
+set -o vi
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -86,7 +89,7 @@ alias l='ls -CF'
 
 alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade'
-alias mktags='rm ./tags && ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=*.js .'
+alias mktags='find . -iname "*.[ch]pp" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./tags -L-'
 alias untar='tar -xzvf'
 
 alias :q='exit'
@@ -112,20 +115,33 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# For Cabal and Racket
 export PATH=$HOME/.cabal/bin:$HOME/bin:$HOME/bin/racket/bin/:$PATH
+# Local Install Dirs
 export PATH=$HOME/.local/bin:$PATH
+# Cabal Sandboxes
 export PATH=.cabal-sandbox/bin:$PATH
+# The RTags tool
+export PATH=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20160511-ff438ce/deb7-64/bin:$PATH
 
-TEXMF=/home/spenser/.latex
+TEXMF=/home/sbauman/.latex
 
 export XDG_CURRENT_DESKTOP=Unity
+
+# Various editor variables
 export EDITOR=nvim
 export SVN_EDITOR=nvim
 export VISUAL=nvim
 
-export CCACHE_COMPRESS=yes
+#Arguments for P4MERGE
+export P4MERGE=vimdiff
+export P4EDITOR=vim
 
-set -o vi
+# Environment variable for rtags
+export WORKING_DIR=/local-ssd/sbauman/Bslcgcore1/
+
+# CCACHE settings
+export CCACHE_COMPRESS=yes
 
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
 

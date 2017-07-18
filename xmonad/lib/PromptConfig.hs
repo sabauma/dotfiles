@@ -34,7 +34,7 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , bgHLight        = foregroundColor
                      , fgHLight        = backgroundColor
                      , alwaysHighlight = True
-                     , font            = myFont 12
+                     , font            = myFont 10
                      , height          = 24
                      , searchPredicate = mySearch }
   where mySearch = isInfixOf `on` map toLower

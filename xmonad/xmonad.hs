@@ -294,7 +294,7 @@ xmobarConfig = xmobarPP
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     urgent  = xmobarColor Colors.darkRed ""
-    sep     = "   "
+    sep     = " "
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
