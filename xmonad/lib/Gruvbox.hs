@@ -6,7 +6,6 @@ import           Data.Hashable
 import qualified Data.Vector   as V
 import           XMonad        (Window, X (), runQuery, title)
 
-backgroundSoft, backgroundNorm, backgroundHard, background :: String
 backgroundSoft = "#32302f"
 backgroundNorm = "#282828"
 backgroundHard = "#1d2021"
