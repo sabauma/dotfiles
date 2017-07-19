@@ -108,7 +108,7 @@ gridSelectConfig = def {gs_font=myFont 10, gs_colorizer=Colors.colorizer}
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
+myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
     -- close focused window
@@ -122,9 +122,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp)
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster)
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
     -- Swap the focused window with the next window
@@ -293,7 +293,7 @@ xmobarConfig = xmobarPP
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     urgent  = xmobarColor Colors.darkRed ""
-    sep     = "   "
+    sep     = " "
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
