@@ -28,6 +28,8 @@ Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/zchee/deoplete-jedi.git'
 Plug 'https://github.com/davidhalter/jedi-vim.git'
+Plug 'https://github.com/chikamichi/mediawiki.vim.git'
+Plug 'https://github.com/nfvs/vim-perforce.git'
 
 " Stuff for rtags
 Plug 'https://github.com/lyuts/vim-rtags.git'
@@ -191,14 +193,16 @@ set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%6v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-highlight ColorColumn ctermbg=80
+"highlight ExtraWhitespace ctermbg=red guibg=red
+"highlight ColorColumn ctermbg=80
+set listchars=tab:>-,trail:·,extends:>,precedes:<
+set list
 
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+"match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd BufWinLeave * call clearmatches()
 
 " Interrobangs...
 digraph !? 8253
