@@ -94,6 +94,7 @@ alias :e='nvim'
 alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
+alias config-env="eval `opam config env`"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -118,7 +119,7 @@ export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
 
 TEXMF=/home/spenser/.latex
 
-export XDG_CURRENT_DESKTOP=Unity
+export XDG_CURRENT_DESKTOP=GNOME
 export EDITOR=nvim
 export SVN_EDITOR=nvim
 export VISUAL=nvim

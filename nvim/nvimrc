@@ -190,12 +190,8 @@ set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%6v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+set list
+set listchars=tab:>-,trail:·,extends:>,precedes:<
 
 " Interrobangs...
 digraph !? 8253

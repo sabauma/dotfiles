@@ -33,7 +33,7 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , fgColor         = foregroundColor
                      , bgHLight        = foregroundColor
                      , fgHLight        = backgroundColor
-                     , alwaysHighlight = True
+                     , alwaysHighlight = False
                      , font            = myFont 12
                      , height          = 24
                      , searchPredicate = mySearch }
