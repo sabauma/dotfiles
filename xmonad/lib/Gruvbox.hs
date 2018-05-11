@@ -4,7 +4,13 @@ module Gruvbox where
 
 import           Data.Hashable
 import qualified Data.Vector   as V
-import           XMonad        (Window, X (), runQuery, title)
+import           XMonad        (Window, X (), io, runQuery, title)
+import           XMonad.Core
+import qualified XMonad.Util.ExtensibleState as XS
+import           System.Time
+import           System.Random
+
+backgroundSoft, backgroundNorm, backgroundHard, foreground, background :: String
 
 backgroundSoft = "#32302f"
 backgroundNorm = "#282828"
@@ -56,12 +62,26 @@ allColors = V.fromList [ darkRed     , red
                        , gray0
                        ]
 
+newtype Entropy = Entropy { unEntropy :: Int }
+
+instance ExtensionClass Entropy where
+  initialValue  = Entropy 0
+  extensionType = StateExtension
+
+getSeed :: X Int
+getSeed = unEntropy <$> XS.get
+
+-- Invoke updateSeed from myLogHook to alternate which colors are used
+updateSeed :: X ()
+updateSeed = XS.modify (Entropy . (+1) . unEntropy)
+
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
   | otherwise = do
+    seed <- hash <$> getSeed
     name <- runQuery title s
-    let index   = hash name `mod` (V.length allColors)
+    let index   = hashWithSalt (hash seed) name `mod` V.length allColors
         bgcolor = V.unsafeIndex allColors index
     return (bgcolor, background)
 

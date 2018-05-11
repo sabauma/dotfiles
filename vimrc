@@ -23,6 +23,8 @@ Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/maralla/completor.vim.git'
 Plug 'https://github.com/lyuts/vim-rtags.git'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -30,8 +32,9 @@ Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 
 call plug#end()
+set t_Co=256
 
-set termguicolors
+"set termguicolors
 
 " Tab settings
 " set cindent
@@ -203,12 +206,9 @@ set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%4v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" Highlighting for trailing whitespace and abnormal indentation
+set listchars=tab:>-,trail:·,extends:>,precedes:<
+set list
 
 " Prefer C++11 over the standard C++ syntax file
 autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11

@@ -27,7 +27,7 @@ import           XMonad.Prompt.Window             (windowPromptGoto)
 
 -- General libraries
 import           Data.Char
-import           Data.List                        ((\\))
+import           Data.List                        ((\\), isPrefixOf)
 import           Data.Maybe                       (fromMaybe)
 import           Data.Monoid                      (appEndo)
 import           FindEmptyWorkspace
@@ -171,7 +171,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_Left  ), prevWS)
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
-    , ((modm               , xK_v        ) , selectWorkspace myPromptConfig)
+    , ((modm               , xK_v        ) , selectWorkspace autoPromptConfig)
     , ((modm               , xK_b        ) , withWorkspace myPromptConfig (windows . W.shift))
     , ((modm .|. shiftMask , xK_b        ) , withWorkspace myPromptConfig (windows . copy))
     -- Two dimensional navigation
@@ -219,13 +219,14 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
         | (key, n) <- zip workspaceKeys [0 ..] ]
 
     where -- Keys for specifying workspaces.
-          workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
+          workspaceKeys :: [KeySym]
+          workspaceKeys = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
 
           amixer :: (MonadIO m) => String -> m ()
-          amixer args = spawn $ "amixer " ++ args
+          amixer args = spawn ("amixer " ++ args)
 
           backlight :: (MonadIO m) => String -> m ()
-          backlight args = spawn $ "xbacklight " ++ args
+          backlight args = spawn ("xbacklight " ++ args)
 
 fullFloatFocused =
     withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
@@ -266,11 +267,10 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
-    , isFullscreen                  --> doFullFloat ]
-
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+    {-, className =? "Firefox-esr"-}
+    , isPrefixOf "Firefox" <$> className --> doShift "1:web"
+    , isFullscreen                  --> doFullFloat
+    ]
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -298,6 +298,7 @@ xmobarConfig = xmobarPP
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
+    Colors.updateSeed
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
     updatePointer (0.5, 0.5) (0, 0)
@@ -318,7 +319,7 @@ myStartupHook = setWMName "LG3D" -- return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main :: IO ()
-main = xmonad . defaults =<< spawnPipe "/home/sbauman/.cabal/bin/xmobar"
+main = xmonad . defaults =<< spawnPipe "$HOME/.cabal/bin/xmobar"
 
 allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
@@ -331,7 +332,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 defaults xmproc = docks $ def
     { -- Simple Stuff
       terminal           = myTerminal
-    , focusFollowsMouse  = myFocusFollowsMouse
+    , focusFollowsMouse  = True
     , borderWidth        = myBorderWidth
     , modMask            = myModMask
       -- numlockMask        = myNumlockMask,

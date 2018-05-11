@@ -7,7 +7,6 @@ call plug#begin('~/.nvim/plugged')
 
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/eparreno/vim-l9.git'
-"Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
 Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
 Plug 'https://github.com/godlygeek/tabular.git'
@@ -22,14 +21,15 @@ Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
 "Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
-Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
-Plug 'https://github.com/zchee/deoplete-jedi.git'
-Plug 'https://github.com/davidhalter/jedi-vim.git'
-Plug 'https://github.com/chikamichi/mediawiki.vim.git'
 Plug 'https://github.com/nfvs/vim-perforce.git'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Drawit
+Plug 'https://github.com/vim-scripts/DrawIt.git'
 
 " Stuff for rtags
 Plug 'https://github.com/lyuts/vim-rtags.git'
@@ -37,8 +37,15 @@ Plug 'https://github.com/Shougo/unite.vim.git'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
-Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
+
+" Syntax files
+Plug 'https://github.com/chikamichi/mediawiki.vim.git'
+
+" Deoplete and sources
+Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
+" Plug 'https://github.com/zchee/deoplete-jedi.git'
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
 
 call plug#end()
 
@@ -55,6 +62,7 @@ filetype plugin on
 filetype indent on
 
 set termguicolors
+set guicursor=
 
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
@@ -87,13 +95,16 @@ set virtualedit=all
 
 set modelines=0
 set wrap
-set textwidth=80
+set textwidth=85
 set formatoptions=qrn1
 set colorcolumn=85
 set title
 set lazyredraw
 set splitright
 set splitbelow
+
+" Set path for find command
+set path=.,/usr/include,,**
 
 " Don't move the cursor to the first column during row traversals
 set nostartofline
@@ -154,12 +165,14 @@ autocmd BufRead *\.tmp setlocal spell spelllang=en_us
 " Spell checking for latex files
 autocmd BufRead *\.tex setlocal spell spelllang=en_us
 
+" {{{ Latex configuration
 " Load latex even for empty files
 let g:vimtex_fold_enabled=1
 let g:vimtex_view_method='zathura'
 autocmd BufRead *\.tex setlocal iskeyword+=:
 map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
 map ,b :!bibtex %<CR>
+" }}}
 
 " Remove trailing whitespace
 function! StripTrailingWhitespaces()
@@ -193,22 +206,17 @@ set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%6v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
-"highlight ExtraWhitespace ctermbg=red guibg=red
-"highlight ColorColumn ctermbg=80
+" Highlighting for trailing whitespace and abnormal indentation
 set listchars=tab:>-,trail:·,extends:>,precedes:<
 set list
-
-"match ExtraWhitespace /\s\+$/
-"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-"autocmd BufWinLeave * call clearmatches()
 
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
 
-set tags=./tags;
+" {{{ CTAGS
+set tags=./ctags;
+" }}}
 
 " {{{ Terminal mode configuration
 let g:terminal_color_0  = '#282828'
@@ -241,15 +249,19 @@ set scrollback=-1
 let g:netrw_liststyle=3
 let g:netrw_winsize=10
 let g:netrw_alto=1
+let g:netrw_sort_sequence = '[\/]$,\<core\%(\.\d\+\)\=,\.[a-np-z]$,*,\.o$,\.obj$,\.info$,\.swp$,\.bak$,\~$'
 " }}}
 
-" Deoplete configuration
+" {{{ Deoplete configuration
 let g:deoplete#enable_at_startup = 1
+" }}}
 
+" {{{ Quick buffer manipulation
 nnoremap gb :ls<CR>:buffer<Space>
 nnoremap gB :ls<CR>:sbuffer<Space>
 nnoremap ,b :buffer *
 nnoremap ,B :sbuffer *
+" }}}
 
 " {{{ Haskell configuration
 let g:haskell_indent_where = 2
@@ -266,8 +278,8 @@ let g:haskell_classic_highlighting = 1
 let g:haskell_indent_disable = 1
 " }}}
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-let g:netrw_sort_sequence = '[\/]$,\<core\%(\.\d\+\)\=,\.[a-np-z]$,*,\.o$,\.obj$,\.info$,\.swp$,\.bak$,\~$'
 
+" {{{ RTAGS modifications for working in sandboxes
 let g:rtagsRcCmd = "rc --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"
 let g:rtagsRdmCmd = "rdm --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"
+" }}}

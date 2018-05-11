@@ -2,10 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[[ $TMUX = "" ]] && export TERM=xterm-256color
+. /mathworks/hub/share/sbtools/bash_setup.bash
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
+#[[ $TMUX = "" ]] && export TERM=xterm-256color
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -79,6 +81,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# prefer neovim if it exists, otherwise default to vim
+if [ -x "$(command -v nvim)" ]; then
+    VIM_VERSION="nvim"
+    VIMDIFF_VERSION="nvim -d"
+else
+    VIM_VERSION="vim"
+    VIMDIFF_VERSION="vimdiff"
+fi
+
 # Set bash to use vi based interaction mode
 set -o vi
 
@@ -89,15 +100,22 @@ alias l='ls -CF'
 
 alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade'
-alias mktags='find . -iname "*.[ch]pp" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./tags -L-'
+alias mktags='find . -iname "*.[ch]pp" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./ctags -L-'
 alias untar='tar -xzvf'
 
 alias :q='exit'
-alias :e='nvim'
+alias :e="$VIM_VERSION"
 alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
 alias ssd="cd /local-ssd/sbauman"
+#alias config-env="eval `opam config env`"
+
+alias c='pygmentize -O style=borland -f console -g'
+alias tmux='TERM=xterm-256color tmux'
+alias sbsb='sb -nodesktop -nosplash'
+alias sync-gecks='rsync -avz $HOME/gecks $s'
+alias sandboxes='mw -using Bmain sbs list'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -115,6 +133,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+export RTAGS_BIN_DIR=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20180116-08350ff57777/deb8-64/bin
+
 # For Cabal and Racket
 export PATH=$HOME/.cabal/bin:$HOME/bin:$HOME/bin/racket/bin/:$PATH
 # Local Install Dirs
@@ -122,20 +142,22 @@ export PATH=$HOME/.local/bin:$PATH
 # Cabal Sandboxes
 export PATH=.cabal-sandbox/bin:$PATH
 # The RTags tool
-export PATH=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20160511-ff438ce/deb7-64/bin:$PATH
+export PATH=$RTAGS_BIN_DIR:$PATH
+# CGIR Debugging Tools (cgbug)
+export PATH=/mathworks/hub/share/sbtools/apps/cgir_tools:$PATH
 
 TEXMF=/home/sbauman/.latex
 
 export XDG_CURRENT_DESKTOP=Unity
 
 # Various editor variables
-export EDITOR=nvim
-export SVN_EDITOR=nvim
-export VISUAL=nvim
+export EDITOR="$VIM_VERSION"
+export SVN_EDITOR="$VIM_VERSION"
+export VISUAL="$VIM_VERSION"
 
 #Arguments for P4MERGE
-export P4MERGE=vimdiff
-export P4EDITOR=vim
+export P4MERGE="$VIMDIFF_VERSION"
+export P4EDITOR="$VIM_VERSION"
 
 # Environment variable for rtags
 export WORKING_DIR=/local-ssd/sbauman/Bslcgcore1/
@@ -172,5 +194,10 @@ xterm*|rxvt*)
     ;;
 *)
     ;;
+esac
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     [ -f ~/.fzf.bash ] && source ~/.fzf.bash;;
 esac
 

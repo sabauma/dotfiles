@@ -33,11 +33,15 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , fgColor         = foregroundColor
                      , bgHLight        = foregroundColor
                      , fgHLight        = backgroundColor
-                     , alwaysHighlight = True
+                     , alwaysHighlight = False
                      , font            = myFont 10
                      , height          = 24
                      , searchPredicate = mySearch }
   where mySearch = isInfixOf `on` map toLower
+
+-- A variant of myPromptConfig which always highlights
+autoPromptConfig :: XPConfig
+autoPromptConfig = myPromptConfig { alwaysHighlight = True }
 
 changeDirPrompt :: X ()
 changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
