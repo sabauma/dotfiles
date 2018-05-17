@@ -295,6 +295,7 @@ xmobarConfig = xmobarPP
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
+    updateSeed
     dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
     -- Place pointer in the center of the focused window
     updatePointer (0.5, 0.5) (0, 0)

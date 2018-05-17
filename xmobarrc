@@ -2,7 +2,7 @@
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
 Config {
-    font = "xft:Fira Sans:size=11,antialias=true",
+    font = "xft:Fira Sans:size=13,antialias=true",
     bgColor = "#1d2021",
     fgColor = "#ebdbb2",
     position = Top,

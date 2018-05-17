@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -O2 -Wall #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Gruvbox where
 
 import           Data.Hashable
 import qualified Data.Vector   as V
 import           XMonad        (Window, X (), runQuery, title)
+import           XMonad.Core
+import qualified XMonad.Util.ExtensibleState as XS
 
 backgroundSoft = "#32302f"
 backgroundNorm = "#282828"
@@ -56,12 +59,23 @@ allColors = V.fromList [ darkRed     , red
                        , gray0
                        ]
 
+newtype Entropy = Entropy { unEntropy :: Int }
+  deriving (Hashable)
+
+instance ExtensionClass Entropy where
+  initialValue  = Entropy 0
+  extensionType = StateExtension
+
+updateSeed :: X ()
+updateSeed = XS.modify (Entropy . (+1) . unEntropy)
+
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
   | otherwise = do
+    seed <- XS.get :: X Entropy
     name <- runQuery title s
-    let index   = hash name `mod` (V.length allColors)
+    let index   = hashWithSalt (hash seed) name `mod` (V.length allColors)
         bgcolor = V.unsafeIndex allColors index
     return (bgcolor, background)
 
