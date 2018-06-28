@@ -51,7 +51,7 @@ myTerminal      = "gnome-terminal"
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 1
+myBorderWidth   = 5
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -86,7 +86,7 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor  = Colors.foreground
+myNormalBorderColor  = Colors.background
 myFocusedBorderColor = Colors.darkRed
 
 -- Useful functions for restarting XMonad
@@ -242,7 +242,7 @@ myMouseBindings XConfig{XMonad.modMask = modMask} = M.fromList
 ------------------------------------------------------------------------
 -- Layouts:
 
-mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
+mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts (tiled ||| mirror ||| grid ||| Full)
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
@@ -276,8 +276,7 @@ isJunk :: String -> Bool
 isJunk x = x == "SmartSpacing" || all isNumber x
 
 cleanupLayout :: String -> String
-cleanupLayout s = foldr const s $ filter (not . isJunk) ss
-  where ss = words s
+cleanupLayout s = foldr const s $ filter (not . isJunk) (words s)
 
 xmobarConfig :: PP
 xmobarConfig = xmobarPP

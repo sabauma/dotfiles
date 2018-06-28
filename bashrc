@@ -172,3 +172,5 @@ function rfci() {
   cd `racket -l find-collection/run -- -i $@`
 }
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
