@@ -9,6 +9,8 @@ import           XMonad        (Window, X (), runQuery, title)
 import           XMonad.Core
 import qualified XMonad.Util.ExtensibleState as XS
 
+import System.Random
+
 backgroundSoft = "#32302f"
 backgroundNorm = "#282828"
 backgroundHard = "#1d2021"
@@ -59,21 +61,24 @@ allColors = V.fromList [ darkRed     , red
                        , gray0
                        ]
 
-newtype Entropy = Entropy { unEntropy :: Int }
-  deriving (Hashable)
+newtype Entropy = Entropy { getEntropy :: StdGen }
+  deriving (RandomGen)
 
 instance ExtensionClass Entropy where
-  initialValue  = Entropy 0
+  initialValue  = Entropy (mkStdGen 0)
   extensionType = StateExtension
 
 updateSeed :: X ()
-updateSeed = XS.modify (Entropy . (+1) . unEntropy)
+updateSeed = XS.modify (snd . next :: Entropy -> Entropy)
+
+seedValue :: X Int
+seedValue = fmap (fst . next) (XS.get :: X Entropy)
 
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
   | otherwise = do
-    seed <- XS.get :: X Entropy
+    seed <- seedValue
     name <- runQuery title s
     let index   = hashWithSalt (hash seed) name `mod` (V.length allColors)
         bgcolor = V.unsafeIndex allColors index

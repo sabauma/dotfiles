@@ -30,8 +30,8 @@ foregroundColor = Colors.foreground
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor         = backgroundColor
-                     , fgColor         = foregroundColor
-                     , bgHLight        = foregroundColor
+                     , fgColor         = Colors.blue
+                     , bgHLight        = Colors.darkBlue
                      , fgHLight        = backgroundColor
                      , alwaysHighlight = False
                      , font            = myFont 12
