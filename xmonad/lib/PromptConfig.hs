@@ -8,6 +8,7 @@ import           Gruvbox                 as Colors
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Prompt.Directory (directoryPrompt)
+import           XMonad.Prompt.FuzzyMatch
 
 import           PerWorkspaceDirs        (changeDir, currentWorkspace)
 
@@ -36,8 +37,8 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , alwaysHighlight = False
                      , font            = myFont 12
                      , height          = 24
-                     , searchPredicate = mySearch }
-  where mySearch = isInfixOf `on` map toLower
+                     , sorter          = fuzzySort
+                     , searchPredicate = fuzzyMatch }
 
 changeDirPrompt :: X ()
 changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
