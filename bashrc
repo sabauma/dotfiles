@@ -127,10 +127,6 @@ fi
 
 export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
-export PATH=.cabal-sandbox/bin:$PATH
-export PYTHONPATH=$PYTHONPATH:/home/spenser/src/pycket/pypy
-
-TEXMF=/home/spenser/.latex
 
 export XDG_CURRENT_DESKTOP=GNOME
 export EDITOR=nvim
@@ -185,6 +181,5 @@ function rfc() {
 function rfci() {
   cd `racket -l find-collection/run -- -i $@`
 }
-
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

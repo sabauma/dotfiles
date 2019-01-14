@@ -22,15 +22,7 @@ Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
-Plug 'https://github.com/rust-lang/rust.vim.git'
-Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-Plug 'https://github.com/Konfekt/FastFold.git'
-Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/bitc/vim-hdevtools.git'
-Plug 'https://github.com/tpope/vim-vinegar.git'
-Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
-Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'https://github.com/maralla/completor.vim.git'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -203,12 +195,9 @@ set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%4v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" Highlighting for trailing whitespace and abnormal indentation
+set listchars=tab:>-,trail:·,extends:>,precedes:<
+set list
 
 " Interrobangs...
 digraph !? 8253

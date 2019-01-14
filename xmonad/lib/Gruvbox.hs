@@ -82,6 +82,14 @@ getColor window = do
       index     = fst (randomR (0, V.length allColors - 1) generator)
   return (V.unsafeIndex allColors index)
 
+getColor :: Window -> X String
+getColor window = do
+  seed <- hash <$> getSeed
+  name <- runQuery title window
+  let generator = mkStdGen (hashWithSalt seed window)
+      index     = fst (randomR (0, V.length allColors - 1) generator)
+  return (V.unsafeIndex allColors index)
+
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
@@ -91,4 +99,3 @@ colorizer s active
     let index   = hashWithSalt (hash seed) name `mod` (V.length allColors)
         bgcolor = V.unsafeIndex allColors index
     return (bgcolor, background)
-
