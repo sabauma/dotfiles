@@ -1,17 +1,26 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'https://github.com/vim-scripts/a.vim.git'
-Plug 'https://github.com/eparreno/vim-l9.git'
-Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/Shougo/vimproc.git', { 'do': 'make' }
+Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/eagletmt/ghcmod-vim.git'
+Plug 'https://github.com/eparreno/vim-l9.git'
 Plug 'https://github.com/godlygeek/tabular.git'
+Plug 'https://github.com/lyuts/vim-rtags.git'
+Plug 'https://github.com/maralla/completor.vim.git'
+Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
+Plug 'https://github.com/nathanaelkane/vim-indent-guides.git'
+Plug 'https://github.com/nfvs/vim-perforce.git'
+Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
+Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
-Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
+Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
@@ -19,16 +28,24 @@ Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
-"Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
+Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/tpope/vim-obsession.git'
 Plug 'https://github.com/maralla/completor.vim.git'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
-Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 
+" Syntax files
+Plug 'https://github.com/chikamichi/mediawiki.vim.git'
+
 call plug#end()
+
+if has("gui_running")
+  set guifont=Fira\ Mono\ 16
+endif
 
 set termguicolors
 
@@ -53,7 +70,7 @@ filetype indent on
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='soft'
+let g:gruvbox_contrast_light='hard'
 colorscheme gruvbox
 set background=dark
 
@@ -92,7 +109,8 @@ set nostartofline
 
 " No delay for escape key
 set timeoutlen=1000 ttimeoutlen=0
-" set autochdir
+
+set diffopt+=algorithm:patience,indent-heuristic
 
 " Backup & Undo settings
 set undodir=~/.vim/undodir
@@ -128,9 +146,6 @@ nnoremap ` '
 
 " Remove menu
 set go=c
-
-" Format using astyle
-map <Leader>f :!astyle --style=allman --indent=spaces=4 -N -S -w --add-one-line-brackets --convert-tabs --indent-col1-comments -m0 %<CR>
 
 " Faster way to switch between splits
 map <Leader>w <C-w>w
@@ -177,25 +192,6 @@ set completeopt=menu,menuone,longest
 " Limit popup menu height
 set pumheight=15
 
-" Key Maps
-" --------
-" Toggle NERDTree with F2
-map <F2> :NERDTreeToggle<CR>
-" Use Y to copy until the end of the line. Use yy to copy the whole line.
-nnoremap Y y$
-
-" Some tricks for mutt
-" F1 through F3 re-wraps paragraphs in useful ways
-augroup MUTT
-    au BufRead ~/.mutt/temp/mutt* set spell " <-- vim 7 required
-    au BufRead ~/.mutt/temp/mutt* nmap  <F1>  gqap
-    au BufRead ~/.mutt/temp/mutt* nmap  <F2>  gqqj
-    au BufRead ~/.mutt/temp/mutt* nmap  <F3>  kgqj
-    au BufRead ~/.mutt/temp/mutt* map!  <F1>  <ESC>gqapi
-    au BufRead ~/.mutt/temp/mutt* map!  <F2>  <ESC>gqqji
-    au BufRead ~/.mutt/temp/mutt* map!  <F3>  <ESC>kgqji
-augroup END
-
 set statusline=
 set statusline +=%1*\ %n\ %*            "buffer number
 set statusline +=%5*%{&ff}%*            "file format
@@ -214,15 +210,11 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" Prefer C++11 over the standard C++ syntax file
-autocmd BufNewFile,BufRead *.h,*.cpp set syntax=cpp11
-
-let g:sexp_enable_insert_mode_mappings = 0
-au BufNewFile,BufRead *.agda setf agda
-
 " Interrobangs...
 digraph !? 8253
 digraph ?! 8253
+
+set tags=./ctags;
 
 let g:netrw_liststyle=3
 let g:netrw_winsize=10

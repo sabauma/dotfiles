@@ -18,8 +18,6 @@ Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
-Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-"Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/bitc/vim-hdevtools.git'
@@ -59,7 +57,7 @@ set termguicolors
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
+let g:gruvbox_contrast_light='medium'
 set background=dark
 colorscheme gruvbox
 
@@ -98,7 +96,8 @@ set splitbelow
 " Don't move the cursor to the first column during row traversals
 set nostartofline
 
-" set autochdir
+" Configure diff algorithm to be a little more ergonomic
+set diffopt+=algorithm:patience,indent-heuristic
 
 " Backup & Undo settings
 set undodir=~/.nvim/undodir//

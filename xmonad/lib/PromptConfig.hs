@@ -40,6 +40,10 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , sorter          = fuzzySort
                      , searchPredicate = fuzzyMatch }
 
+-- A variant of myPromptConfig which always highlights
+autoPromptConfig :: XPConfig
+autoPromptConfig = myPromptConfig { alwaysHighlight = True }
+
 changeDirPrompt :: X ()
 changeDirPrompt = directoryPrompt myPromptConfig "Set working directory: " setWorkspace
   where setWorkspace d = currentWorkspace >>= changeDir d

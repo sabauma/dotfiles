@@ -103,10 +103,14 @@ spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
     spawnInDir command s = spawnHere $ printf "cd %s ; %s" s command
 
 gridSelectConfig :: GSConfig Window
-gridSelectConfig = def { gs_font        = myFont 12
-                       , gs_colorizer   = Colors.colorizer
-                       , gs_bordercolor = Colors.background
-                       }
+gridSelectConfig =
+  let config = def :: GSConfig Window
+  in config { gs_font        = myFont 12
+            , gs_colorizer   = Colors.colorizer
+            , gs_cellheight  = gs_cellheight config * 3 `div` 2
+            , gs_cellwidth   = gs_cellwidth config * 3 `div` 2
+            , gs_bordercolor = Colors.background
+            }
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -200,7 +204,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm      , xK_d) , changeDirPrompt)
 
     , ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" )
-    , ((mod4Mask                , xK_F1 ) , spawn "firefox"                          )
+    , ((mod4Mask                , xK_F1 ) , spawn "$HOME/bin/firefox"                )
     , ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  )
     ]
     ++

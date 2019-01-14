@@ -1,5 +1,5 @@
-{-# OPTIONS_GHC -O2 -Wall #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# OPTIONS_GHC -O2 -Wall  #-}
+{-# LANGUAGE TupleSections #-}
 
 module Gruvbox where
 
@@ -73,6 +73,14 @@ updateSeed = XS.modify (snd . next :: Entropy -> Entropy)
 
 seedValue :: X Int
 seedValue = fmap (fst . next) (XS.get :: X Entropy)
+
+getColor :: Window -> X String
+getColor window = do
+  seed <- hash <$> getSeed
+  name <- runQuery title window
+  let generator = mkStdGen (hashWithSalt seed window)
+      index     = fst (randomR (0, V.length allColors - 1) generator)
+  return (V.unsafeIndex allColors index)
 
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active

@@ -1,6 +1,6 @@
-XTerm*font: xft:Fira Code:size=11
-XTerm*boldFont: xft:Fira Code Bold:size=11
-XTerm*faceName: xft:Fira Code:size=11
+XTerm*font: xft:Fira Mono:size=12
+XTerm*boldFont: xft:Fira Mono Bold:size=12
+XTerm*faceName: xft:Fira Mono:size=12
 XTerm*vt100*geometry: 80x50
 XTerm*saveLines: 10000
 XTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
