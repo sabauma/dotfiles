@@ -44,12 +44,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
@@ -72,7 +72,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto --human-readable --group-directories-first --classify'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -93,30 +93,6 @@ fi
 # Set bash to use vi based interaction mode
 set -o vi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-alias update='sudo apt update'
-alias upgrade='sudo apt dist-upgrade'
-alias mktags='find . -iname "*.[ch]pp" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./ctags -L-'
-alias untar='tar -xzvf'
-
-alias :q='exit'
-alias :e="$VIM_VERSION"
-alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
-alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
-alias qutebrowser="python3 -m qutebrowser"
-alias ssd="cd /local-ssd/sbauman"
-#alias config-env="eval `opam config env`"
-
-alias c='pygmentize -O style=borland -f console -g'
-alias tmux='TERM=xterm-256color tmux'
-alias sbsb='sb -nodesktop -nosplash'
-alias sync-gecks='rsync -avz $HOME/gecks $s'
-alias sandboxes='mw -using Bmain sbs list'
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -133,7 +109,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export RTAGS_BIN_DIR=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20180116-08350ff57777/deb8-64/bin
+export RTAGS_BIN_DIR=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20181127-5870fb617dbc/deb9-64/bin
 
 # For Cabal and Racket
 export PATH=$HOME/.cabal/bin:$HOME/bin:$HOME/bin/racket/bin/:$PATH
@@ -160,7 +136,7 @@ export P4MERGE="$VIMDIFF_VERSION"
 export P4EDITOR="$VIM_VERSION"
 
 # Environment variable for rtags
-export WORKING_DIR=/local-ssd/sbauman/Bslcgcore1/
+export WORKING_DIR=/local-ssd/sbauman/Bcgir_parallel1/
 
 # CCACHE settings
 export CCACHE_COMPRESS=yes
@@ -200,4 +176,17 @@ unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     [ -f ~/.fzf.bash ] && source ~/.fzf.bash;;
 esac
+
+# Some logic to check that the rtags bin is not out of date.
+# The sbccptags call is rather slow, so this check is done async to prevent
+# long terminal starts.
+check_rtags() {
+    bin_dir=$(sbcpptags -rtags-bin-dir)
+    if [ $bin_dir != $RTAGS_BIN_DIR ]; then
+        echo "update rtags bin"
+    fi
+}
+
+check_rtags &
+disown $!
 

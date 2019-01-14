@@ -52,7 +52,7 @@ myTerminal      = "gnome-terminal"
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 1
+myBorderWidth   = 5
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -87,7 +87,7 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor  = Colors.foreground
+myNormalBorderColor  = Colors.background
 myFocusedBorderColor = Colors.darkRed
 
 -- Useful functions for restarting XMonad
@@ -104,7 +104,14 @@ spawnInCurDir c = currentWorkspace >>= getDir >>= spawnInDir c
     spawnInDir command s = spawnHere $ printf "cd %s ; %s" s command
 
 gridSelectConfig :: GSConfig Window
-gridSelectConfig = def {gs_font=myFont 9, gs_colorizer=Colors.colorizer}
+gridSelectConfig =
+  let config = def :: GSConfig Window
+  in config { gs_font        = myFont 12
+            , gs_colorizer   = Colors.colorizer
+            , gs_cellheight  = gs_cellheight config * 3 `div` 2
+            , gs_cellwidth   = gs_cellwidth config * 3 `div` 2
+            , gs_bordercolor = Colors.background
+            }
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -200,7 +207,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     , ((modm      , xK_d) , changeDirPrompt)
 
     , ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" )
-    , ((mod4Mask                , xK_F1 ) , spawn "firefox"                          )
+    , ((mod4Mask                , xK_F1 ) , spawn "$HOME/bin/firefox"                )
     , ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  )
     ]
     ++
@@ -276,7 +283,7 @@ myManageHook = composeAll
 -- Status bars and logging
 
 isJunk :: String -> Bool
-isJunk x = x == "SmartSpacing" || all isNumber x
+isJunk x = x == "Spacing" || all isNumber x
 
 cleanupLayout :: String -> String
 cleanupLayout s = foldr const s $ filter (not . isJunk) ss

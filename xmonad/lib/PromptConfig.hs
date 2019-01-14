@@ -8,6 +8,7 @@ import           Gruvbox                 as Colors
 import           XMonad
 import           XMonad.Prompt
 import           XMonad.Prompt.Directory (directoryPrompt)
+import           XMonad.Prompt.FuzzyMatch
 
 import           PerWorkspaceDirs        (changeDir, currentWorkspace)
 
@@ -30,14 +31,14 @@ foregroundColor = Colors.foreground
 -- XPConfig with an infix search, rather than prefix.
 myPromptConfig :: XPConfig
 myPromptConfig = def { bgColor         = backgroundColor
-                     , fgColor         = foregroundColor
-                     , bgHLight        = foregroundColor
+                     , fgColor         = Colors.blue
+                     , bgHLight        = Colors.blue
                      , fgHLight        = backgroundColor
                      , alwaysHighlight = False
-                     , font            = myFont 10
-                     , height          = 24
-                     , searchPredicate = mySearch }
-  where mySearch = isInfixOf `on` map toLower
+                     , font            = myFont 16
+                     , height          = 36
+                     , searchPredicate = fuzzyMatch
+                     , sorter          = fuzzySort }
 
 -- A variant of myPromptConfig which always highlights
 autoPromptConfig :: XPConfig

@@ -1,4 +1,5 @@
-{-# OPTIONS_GHC -O2 -Wall #-}
+{-# OPTIONS_GHC -O2 -Wall  #-}
+{-# LANGUAGE TupleSections #-}
 
 module Gruvbox where
 
@@ -75,13 +76,16 @@ getSeed = unEntropy <$> XS.get
 updateSeed :: X ()
 updateSeed = XS.modify (Entropy . (+1) . unEntropy)
 
+getColor :: Window -> X String
+getColor window = do
+  seed <- hash <$> getSeed
+  name <- runQuery title window
+  let generator = mkStdGen (hashWithSalt seed window)
+      index     = fst (randomR (0, V.length allColors - 1) generator)
+  return (V.unsafeIndex allColors index)
+
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
-  | active    = return (background, foreground)
-  | otherwise = do
-    seed <- hash <$> getSeed
-    name <- runQuery title s
-    let index   = hashWithSalt (hash seed) name `mod` V.length allColors
-        bgcolor = V.unsafeIndex allColors index
-    return (bgcolor, background)
+  | active    = pure (background, foreground)
+  | otherwise = fmap (, background) (getColor s)
 

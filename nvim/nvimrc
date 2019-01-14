@@ -17,8 +17,6 @@ Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
-Plug 'https://github.com/vim-scripts/Efficient-python-folding.git'
-"Plug 'https://github.com/Konfekt/FastFold.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/mbbill/undotree.git'
@@ -67,7 +65,7 @@ set guicursor=
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
+let g:gruvbox_contrast_light='medium'
 set background=dark
 colorscheme gruvbox
 
@@ -109,7 +107,8 @@ set path=.,/usr/include,,**
 " Don't move the cursor to the first column during row traversals
 set nostartofline
 
-" set autochdir
+" Configure diff algorithm to be a little more ergonomic
+set diffopt+=algorithm:patience,indent-heuristic
 
 " Backup & Undo settings
 set undodir=~/.nvim/undodir//
@@ -278,8 +277,43 @@ let g:haskell_classic_highlighting = 1
 let g:haskell_indent_disable = 1
 " }}}
 
-
 " {{{ RTAGS modifications for working in sandboxes
-let g:rtagsRcCmd = "rc --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"
-let g:rtagsRdmCmd = "rdm --socket-file=" .$WORKING_DIR. "/.sbtools/sbcpptags/rdm_socket"
+
+" This callback will be executed when the entire command is completed
+" TODO: check for errors when the command fails
+function! SetRTagsCmds(channel)
+  for line in readfile(g:rtagsWorkingDir, '', 1)
+    let g:rtagsRcCmd = "rc --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+    let g:rtagsRdmCmd = "rdm --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+  endfor
+  unlet g:rtagsWorkingDir
+endfunction
+
+function! NvimSetRTagsCmds(job_id, data, event) dict
+  let vals = join(a:data, '')
+  if len(vals) > 0
+      let g:rtagsRcCmd = "rc --socket-file=" .vals. "/.sbtools/sbcpptags/rdm_socket"
+      let g:rtagsRdmCmd = "rdm --socket-file=" .vals. "/.sbtools/sbcpptags/rdm_socket"
+  endif
+endfunction
+
+function! ConfigureRTagsEnv()
+  " Make sure we're running VIM version 8 or higher.
+  if !has('job') && !has('nvim')
+    echoerr 'ConfigureRTagsEnv requires VIM version 8 or higher'
+    return
+  endif
+
+  " Launch the job.
+  " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
+  " will not actually get hit if we write err out to the same file. Not sure if I'm doing this wrong or?
+  if has('nvim')
+      call jobstart('sbroot', {'on_stdout': 'NvimSetRTagsCmds'})
+  else
+      let g:rtagsWorkingDir = tempname()
+      call job_start('sbroot', {'close_cb': 'SetRTagsCmds', 'out_io': 'file', 'out_name': g:rtagsWorkingDir})
+  endif
+endfunction
+
+call ConfigureRTagsEnv()
 " }}}

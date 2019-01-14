@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/mathworks/devel/sbs/33/sbauman.Bgpucoder.j796246/matlab/src/cgir_parallel'
 let g:netrw_dirhist_2='/mathworks/devel/sbs/33/sbauman.Bgpucoder.j796246/matlab/src/cgir_parallel/export/include/cgir_parallel/analysis'
 let g:netrw_dirhist_3='/mathworks/devel/sbs/33/sbauman.Bgpucoder.j796246/matlab/src/cgir_parallel/export/include/cgir_parallel/xform'
+let g:netrw_dirhist_4='/mathworks/devel/sandbox/sbauman/gecks/g1889190/bad/mex/kalmanfilter/debug'
