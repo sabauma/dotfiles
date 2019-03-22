@@ -121,6 +121,8 @@ export PATH=.cabal-sandbox/bin:$PATH
 export PATH=$RTAGS_BIN_DIR:$PATH
 # CGIR Debugging Tools (cgbug)
 export PATH=/mathworks/hub/share/sbtools/apps/cgir_tools:$PATH
+# Cargo
+export PATH=$HOME/.cargo/bin:$PATH
 
 TEXMF=/home/sbauman/.latex
 

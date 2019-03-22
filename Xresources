@@ -1,6 +1,13 @@
-XTerm*font: xft:Fira Mono:size=12
 XTerm*boldFont: xft:Fira Mono Bold:size=12
 XTerm*faceName: xft:Fira Mono:size=12
+
+XTerm*font1: xft:Fira Mono:size=8
+XTerm*font2: xft:Fira Mono:size=10
+XTerm*font3: xft:Fira Mono:size=12
+XTerm*font4: xft:Fira Mono:size=16
+XTerm*font5: xft:Fira Mono:size=22
+XTerm*font6: xft:Fira Mono:size=25
+
 XTerm*vt100*geometry: 80x50
 XTerm*saveLines: 10000
 XTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
@@ -9,7 +16,12 @@ XTerm*fastScroll: true
 XTerm*jumpScroll: true
 XTerm*locale: true
 XTerm*bellIsUrgent: true
-urxvt.urgentOnBell: true
+
+XTerm.VT100.translations: #override \
+    Ctrl <Key> minus:  smaller-vt-font() \n\
+    Ctrl <Key> plus:   larger-vt-font() \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
 
 /* colors */
 #define bg   #1d2021

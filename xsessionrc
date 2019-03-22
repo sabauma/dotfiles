@@ -10,7 +10,7 @@ export WINDOW_MANAGER=xmonad
 xcompmgr &
 
 gnome-keyring-daemon &
-#gnome-settings-daemon &
+gnome-screensaver &
 
 bash $HOME/bin/wallpaper.sh &
 sleep 2 && setxkbmap -option "caps:swapescape"

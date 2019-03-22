@@ -47,7 +47,7 @@ import qualified XMonad.StackSet                  as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "gnome-terminal"
+myTerminal      = "xterm"
 
 
 -- Width of the window border in pixels.
@@ -108,8 +108,8 @@ gridSelectConfig =
   let config = def :: GSConfig Window
   in config { gs_font        = myFont 12
             , gs_colorizer   = Colors.colorizer
-            , gs_cellheight  = gs_cellheight config * 3 `div` 2
-            , gs_cellwidth   = gs_cellwidth config * 3 `div` 2
+            , gs_cellheight  = div (gs_cellheight config * 3) 2
+            , gs_cellwidth   = div (gs_cellwidth config * 3) 2
             , gs_bordercolor = Colors.background
             }
 
@@ -132,7 +132,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster)
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
     -- Swap the focused window with the next window
@@ -179,6 +179,7 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     -- Dynamic workspace bindings
     , ((modm .|. shiftMask , xK_BackSpace) , removeWorkspace)
     , ((modm               , xK_v        ) , selectWorkspace autoPromptConfig)
+    , ((modm .|. shiftMask , xK_v        ) , withWorkspace myPromptConfig (windows . swapWithCurrent))
     , ((modm               , xK_b        ) , withWorkspace myPromptConfig (windows . W.shift))
     , ((modm .|. shiftMask , xK_b        ) , withWorkspace myPromptConfig (windows . copy))
     -- Two dimensional navigation
@@ -274,7 +275,6 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "desktop"        --> doIgnore
     , className =? "Firefox"        --> doShift "1:web"
-    {-, className =? "Firefox-esr"-}
     , isPrefixOf "Firefox" <$> className --> doShift "1:web"
     , isFullscreen                  --> doFullFloat
     ]
@@ -305,10 +305,10 @@ xmobarConfig = xmobarPP
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
-    Colors.updateSeed
-    dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
-    -- Place pointer in the center of the focused window
-    updatePointer (0.5, 0.5) (0, 0)
+  Colors.updateSeed
+  dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
+  -- Place pointer in the center of the focused window
+  updatePointer (0.5, 0.5) (0, 0)
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -318,7 +318,8 @@ myLogHook xmproc = do
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = setWMName "LG3D" -- return ()
+myStartupHook = setWMName "LG3D"
+
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
