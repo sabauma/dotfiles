@@ -21,11 +21,13 @@ alias ssd="cd /local-ssd/sbauman"
 
 alias c='pygmentize -O style=borland -f console -g'
 alias tmux='TERM=xterm-256color tmux'
-alias sbsb='sb -nodesktop -nosplash'
 alias sync-gecks='rsync -avz $HOME/gecks $s'
 alias sandboxes='mw -using Bmain sbs list'
 alias rtags-index='nice -n 15 sbcpptags -mods-all'
 
 # Create tags files for sandboxes
-alias mktags='find . -iname "*.[ch]pp" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./ctags -L-'
+alias mktags='find . -iregex ".*\.[ch]\(pp\)?" -print | ctags --c++-kinds=+p --fields=+iaS --extra=+q -f ./ctags -L-'
 
+# sbtools
+alias sbsb='sb -nodesktop -nosplash'
+alias sbsubmit='sbsubmit -no-clickable-shell'

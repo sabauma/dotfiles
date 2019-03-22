@@ -128,6 +128,13 @@ fi
 export PATH=/home/spenser/.cabal/bin:/home/spenser/bin:/home/spenser/bin/racket/bin:$PATH
 export PATH=/home/spenser/.local/bin:$PATH
 
+TEXMF=/home/sbauman/.latex
+
+# Various editor variables
+export EDITOR="$VIM_VERSION"
+export SVN_EDITOR="$VIM_VERSION"
+export VISUAL="$VIM_VERSION"
+
 export XDG_CURRENT_DESKTOP=GNOME
 export EDITOR=nvim
 export SVN_EDITOR=nvim

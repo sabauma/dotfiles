@@ -17,7 +17,6 @@ gnome-keyring-daemon &
 gnome-screensaver &
 
 bash /home/spenser/bin/wallpaper.sh &
-#feh --bg-fill /home/spenser/Pictures/high-res/Air___Exo-3840x1200.jpg &
 (sleep 5 && setxkbmap -option "caps:swapescape") &
 
 # feh --bg-fill /home/spenser/Pictures/WPX7MHGC.jpg &

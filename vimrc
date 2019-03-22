@@ -228,3 +228,39 @@ let g:haskell_enable_typeroles = 1
 let g:haskell_enable_static_pointers = 1
 let g:haskell_classic_highlighting = 1
 
+" This callback will be executed when the entire command is completed
+" TODO: check for errors when the command fails
+function! SetRTagsCmds(channel)
+  for line in readfile(g:rtagsWorkingDir, '', 1)
+    let g:rtagsRcCmd = "rc --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+    let g:rtagsRdmCmd = "rdm --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+  endfor
+endfunction
+
+function! ConfigureRTagsEnv()
+  " Make sure we're running VIM version 8 or higher.
+  if !has('job')
+    echoerr 'ConfigureRTagsEnv requires VIM version 8 or higher'
+    return
+  endif
+
+  if exists('g:backgroundCommandOutput')
+    let g:rtagsWorkingDir = system("sbroot | tr -d '\n'")
+    let g:rtagsRcCmd = "rc --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+    let g:rtagsRdmCmd = "rdm --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
+  else
+    " Launch the job.
+    " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
+    " will not actually get hit if we write err out to the same file. Not sure if I'm doing this wrong or?
+    let g:rtagsWorkingDir = tempname()
+    call job_start('sbroot', {'close_cb': 'SetRTagsCmds', 'out_io': 'file', 'out_name': g:rtagsWorkingDir})
+  endif
+endfunction
+
+call ConfigureRTagsEnv()
+
+" {{{ Remove old undo files
+let s:undos = split(globpath(&undodir, '*'), "\n")
+call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
+call map(s:undos, 'delete(v:val)')
+" }}}
