@@ -95,6 +95,7 @@ alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Comp
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
 alias config-env="eval `opam config env`"
+alias vpn='/opt/cisco/anyconnect/bin/vpnui'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

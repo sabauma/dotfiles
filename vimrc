@@ -40,6 +40,9 @@ set expandtab
 set tabstop=4
 set shiftwidth=4 softtabstop=4
 
+" Use patience diff when in diff mode
+set diffopt+=algorithm:patience
+
 set t_Co=256
 
 syntax on
