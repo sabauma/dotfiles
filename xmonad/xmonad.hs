@@ -26,7 +26,7 @@ import           XMonad.Prompt.Window             (windowPromptGoto)
 
 -- General libraries
 import           Data.Char
-import           Data.List                        ((\\))
+import           Data.List                        ((\\), isPrefixOf)
 import           Data.Maybe                       (fromMaybe)
 import           Data.Monoid                      (appEndo)
 import           FindEmptyWorkspace
@@ -205,7 +205,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm      , xK_d) , changeDirPrompt)
 
     , ((mod4Mask  .|. shiftMask , xK_z  ) , spawn "gnome-screensaver-command --lock" )
-    , ((mod4Mask                , xK_F1 ) , spawn "$HOME/bin/firefox"                )
+    , ((mod4Mask                , xK_F1 ) , spawn "firefox"                          )
     , ((mod4Mask                , xK_F3 ) , spawnInCurDir "nautilus --no-desktop ."  )
     ]
     ++
@@ -270,7 +270,6 @@ myManageHook = composeAll
     [ className =? "MPlayer"             --> doFloat
     , resource  =? "desktop_window"      --> doIgnore
     , resource  =? "desktop"             --> doIgnore
-    , isPrefixOf "Firefox" <$> className --> doShift "1:web"
     , isFullscreen                       --> doFullFloat
     ]
 
@@ -316,7 +315,7 @@ myLogHook xmproc = do
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = setWMName "LG3D"
+myStartupHook = return ()
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
