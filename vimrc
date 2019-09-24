@@ -22,6 +22,7 @@ Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/vim-latex/vim-latex.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -47,6 +48,9 @@ set smartindent
 set expandtab
 set tabstop=4
 set shiftwidth=4 softtabstop=4
+
+" Use patience diff when in diff mode
+set diffopt+=algorithm:patience
 
 syntax on
 filetype plugin on
@@ -258,3 +262,4 @@ let s:undos = split(globpath(&undodir, '*'), "\n")
 call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
 call map(s:undos, 'delete(v:val)')
 " }}}
+"

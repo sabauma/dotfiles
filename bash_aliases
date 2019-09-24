@@ -35,5 +35,4 @@ alias sbsb='sb -nodesktop -nosplash'
 alias sbsubmit='sbsubmit -no-clickable-shell'
 
 alias changelists='p4 opened | awk '\''{print $5}'\'' | sort -u'
-
 alias touchall='find . -name "*.cpp" | xargs touch'

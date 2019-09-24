@@ -126,8 +126,6 @@ myKeys conf@XConfig{XMonad.modMask = modm} = M.fromList $
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
-    -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
@@ -254,7 +252,7 @@ myMouseBindings XConfig{XMonad.modMask = modMask} = M.fromList
 ------------------------------------------------------------------------
 -- Layouts:
 
-mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts $ tiled ||| mirror ||| grid ||| Full
+mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts (tiled ||| mirror ||| grid ||| Full)
   where
     tiled  = Tall nmaster delta ratio
     mirror = Mirror tiled
@@ -274,7 +272,6 @@ myManageHook = composeAll
     [ className =? "MPlayer"             --> doFloat
     , resource  =? "desktop_window"      --> doIgnore
     , resource  =? "desktop"             --> doIgnore
-    , isPrefixOf "Firefox" <$> className --> doShift "1:web"
     , isFullscreen                       --> doFullFloat
     ]
 
@@ -285,8 +282,7 @@ isJunk :: String -> Bool
 isJunk x = x == "Spacing" || all isNumber x
 
 cleanupLayout :: String -> String
-cleanupLayout s = foldr const s $ filter (not . isJunk) ss
-  where ss = words s
+cleanupLayout s = foldr const s $ filter (not . isJunk) (words s)
 
 xmobarConfig :: PP
 xmobarConfig = xmobarPP

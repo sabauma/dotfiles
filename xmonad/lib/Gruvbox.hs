@@ -1,5 +1,6 @@
-{-# OPTIONS_GHC -O2 -Wall  #-}
-{-# LANGUAGE TupleSections #-}
+{-# OPTIONS_GHC -O2 -Wall               #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE TupleSections              #-}
 
 module Gruvbox where
 
@@ -12,7 +13,6 @@ import           System.Time
 import           System.Random
 
 backgroundSoft, backgroundNorm, backgroundHard, foreground, background :: String
-
 backgroundSoft = "#32302f"
 backgroundNorm = "#282828"
 backgroundHard = "#1d2021"
@@ -88,4 +88,3 @@ colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = pure (background, foreground)
   | otherwise = fmap (, background) (getColor s)
-

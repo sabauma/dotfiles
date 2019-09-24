@@ -35,6 +35,9 @@ Plug 'https://github.com/vim-scripts/DrawIt.git'
 Plug 'https://github.com/lyuts/vim-rtags.git'
 Plug 'https://github.com/Shougo/unite.vim.git'
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
@@ -345,5 +348,4 @@ function! LightlineFilename()
 endfunction
 
 " }}}
-
 

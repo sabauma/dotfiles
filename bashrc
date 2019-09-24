@@ -192,3 +192,4 @@ check_rtags() {
 check_rtags &
 disown $!
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
