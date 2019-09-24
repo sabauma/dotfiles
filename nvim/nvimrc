@@ -15,7 +15,6 @@ Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
@@ -25,6 +24,9 @@ Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/nfvs/vim-perforce.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+Plug 'itchyny/lightline.vim'
+Plug 'https://github.com/junegunn/goyo.vim.git'
 
 " Drawit
 Plug 'https://github.com/vim-scripts/DrawIt.git'
@@ -42,8 +44,6 @@ Plug 'https://github.com/chikamichi/mediawiki.vim.git'
 
 " Deoplete and sources
 Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
-" Plug 'https://github.com/zchee/deoplete-jedi.git'
-" Plug 'https://github.com/davidhalter/jedi-vim.git'
 
 call plug#end()
 
@@ -325,25 +325,25 @@ call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
 call map(s:undos, 'delete(v:val)')
 " }}}
 
-" {{{ Support for opening large files more quickly
-" file is large from 20mb
-let g:LargeFile = 1024 * 1024 * 20
-augroup LargeFile 
- autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
-augroup END
+let g:python3_host_prog = '/mathworks/home/sbauman/src/dotfiles/nvim/pypynvim3/bin/python3'
 
-function LargeFile()
- " no syntax highlighting etc
- set eventignore+=FileType
- " save memory when other file is viewed
- setlocal bufhidden=unload
- " is read-only (write with :w new_filename)
- setlocal buftype=nowrite
- " no undo possible
- setlocal undolevels=-1
- " display message
- autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
+" {{{ Lightline config
+let g:lightline = {
+  \ 'colorscheme': 'gruvbox',
+  \ 'active' : {
+  \   'left' : [['mode', 'paste'], ['readonly', 'filename']]
+  \ },
+  \ 'component_function': {
+  \   'filename': 'LightlineFilename',
+  \ },
+  \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:.') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
 endfunction
+
 " }}}
 
-let g:python3_host_prog = '/mathworks/home/sbauman/src/dotfiles/nvim/pypynvim3/bin/python3'
+

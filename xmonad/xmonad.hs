@@ -271,12 +271,11 @@ mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts $ tiled ||| mirror |||
 -- Window rules
 
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "desktop"        --> doIgnore
-    , className =? "Firefox"        --> doShift "1:web"
+    [ className =? "MPlayer"             --> doFloat
+    , resource  =? "desktop_window"      --> doIgnore
+    , resource  =? "desktop"             --> doIgnore
     , isPrefixOf "Firefox" <$> className --> doShift "1:web"
-    , isFullscreen                  --> doFullFloat
+    , isFullscreen                       --> doFullFloat
     ]
 
 ------------------------------------------------------------------------
