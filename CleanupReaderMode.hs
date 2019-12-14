@@ -1,8 +1,10 @@
+{-# LANGUAGE OverloadedStrings #-}
 
+import qualified Data.ByteString as B
 import System.IO
 import Text.HTML.TagSoup.Tree
 
-removeReaderMode :: [TagTree String] -> [TagTree String]
+removeReaderMode :: [TagTree B.ByteString] -> [TagTree B.ByteString]
 removeReaderMode tree = transformTree f tree
   where
     f (TagBranch _ attrs _)
@@ -10,5 +12,5 @@ removeReaderMode tree = transformTree f tree
     f x = [x]
 
 main :: IO ()
-main = interact (renderTree . removeReaderMode . parseTree)
+main = B.interact (renderTree . removeReaderMode . parseTree)
 
