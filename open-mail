@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tmux new-session -d 'mutt -f ~/.mail/fastmail/Inbox'
-tmux split-window -h 'mutt -f ~/.mail/gmail/Inbox'
-tmux split-window -v 'mutt -f ~/.mail/mathworks/Inbox'
+tmux new-session -d 'mutt -f +fastmail/Inbox'
+tmux split-window -h 'mutt -f +gmail/Inbox'
+tmux split-window -v 'mutt -f +mathworks/Inbox'
 tmux -2 attach-session -d

@@ -25,6 +25,8 @@ Plug 'https://github.com/wlangstroth/vim-racket.git'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vim-zettel'
 
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
@@ -264,3 +266,8 @@ let s:undos = split(globpath(&undodir, '*'), "\n")
 call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
 call map(s:undos, 'delete(v:val)')
 " }}}
+
+" {{{ Vimwiki configuration
+let g:vimwiki_list = [{'path':'~/src/notes/','ext':'.wiki','syntax':'default'}]
+" }}}
+

@@ -33,6 +33,10 @@ Plug 'https://github.com/davidhalter/jedi-vim.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" Note taking plugins
+Plug 'vimwiki/vimwiki'
+Plug 'https://github.com/michal-h21/vim-zettel.git'
+
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
@@ -98,7 +102,7 @@ set splitbelow
 set nostartofline
 
 " Configure diff algorithm to be a little more ergonomic
-set diffopt+=algorithm:patience,indent-heuristic
+set diffopt+=algorithm:histogram,indent-heuristic
 
 " Backup & Undo settings
 set undodir=~/.nvim/undodir//
@@ -282,3 +286,5 @@ function LargeFile()
 endfunction
 " }}}
 
+" Wiki Configuration
+let g:vimwiki_list = [{'path':'~/src/notes/vimwiki/markdown/','ext':'.md','syntax':'markdown'}, {"path":"~/src/notes/vimwiki/wiki/"}]

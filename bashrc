@@ -190,3 +190,6 @@ function rfci() {
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+source /home/spenser/.config/broot/launcher/bash/br
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
