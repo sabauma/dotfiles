@@ -10,6 +10,7 @@ import           XMonad.Actions.Navigation2D
 import           XMonad.Actions.SpawnOn
 import           XMonad.Actions.SwapWorkspaces
 import           XMonad.Actions.UpdatePointer
+import           XMonad.Actions.Volume
 import           XMonad.Actions.Warp
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
@@ -25,6 +26,7 @@ import           XMonad.Prompt.RunOrRaise         (runOrRaisePrompt)
 import           XMonad.Prompt.Window             (windowPromptGoto)
 
 -- General libraries
+import           Control.Monad
 import           Data.Char
 import           Data.List                        ((\\), isPrefixOf)
 import           Data.Maybe                       (fromMaybe)
@@ -87,11 +89,11 @@ myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music",
 -- Based off of the gruvbox color scheme
 myNormalBorderColor, myFocusedBorderColor :: String
 myNormalBorderColor  = Colors.background
-myFocusedBorderColor = Colors.darkRed
+myFocusedBorderColor = Colors.darkBlue
 
 -- Useful functions for restarting XMonad
 xmonadExecutable :: String
-xmonadExecutable = "/home/spenser/.cabal/bin/xmonad"
+xmonadExecutable = "/usr/bin/xmonad"
 
 restartXMonad :: X ()
 restartXMonad = broadcastMessage ReleaseResources >> restart xmonadExecutable True
@@ -147,7 +149,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
+    --, ((modm .|. shiftMask, xK_q     ), io exitSuccess)
     -- Restart xmonad
     , ((modm              , xK_q     ), restartXMonad)
     -- Cycle recent workspaces
@@ -196,11 +198,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm .|. shiftMask , xK_w) , shiftPrevScreen)
     , ((modm .|. shiftMask , xK_r) , shiftNextScreen)
 
-    , ((noModMask , xF86XK_AudioLowerVolume) , amixer "set Master 2- -c 1")
-    , ((noModMask , xF86XK_AudioRaiseVolume) , amixer "set Master 2+ -c 1")
-    , ((noModMask , xF86XK_AudioMute)        , amixer "set Master toggle -c 1")
-    , ((noModMask , xF86XK_MonBrightnessDown), backlight "-dec 10")
-    , ((noModMask , xF86XK_MonBrightnessUp)  , backlight "-inc 10")
+    , ((noModMask , xF86XK_AudioLowerVolume) , void (lowerVolume 2))
+    , ((noModMask , xF86XK_AudioRaiseVolume) , void (raiseVolume 2))
+    , ((noModMask , xF86XK_AudioMute)        , void toggleMute)
     -- Set working directory for a workspace
     , ((modm      , xK_d) , changeDirPrompt)
 
@@ -226,26 +226,21 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
 
-          amixer :: (MonadIO m) => String -> m ()
-          amixer args = spawn $ "amixer " ++ args
-
-          backlight :: (MonadIO m) => String -> m ()
-          backlight args = spawn $ "xbacklight " ++ args
-
 fullFloatFocused =
-    withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
+    withFocused (\f -> windows =<< appEndo `fmap` runQuery doFullFloat f)
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 
 myMouseBindings XConfig{XMonad.modMask = modMask} = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w)
+    [ ((modMask, button1), mouseAction mouseMoveWindow)
     -- mod-button2, Raise the window to the top of the stack
-    , ((modMask, button2), \w -> focus w >> windows W.swapMaster)
+    , ((modMask, button2), mouseAction (const $ windows W.swapMaster))
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modMask, button3), \w -> focus w >> mouseResizeWindow w)
+    , ((modMask, button3), mouseAction mouseResizeWindow)
     ]
+  where mouseAction act w = focus w >> act w
 
 ------------------------------------------------------------------------
 -- Layouts:

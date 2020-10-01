@@ -14,7 +14,6 @@ Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
@@ -287,4 +286,5 @@ endfunction
 " }}}
 
 " Wiki Configuration
-let g:vimwiki_list = [{'path':'~/src/notes/vimwiki/markdown/','ext':'.md','syntax':'markdown'}, {"path":"~/src/notes/vimwiki/wiki/"}]
+let g:vimwiki_list = [{"path":"~/Notes/vimwiki/"}]
+

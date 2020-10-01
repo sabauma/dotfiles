@@ -1,6 +1,4 @@
--- xmobar config used by Vic Fryzel
--- Author: Vic Fryzel
--- http://github.com/vicfryzel/xmonad-config
+-- xmobar config used by Spenser Bauman
 Config {
     font = "xft:Fira Sans:size=15,antialias=true",
     bgColor = "#1d2021",
@@ -8,16 +6,14 @@ Config {
     position = Top,
     lowerOnStart = True,
     commands = [
-        Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#fb4934","-l","#b8bb26","-n","#458588","-w","3"] 10,
-        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
-        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
-        Run DynNetwork ["-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
+        Run Cpu ["-L","3","-H","50", "-l", "#b8bb26", "--normal","#458588","--high","#fb4934","-p","3"] 10,
+        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#fb4934","-l","#b8bb26","-n","#458588", "-p","3"] 10,
+        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#fb4934","-l","#b8bb26","-n","#458588", "-p","3"] 10,
+        Run DynNetwork ["-H","200","-L","10","-h","#fb4934","-l","#b8bb26","-n","#458588","-m","8"] 10,
         Run Date "%a %b %_d %H:%M" "date" 10,
-        Run Volume "default" "Master" ["-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
-        Run Battery ["-t", "<left>%","-h","#fb4934","-l","#b8bb26","-n","#458588"] 10,
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %dynnetwork%   Bat: %battery%   %default:Master%   %date%"
+    template = "%StdinReader% }{ <fc=#b16286>[</fc> %cpu% <fc=#b16286>]</fc> <fc=#b16286>--</fc> <fc=#b16286>[</fc> %memory% <fc=#b16286>]</fc> <fc=#b16286>--</fc> <fc=#b16286>[</fc> %swap% <fc=#b16286>]</fc> <fc=#b16286>--</fc> <fc=#b16286>[</fc> %dynnetwork% <fc=#b16286>]</fc> <fc=#b16286>--</fc> <fc=#b16286>[</fc> %date% <fc=#b16286>]</fc>"
 }

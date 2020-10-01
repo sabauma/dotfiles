@@ -94,7 +94,6 @@ alias :e='nvim'
 alias sync-downloads='rsync -avz spenser@68.45.30.169/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias sync-downloads-home='rsync -avz spenser@192.168.1.224:/home/spenser/Torrents/Complete /home/spenser/Torrents'
 alias qutebrowser="python3 -m qutebrowser"
-alias config-env="eval `opam config env`"
 alias vpn='/opt/cisco/anyconnect/bin/vpnui'
 
 # prefer neovim if it exists, otherwise default to vim
@@ -191,5 +190,3 @@ function rfci() {
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-source /home/spenser/.config/broot/launcher/bash/br
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
