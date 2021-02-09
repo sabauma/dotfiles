@@ -41,6 +41,11 @@ Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 
+Plug 'https://github.com/vim-scripts/SyntaxRange.git'
+Plug 'https://github.com/junegunn/goyo.vim.git'
+Plug 'https://github.com/tpope/vim-markdown.git'
+
+
 call plug#end()
 
 " Tab settings
@@ -287,4 +292,4 @@ endfunction
 
 " Wiki Configuration
 let g:vimwiki_list = [{"path":"~/Notes/vimwiki/"}]
-
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'haskell']

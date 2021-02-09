@@ -48,7 +48,7 @@ import qualified XMonad.StackSet                  as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "xterm"
+myTerminal      = "alacritty"
 
 
 -- Width of the window border in pixels.

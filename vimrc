@@ -32,6 +32,10 @@ Plug 'michal-h21/vim-zettel'
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 
+Plug 'https://github.com/vim-scripts/SyntaxRange.git'
+Plug 'https://github.com/junegunn/goyo.vim.git'
+Plug 'https://github.com/tpope/vim-markdown.git'
+
 " Syntax files
 Plug 'https://github.com/chikamichi/mediawiki.vim.git'
 
