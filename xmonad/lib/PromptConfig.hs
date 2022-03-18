@@ -17,11 +17,12 @@ myFont size = "xft:Fira Mono:size=" ++ show size
 
 -- These color were taken from the the gruvbox color scheme.
 -- See the .Xresources file for more color information.
-xmobarTitleColor, xmobarCurrentWorkspaceColor, xmobarLayoutColor :: String
+xmobarTitleColor, xmobarCurrentWorkspaceColor, xmobarVisibleWorkspaceColor, xmobarLayoutColor :: String
 -- Color of current window title in xmobar.
 xmobarTitleColor = Colors.darkMagenta
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = Colors.darkBlue
+xmobarVisibleWorkspaceColor = Colors.darkRed
 -- Color of the layout field
 xmobarLayoutColor = Colors.yellow
 
@@ -35,8 +36,8 @@ myPromptConfig = def { bgColor         = backgroundColor
                      , bgHLight        = Colors.darkBlue
                      , fgHLight        = backgroundColor
                      , alwaysHighlight = False
-                     , font            = myFont 12
-                     , height          = 24
+                     , font            = myFont 16
+                     , height          = 36
                      , sorter          = fuzzySort
                      , searchPredicate = fuzzyMatch }
 

@@ -5,15 +5,17 @@ source ~/.bashrc
 xrdb -merge ~/.Xresources &
 
 export WINDOW_MANAGER=xmonad
+export XDG_CURRENT_DESKTOP=GNOME
+export CALIBRE_USE_DARK_PALETTE=1
 
 # For some reason compton does not work well on 16.10 with mulitple monitors
 compton -bCG --backend glx --paint-on-overlay --vsync opengl-swc
-# xcompmgr &
 
 (sleep 1 && unity-settings-daemon) &
 
-gnome-keyring-daemon &
+gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
 gnome-screensaver &
+
 
 #(sleep 5 && setxkbmap -option "caps:swapescape") &
 

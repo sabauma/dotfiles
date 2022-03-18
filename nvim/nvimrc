@@ -15,36 +15,54 @@ Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/wlangstroth/vim-racket.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/neovimhaskell/haskell-vim.git'
-Plug 'https://github.com/bitc/vim-hdevtools.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
-Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'https://github.com/reedes/vim-wordy.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
-Plug 'https://github.com/zchee/deoplete-jedi.git'
 Plug 'https://github.com/davidhalter/jedi-vim.git'
+
+" TreeSitter related plugins
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'https://github.com/lewis6991/spellsitter.nvim.git'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Note taking plugins
-Plug 'vimwiki/vimwiki'
-Plug 'https://github.com/michal-h21/vim-zettel.git'
-
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
-Plug 'https://github.com/chriskempson/base16-vim.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
+Plug 'https://github.com/sainnhe/everforest.git'
 
-Plug 'https://github.com/vim-scripts/SyntaxRange.git'
 Plug 'https://github.com/junegunn/goyo.vim.git'
 Plug 'https://github.com/tpope/vim-markdown.git'
 
+" nvim-cmp
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+
+" Telescope plugins
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Neorg related
+Plug 'folke/zen-mode.nvim'
+Plug 'nvim-neorg/neorg', { 'branch': 'main' } | Plug 'nvim-lua/plenary.nvim'
+Plug 'https://github.com/nvim-neorg/neorg-telescope.git'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
+
+" For LLVM and MLIR Syntax files
+Plug 'https://github.com/llvm/llvm-project.git', { 'rtp': 'mlir/utils/vim' }
+Plug 'https://github.com/llvm/llvm-project.git', { 'as': 'llvm-project2', 'rtp': 'llvm/utils/vim' }
+
+" For neo-tree
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+
+Plug 'ggandor/lightspeed.nvim'
 
 call plug#end()
 
@@ -53,8 +71,9 @@ call plug#end()
 set autoindent
 set smartindent
 set expandtab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
+set conceallevel=0
 
 syntax on
 filetype plugin on
@@ -62,6 +81,7 @@ filetype indent on
 
 set termguicolors
 
+let g:everforest_background = 'hard'
 let g:gruvbox_italics=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
@@ -94,9 +114,9 @@ set virtualedit=all
 
 set modelines=0
 set wrap
-set textwidth=80
+set textwidth=90
 set formatoptions=qrn1
-set colorcolumn=85
+set colorcolumn=90
 set title
 set lazyredraw
 set splitright
@@ -122,17 +142,9 @@ set ssop-=folds     " do not store folds in the session
 map j gj
 map k gk
 
-" Quick navigation of tabs
-map <leader>th :tabprev<CR>
-map <leader>tl :tabnext<CR>
-map <leader>tn :tabnew<CR>
-map <leader>td :tabclose<CR>
-
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
 set foldmethod=syntax
-
-let g:fastfold_fold_command_suffixes = []
 
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -149,25 +161,11 @@ map <leader>j <C-w>j
 map <leader>k <C-w>k
 map <leader>l <C-w>l
 
-" Some options for word processing
-autocmd BufRead *\.txt setlocal formatoptions+=l
-autocmd BufRead *\.txt setlocal lbr
-autocmd BufRead *\.txt setlocal spell spelllang=en_us
-
-" some options for pentadactyl text areas
-autocmd BufRead *\.tmp setlocal formatoptions+=l
-autocmd BufRead *\.tmp setlocal lbr
-autocmd BufRead *\.tmp setlocal spell spelllang=en_us
-
-" Spell checking for latex files
-autocmd BufRead *\.tex setlocal spell spelllang=en_us
-
-" Load latex even for empty files
-let g:vimtex_fold_enabled=1
-let g:vimtex_view_method='zathura'
-autocmd BufRead *\.tex setlocal iskeyword+=:
-map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
-map ,b :!bibtex %<CR>
+" Quick navigation of tabs
+map <leader>th :tabprev<CR>
+map <leader>tl :tabnext<CR>
+map <leader>tn :tabnew<CR>
+map <leader>td :tabclose<CR>
 
 " Remove trailing whitespace
 function! StripTrailingWhitespaces()
@@ -178,6 +176,9 @@ function! StripTrailingWhitespaces()
 endfun
 
 map <silent> <leader>s :call StripTrailingWhitespaces() <CR>
+
+" Invoke telescope's live-grep
+map <silent> <leader>lg :lua require('telescope.builtin').live_grep() <CR>
 
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
@@ -233,63 +234,139 @@ tnoremap <Leader>w <C-\><C-n><C-w>w
 highlight TermCursor guifg=#cc241d
 " }}}
 
-" {{{ netrw configuration
-let g:netrw_liststyle=3
-let g:netrw_winsize=10
-let g:netrw_alto=1
-" }}}
+lua << EOF
+    local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
-" Deoplete configuration
-let g:deoplete#enable_at_startup = 1
+    parser_configs.norg = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg",
+            files = { "src/parser.c", "src/scanner.cc" },
+            branch = "main"
+        },
+    }
 
-nnoremap gb :ls<CR>:buffer<Space>
-nnoremap gB :ls<CR>:sbuffer<Space>
-nnoremap ,b :buffer *
-nnoremap ,B :sbuffer *
+    parser_configs.norg_meta = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
 
-" {{{ Haskell configuration
-let g:haskell_indent_where = 2
-let g:haskell_indent_if = 0
-let g:haskell_indent_in = 0
-let g:haskell_indent_guard = 2
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_typeroles = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_classic_highlighting = 1
-let g:haskell_indent_disable = 1
-" }}}
+    parser_configs.norg_table = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
 
+    require('nvim-treesitter.configs').setup {
+        --ensure_installed = { "norg", "norg_meta", "norg_table", "haskell", "cpp", "c", "javascript", "vim", "lua" },
+        ensure_installed = "all",
+        ignore_install = {}, -- List of parsers to ignore installing
+        highlight = {
+          enable = true,              -- false will disable the whole extension
+          disable = {},  -- list of language that will be disabled
+          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+          -- Using this option may slow down your editor, and you may see some duplicate highlights.
+          -- Instead of true it can also be a list of languages
+          additional_vim_regex_highlighting = true,
+        },
+    }
 
-" {{{ Delete old undo files
-let s:undos = split(globpath(&undodir, '*'), "\n")
-call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
-call map(s:undos, 'delete(v:val)')
-" }}}
+    require('neorg').setup {
+        -- Tell Neorg what modules to load
+        load = {
+            ["core.defaults"] = {}, -- Load all the default modules
+            ["core.norg.concealer"] = {
+                config = {
+                    markup = {
+                        enabled = true
+                    },
+                }
+            }, -- Allows for use of icons
+            ["core.norg.completion"] = {
+                config = {
+                    engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+                }
+            },
+            ["core.presenter"] = {
+                config = {
+                    zen_mode = "zen-mode"
+                },
+            },
+            ["core.norg.dirman"] = {
+                config = {
+                  workspaces = {
+                    work = "~/Notes/work",
+                    personal = "~/Notes/personal"
+                  }
+                }
+            },
+            ["core.integrations.telescope"] = {}, -- Enable the telescope module
+            ["core.gtd.base"] = {
+                config = {
+                    workspace = "default"
+                },
+                projects = {
+                    show_completed_projectes = false,
+                    show_projects_without_tasks = false
+                }
+            },
+            ["core.gtd.ui"] = {},
+            ["core.keybinds"] = { -- Configure core.keybinds
+                config = {
+                  default_keybinds = true, -- Generate the default keybinds
+                  neorg_leader = "<Leader>o" -- This is the default if unspecified
+                }
+            },
+            ["core.norg.qol.toc"] = { },
+            ["core.export"] = { },
+            ["core.export.markdown"] = {
+                config = {
+                    extensions = "all",
+                }
+            },
+        },
+    }
 
-" {{{ Support for opening large files more quickly
-" file is large from 20mb
-let g:LargeFile = 1024 * 1024 * 20
-augroup LargeFile 
- autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
-augroup END
+    -- Setup nvim-cmp.
+    local cmp = require'cmp'
 
-function LargeFile()
- " no syntax highlighting etc
- set eventignore+=FileType
- " save memory when other file is viewed
- setlocal bufhidden=unload
- " is read-only (write with :w new_filename)
- setlocal buftype=nowrite
- " no undo possible
- setlocal undolevels=-1
- " display message
- autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
-endfunction
-" }}}
+    cmp.setup({
+      snippet = { },
+      mapping = {
+        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ['<C-e>'] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+      },
+      sources = cmp.config.sources({
+        { name = 'neorg' },
+        { name = 'buffer' }
+      }, {
+        { name = 'buffer' },
+      })
+    })
 
-" Wiki Configuration
-let g:vimwiki_list = [{"path":"~/Notes/vimwiki/"}]
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'haskell']
+    require('telescope').setup({})
+
+    require('telescope').load_extension('media_files')
+    require('spellsitter').setup {
+      enable = true,
+    }
+
+  require("neo-tree").setup{ }
+
+  require("zen-mode").setup {
+    window = {
+      width = 90,
+      options = {
+        number = false
+      }
+    }
+  }
+EOF

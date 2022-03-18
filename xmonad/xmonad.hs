@@ -48,7 +48,7 @@ import qualified XMonad.StackSet                  as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "alacritty"
+myTerminal      = "kitty"
 
 
 -- Width of the window border in pixels.
@@ -83,7 +83,7 @@ myNumlockMask   = mod2Mask
 -- of this list.
 --
 myWorkspaces :: [String]
-myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
+myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:misc"]
 
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
@@ -131,7 +131,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster)
+    -- , ((modm,               xK_m     ), windows W.focusMaster)
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
     -- Swap the focused window with the next window
@@ -167,8 +167,8 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Tag current window to an empty workspace and view it
     , ((modm .|. shiftMask, xK_n     ), tagToEmptyWorkspace)
     -- Run XMonad prompt
-    {-, ((modm,               xK_p     ), spawn "rofi -show run")-}
-    , ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)
+    , ((modm,               xK_p     ), spawn "rofi -show run")
+    {-, ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)-}
     -- Run Window prompt
     , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
     -- Next Workspace
@@ -279,19 +279,24 @@ isJunk :: String -> Bool
 isJunk x = x == "Spacing" || all isNumber x
 
 cleanupLayout :: String -> String
-cleanupLayout s = foldr const s $ filter (not . isJunk) (words s)
+cleanupLayout s = name ++ padd
+  where
+    name = "|" ++ (foldr const s $ filter (not . isJunk) (words s)) ++ "|"
+    padd = take (10 - length name) (cycle " ")
 
 xmobarConfig :: PP
 xmobarConfig = xmobarPP
              { ppTitle   = title
              , ppLayout  = layout
              , ppCurrent = current
+             , ppVisible = visible
              , ppSep     = sep
              , ppUrgent  = urgent }
   where
     title   = xmobarColor xmobarTitleColor ""  . shorten 100
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
+    visible = xmobarColor xmobarVisibleWorkspaceColor "" . wrap "(" ")"
     urgent  = xmobarColor Colors.darkRed ""
     sep     = "   "
 
@@ -318,7 +323,7 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main :: IO ()
-main = xmonad . defaults =<< spawnPipe "$HOME/.cabal/bin/xmobar"
+main = xmonad . defaults =<< spawnPipe "xmobar"
 
 allHooks :: [ManageHook]
 allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
