@@ -1,16 +1,16 @@
-{-# OPTIONS_GHC -O2 -Wall               #-}
+{-# OPTIONS_GHC -O2 -Wno-deprecations   #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TupleSections              #-}
 
 module Gruvbox where
 
 import           Data.Hashable
-import qualified Data.Vector   as V
+import           Data.List
+import           System.Random
+import           System.Time
 import           XMonad        (Window, X (), io, runQuery, title)
 import           XMonad.Core
 import qualified XMonad.Util.ExtensibleState as XS
-import           System.Time
-import           System.Random
 
 backgroundSoft, backgroundNorm, backgroundHard, foreground, background :: String
 backgroundSoft = "#32302f"
@@ -51,17 +51,17 @@ darkCyan'    = "#427b58"
 darkOrange'  = "#af3a03"
 darkWhite'   = "#7c6f64"
 
-allColors :: V.Vector String
-allColors = V.fromList [ darkRed     , red
-                       , darkGreen   , green
-                       , darkYellow  , yellow
-                       , darkBlue    , blue
-                       , darkMagenta , magenta
-                       , darkOrange  , orange
-                       , darkCyan    , cyan
-                       , darkWhite   , white
-                       , gray0
-                       ]
+allColors :: [String]
+allColors = [ darkRed     , red
+            , darkGreen   , green
+            , darkYellow  , yellow
+            , darkBlue    , blue
+            , darkMagenta , magenta
+            , darkOrange  , orange
+            , darkCyan    , cyan
+            , darkWhite   , white
+            , gray0
+            ]
 
 newtype Entropy = Entropy { unEntropy :: Int }
 
@@ -81,10 +81,11 @@ getColor window = do
   seed <- hash <$> getSeed
   name <- runQuery title window
   let generator = mkStdGen (hashWithSalt seed window)
-      index     = fst (randomR (0, V.length allColors - 1) generator)
-  return (V.unsafeIndex allColors index)
+      index     = fst (randomR (0, length allColors - 1) generator)
+  return (allColors !! index)
 
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = pure (background, foreground)
   | otherwise = fmap (, background) (getColor s)
+

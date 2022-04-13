@@ -109,14 +109,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export RTAGS_BIN_DIR=/mathworks/hub/share/sbtools/external-apps/rtags/rtags-20181127-5870fb617dbc/deb9-64/bin
-
 # For Cabal and Racket
 export PATH=$HOME/.cabal/bin:$HOME/bin:$HOME/bin/racket/bin/:$PATH
 # Local Install Dirs
 export PATH=$HOME/.local/bin:$PATH
-# Cabal Sandboxes
-export PATH=.cabal-sandbox/bin:$PATH
+export PATH=$HOME/.ghcup/bin:$PATH
 # The RTags tool
 export PATH=$RTAGS_BIN_DIR:$PATH
 # CGIR Debugging Tools (cgbug)
@@ -137,15 +134,16 @@ export VISUAL="$VIM_VERSION"
 export P4MERGE="$VIMDIFF_VERSION"
 export P4EDITOR="$VIM_VERSION"
 
-# Environment variable for rtags
-export WORKING_DIR=/local-ssd/sbauman/Bcgir_parallel1/
-
 # CCACHE settings
 export CCACHE_COMPRESS=yes
 
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
+# Set the XDG data directory to not be on a networked location.
+if [ $(hostname) == "ah-sbauman-l" ]
+then
+    export XDG_DATA_HOME="/local-ssd/sbauman/.local"
+fi
 
-alias octave='LIBGL_ALWAYS_SOFTWARE=1 octave'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\[\033[01;32m\]\h: \w\n\[\033[0;36m\]\t $ \[\033[0;39m\]'
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -179,17 +177,8 @@ case "${unameOut}" in
     Linux*)     [ -f ~/.fzf.bash ] && source ~/.fzf.bash;;
 esac
 
-# Some logic to check that the rtags bin is not out of date.
-# The sbccptags call is rather slow, so this check is done async to prevent
-# long terminal starts.
-check_rtags() {
-    bin_dir=$(sbcpptags -rtags-bin-dir)
-    if [ $bin_dir != $RTAGS_BIN_DIR ]; then
-        echo "update rtags bin"
-    fi
-}
-
-check_rtags &
-disown $!
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+source /home/sbauman/.config/broot/launcher/bash/br
+
+eval "$(starship init bash)"

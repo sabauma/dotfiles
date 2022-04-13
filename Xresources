@@ -1,4 +1,5 @@
 XTerm*boldFont: xft:Fira Mono Bold:size=12
+XTerm*italicFont: xft:Fira Mono Italic:size=12
 XTerm*faceName: xft:Fira Mono:size=12
 
 XTerm*font1: xft:Fira Mono:size=8

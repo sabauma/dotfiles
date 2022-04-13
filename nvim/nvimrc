@@ -13,27 +13,19 @@ Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-repeat.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/lervag/vimtex.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/rust-lang/rust.vim.git'
-Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/neovimhaskell/haskell-vim.git'
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/nfvs/vim-perforce.git'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/llvm/llvm-project.git', { 'rtp': 'mlir/utils/vim' }
+Plug 'https://github.com/llvm/llvm-project.git', { 'as': 'llvm-project2', 'rtp': 'llvm/utils/vim' }
 
 Plug 'itchyny/lightline.vim'
-Plug 'https://github.com/junegunn/goyo.vim.git'
 
-" Drawit
-Plug 'https://github.com/vim-scripts/DrawIt.git'
-
-" Stuff for rtags
-Plug 'https://github.com/lyuts/vim-rtags.git'
-Plug 'https://github.com/Shougo/unite.vim.git'
+" coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -41,12 +33,37 @@ Plug 'junegunn/fzf.vim'
 " Colorscheme bundles
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
-
-" Syntax files
-Plug 'https://github.com/chikamichi/mediawiki.vim.git'
+Plug 'https://github.com/sainnhe/everforest.git'
 
 " Deoplete and sources
 Plug 'https://github.com/Shougo/deoplete.nvim.git', { 'do': function('DoRemote') }
+
+Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'https://github.com/lewis6991/spellsitter.nvim.git'
+
+" Telescope plugins
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Neorg related plugins
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+
+" Neorg related
+Plug 'folke/zen-mode.nvim'
+Plug 'nvim-neorg/neorg', { 'branch': 'main' } | Plug 'nvim-lua/plenary.nvim'
+Plug 'https://github.com/nvim-neorg/neorg-telescope.git'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
+
+" For neo-tree
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+
+Plug 'ggandor/lightspeed.nvim'
 
 call plug#end()
 
@@ -55,8 +72,8 @@ call plug#end()
 set autoindent
 set smartindent
 set expandtab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 
 syntax on
 filetype plugin on
@@ -91,7 +108,7 @@ set visualbell
 set cursorline
 set ruler
 set backspace=indent,eol,start
-set laststatus=2
+set laststatus=3
 set number
 set virtualedit=all
 
@@ -104,6 +121,10 @@ set title
 set lazyredraw
 set splitright
 set splitbelow
+set signcolumn=number
+
+" Shorten updatetime for CoC
+set updatetime=400
 
 " Set path for find command
 set path=.,/usr/include,,**
@@ -112,7 +133,7 @@ set path=.,/usr/include,,**
 set nostartofline
 
 " Configure diff algorithm to be a little more ergonomic
-set diffopt+=algorithm:patience,indent-heuristic
+set diffopt+=algorithm:histogram,indent-heuristic,hiddenoff
 
 " Backup & Undo settings
 set undodir=~/.nvim/undodir//
@@ -128,12 +149,6 @@ set ssop-=folds     " do not store folds in the session
 map j gj
 map k gk
 
-" Quick navigation of tabs
-map <leader>th :tabprev<CR>
-map <leader>tl :tabnext<CR>
-map <leader>tn :tabnew<CR>
-map <leader>td :tabclose<CR>
-
 " Fold based on the syntax of the file, but only fold the outer level
 set foldnestmax=1
 set foldmethod=syntax
@@ -148,34 +163,19 @@ nnoremap ` '
 " Remove menu
 set go=c
 
+" {{{ Leader Mappings
+" Quick navigation of tabs
+map <leader>th :tabprev<CR>
+map <leader>tl :tabnext<CR>
+map <leader>tn :tabnew<CR>
+map <leader>td :tabclose<CR>
+
 " Faster way to switch between splits
 map <leader>w <C-w>w
 map <leader>h <C-w>h
 map <leader>j <C-w>j
 map <leader>k <C-w>k
 map <leader>l <C-w>l
-
-" Some options for word processing
-autocmd BufRead *\.txt setlocal formatoptions+=l
-autocmd BufRead *\.txt setlocal lbr
-autocmd BufRead *\.txt setlocal spell spelllang=en_us
-
-" some options for pentadactyl text areas
-autocmd BufRead *\.tmp setlocal formatoptions+=l
-autocmd BufRead *\.tmp setlocal lbr
-autocmd BufRead *\.tmp setlocal spell spelllang=en_us
-
-" Spell checking for latex files
-autocmd BufRead *\.tex setlocal spell spelllang=en_us
-
-" {{{ Latex configuration
-" Load latex even for empty files
-let g:vimtex_fold_enabled=1
-let g:vimtex_view_method='zathura'
-autocmd BufRead *\.tex setlocal iskeyword+=:
-map ,p :!xelatex -shell-escape interaction=nonstopmode %<CR>
-map ,b :!bibtex %<CR>
-" }}}
 
 " Remove trailing whitespace
 function! StripTrailingWhitespaces()
@@ -186,6 +186,12 @@ function! StripTrailingWhitespaces()
 endfun
 
 map <silent> <leader>s :call StripTrailingWhitespaces() <CR>
+
+" Invoke telescope's live-grep
+map <silent> <leader>lg :lua require('telescope.builtin').live_grep() <CR>
+map <silent> <leader>ff :lua require('telescope.builtin').find_files() <CR>
+
+" }}}
 
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
@@ -256,7 +262,7 @@ let g:netrw_sort_sequence = '[\/]$,\<core\%(\.\d\+\)\=,\.[a-np-z]$,*,\.o$,\.obj$
 " }}}
 
 " {{{ Deoplete configuration
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " }}}
 
 " {{{ Quick buffer manipulation
@@ -264,62 +270,6 @@ nnoremap gb :ls<CR>:buffer<Space>
 nnoremap gB :ls<CR>:sbuffer<Space>
 nnoremap ,b :buffer *
 nnoremap ,B :sbuffer *
-" }}}
-
-" {{{ Haskell configuration
-let g:haskell_indent_where = 2
-let g:haskell_indent_if = 0
-let g:haskell_indent_in = 0
-let g:haskell_indent_guard = 2
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1
-let g:haskell_enable_arrowsyntax = 1
-let g:haskell_enable_pattern_synonyms = 1
-let g:haskell_enable_typeroles = 1
-let g:haskell_enable_static_pointers = 1
-let g:haskell_classic_highlighting = 1
-let g:haskell_indent_disable = 1
-" }}}
-
-" {{{ RTAGS modifications for working in sandboxes
-
-" This callback will be executed when the entire command is completed
-" TODO: check for errors when the command fails
-function! SetRTagsCmds(channel)
-  for line in readfile(g:rtagsWorkingDir, '', 1)
-    let g:rtagsRcCmd = "rc --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
-    let g:rtagsRdmCmd = "rdm --socket-file=" .line. "/.sbtools/sbcpptags/rdm_socket"
-  endfor
-  unlet g:rtagsWorkingDir
-endfunction
-
-function! NvimSetRTagsCmds(job_id, data, event) dict
-  let vals = join(a:data, '')
-  if len(vals) > 0
-      let g:rtagsRcCmd = "rc --socket-file=" .vals. "/.sbtools/sbcpptags/rdm_socket"
-      let g:rtagsRdmCmd = "rdm --socket-file=" .vals. "/.sbtools/sbcpptags/rdm_socket"
-  endif
-endfunction
-
-function! ConfigureRTagsEnv()
-  " Make sure we're running VIM version 8 or higher.
-  if !has('job') && !has('nvim')
-    echoerr 'ConfigureRTagsEnv requires VIM version 8 or higher'
-    return
-  endif
-
-  " Launch the job.
-  " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
-  " will not actually get hit if we write err out to the same file. Not sure if I'm doing this wrong or?
-  if has('nvim')
-      call jobstart('sbroot', {'on_stdout': 'NvimSetRTagsCmds'})
-  else
-      let g:rtagsWorkingDir = tempname()
-      call job_start('sbroot', {'close_cb': 'SetRTagsCmds', 'out_io': 'file', 'out_name': g:rtagsWorkingDir})
-  endif
-endfunction
-
-call ConfigureRTagsEnv()
 " }}}
 
 " {{{ Delete old undo files
@@ -348,4 +298,235 @@ function! LightlineFilename()
 endfunction
 
 " }}}
+
+" {{{ Coc related bindings
+"" Remap keys for gotos
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" derived
+nmap <silent> <leader>gc :call CocLocations('ccls','$ccls/inheritance',{'derived': v:true})<cr>
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" }}}
+
+" {{{ nvim-tree
+let g:nvim_tree_quit_on_open = 0 "0 by default, closes the tree when you open a file
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
+let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
+let g:nvim_tree_symlink_arrow = ' >> ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
+let g:nvim_tree_respect_buf_cwd = 0 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
+let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
+let g:nvim_tree_refresh_wait = 500 "1000 by default, control how often the tree can be refreshed, 1000 means the tree can be refresh once per 1000ms.
+let g:nvim_tree_window_picker_exclude = {
+    \   'filetype': [
+    \     'notify',
+    \     'packer',
+    \     'qf'
+    \   ],
+    \   'buftype': [
+    \     'terminal'
+    \   ]
+    \ }
+" Dictionary of buffer option names mapped to a list of option values that
+" indicates to the window picker that the buffer's window should not be
+" selectable.
+let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 0,
+    \ 'files': 0,
+    \ 'folder_arrows': 0,
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath.
+"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
+"but this will not work when you set indent_markers (because of UI conflict)
+
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+" }}}
+
+lua << EOF
+    local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+    parser_configs.norg = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg",
+            files = { "src/parser.c", "src/scanner.cc" },
+            branch = "main"
+        },
+    }
+
+    parser_configs.norg_meta = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
+
+    parser_configs.norg_table = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
+
+    require('nvim-treesitter.configs').setup {
+        --ensure_installed = { "norg", "norg_meta", "norg_table", "haskell", "cpp", "c", "javascript", "vim", "lua" },
+        ensure_installed = "all",
+        ignore_install = {}, -- List of parsers to ignore installing
+        highlight = {
+          enable = true,              -- false will disable the whole extension
+          disable = {},  -- list of language that will be disabled
+          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+          -- Using this option may slow down your editor, and you may see some duplicate highlights.
+          -- Instead of true it can also be a list of languages
+          additional_vim_regex_highlighting = true,
+        },
+    }
+
+    require('neorg').setup {
+        -- Tell Neorg what modules to load
+        load = {
+            ["core.defaults"] = {}, -- Load all the default modules
+            ["core.norg.concealer"] = {
+                config = {
+                    markup = {
+                        enabled = true
+                    },
+                    icon_preset = "diamond"
+                }
+            }, -- Allows for use of icons
+            ["core.norg.completion"] = {
+                config = {
+                    engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+                }
+            },
+            ["core.presenter"] = {
+                config = {
+                    zen_mode = "zen-mode"
+                },
+            },
+            ["core.norg.dirman"] = {
+                config = {
+                  workspaces = {
+                    work = "~/Notes/work",
+                    personal = "~/Notes/personal"
+                  }
+                }
+            },
+            ["core.integrations.telescope"] = {}, -- Enable the telescope module
+            ["core.gtd.base"] = {
+                config = {
+                    workspace = "default"
+                },
+                projects = {
+                    show_completed_projectes = false,
+                    show_projects_without_tasks = false
+                }
+            },
+            ["core.gtd.ui"] = {},
+            ["core.keybinds"] = { -- Configure core.keybinds
+                config = {
+                  default_keybinds = true, -- Generate the default keybinds
+                  neorg_leader = "<Leader>o" -- This is the default if unspecified
+                }
+            },
+            ["core.norg.qol.toc"] = { },
+            ["core.export"] = { },
+            ["core.export.markdown"] = {
+                config = {
+                    extensions = "all",
+                }
+            },
+            ["core.norg.journal"] = {
+                config = {
+                    journal_folder = "journal",
+                    strategy = "flat"
+                }
+            },
+        },
+    }
+
+    -- Setup nvim-cmp.
+    local cmp = require'cmp'
+
+    cmp.setup({
+      snippet = { },
+      mapping = {
+        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ['<C-e>'] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+      },
+      sources = cmp.config.sources({
+        { name = 'neorg' },
+        { name = 'buffer' }
+      }, {
+        { name = 'buffer' },
+      })
+    })
+
+    require('telescope').setup({})
+
+    require('telescope').load_extension('media_files')
+    require('spellsitter').setup {
+      enable = true,
+    }
+
+  require("neo-tree").setup{ }
+
+  require("zen-mode").setup {
+    window = {
+      width = 90,
+      options = {
+        number = false
+      }
+    }
+  }
+
+EOF
+
 

@@ -13,5 +13,5 @@ gnome-keyring-daemon &
 gnome-screensaver &
 
 bash $HOME/bin/wallpaper.sh &
-sleep 2 && setxkbmap -option "caps:swapescape"
+sleep 2 && setxkbmap -option "ctrl:nocaps" && xcape -e 'Control_L=Escape'
 xset b off

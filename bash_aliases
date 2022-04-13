@@ -10,7 +10,6 @@ alias upgrade='sudo apt dist-upgrade'
 
 alias switch-to-devel-farm='sbruntests -farm-management -add sbauman-deb9-64 -farm devel'
 alias switch-to-cuda-farm='sbruntests -farm-management -add sbauman-deb9-64 -farm cuda'
-alias sandbox-update='sbclone -backup'
 
 alias untar='tar -xzvf'
 
@@ -36,3 +35,14 @@ alias sbsubmit='sbsubmit -no-clickable-shell'
 
 alias changelists='p4 opened | awk '\''{print $5}'\'' | sort -u'
 alias touchall='find . -name "*.cpp" | xargs touch'
+alias wd='cd $(mktemp -d)'
+
+function rcd {
+    local tmpfile=$(mktemp)
+    ranger --choosedir="${tmpfile}"
+    local newdir=$(cat "${tmpfile}")
+    cd "${newdir}"
+}
+
+export -f rcd
+

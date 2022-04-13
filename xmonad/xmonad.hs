@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -O2 -Wall #-}
+{-# OPTIONS_GHC -O2 -Wno-deprecations #-}
 module Main (main) where
 
 import           XMonad
@@ -47,7 +47,7 @@ import qualified XMonad.StackSet                  as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "xterm"
+myTerminal      = "~/.local/bin/kitty"
 
 
 -- Width of the window border in pixels.
@@ -82,7 +82,7 @@ myNumlockMask   = mod2Mask
 -- of this list.
 --
 myWorkspaces :: [String]
-myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:torrents"]
+myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..12]
 
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
