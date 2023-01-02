@@ -22,14 +22,11 @@ import           XMonad.Layout.Grid               (Grid (..))
 import           XMonad.Layout.NoBorders          (smartBorders)
 
 import           XMonad.Layout.Spacing            (smartSpacing)
-import           XMonad.Prompt.RunOrRaise         (runOrRaisePrompt)
-import           XMonad.Prompt.Window             (windowPromptGoto)
+import           XMonad.Prompt.Window             (allWindows, windowPrompt, WindowPrompt (..))
 
 -- General libraries
 import           Control.Monad
 import           Data.Char
-import           Data.List                        ((\\), isPrefixOf)
-import           Data.Maybe                       (fromMaybe)
 import           Data.Monoid                      (appEndo)
 import           FindEmptyWorkspace
 import           Gruvbox                          as Colors
@@ -83,7 +80,7 @@ myNumlockMask   = mod2Mask
 -- of this list.
 --
 myWorkspaces :: [String]
-myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4..9] ++ ["10:music", "11:im", "12:misc"]
+myWorkspaces = ["1:web", "2:email", "3:code"] ++ map show [4 :: Integer .. 9] ++ ["10:music", "11:im", "12:misc"]
 
 -- Border colors for unfocused and focused windows, respectively.
 -- Based off of the gruvbox color scheme
@@ -117,6 +114,7 @@ gridSelectConfig =
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawnInCurDir $ XMonad.terminal conf)
@@ -170,7 +168,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_p     ), spawn "rofi -show run")
     {-, ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)-}
     -- Run Window prompt
-    , ((modm .|. shiftMask, xK_p     ), windowPromptGoto myPromptConfig)
+    , ((modm .|. shiftMask, xK_p     ), windowPrompt myPromptConfig Goto allWindows)
     -- Next Workspace
     , ((modm,               xK_Right ), nextWS)
     -- Previous Workspace
@@ -226,6 +224,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
 
+fullFloatFocused :: X ()
 fullFloatFocused =
     withFocused (\f -> windows =<< appEndo `fmap` runQuery doFullFloat f)
 
@@ -333,7 +332,7 @@ allHooks = [manageDocks, myManageHook, manageHook def, manageSpawn]
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 --
-defaults xmproc = docks $ def
+defaults xmproc = docks $ ewmhFullscreen $ def
     { -- Simple Stuff
       terminal           = myTerminal
     , focusFollowsMouse  = myFocusFollowsMouse
@@ -352,6 +351,6 @@ defaults xmproc = docks $ def
     , manageHook         = foldr1 (<+>) allHooks
     , logHook            = myLogHook xmproc
     , startupHook        = myStartupHook
-    , handleEventHook    = handleEventHook def <+> fullscreenEventHook
+    , handleEventHook    = handleEventHook def
     }
 

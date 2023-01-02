@@ -2,8 +2,6 @@
 module PromptConfig where
 
 import           Data.Char
-import           Data.Function           (on)
-import           Data.List               (isInfixOf)
 import           Gruvbox                 as Colors
 import           XMonad
 import           XMonad.Prompt

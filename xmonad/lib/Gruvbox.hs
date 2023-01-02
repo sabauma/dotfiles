@@ -10,6 +10,7 @@ import           XMonad        (Window, X (), runQuery, title)
 import           XMonad.Core
 import qualified XMonad.Util.ExtensibleState as XS
 
+import Data.Word
 import System.Random
 
 backgroundSoft = "#32302f"
@@ -70,15 +71,14 @@ instance ExtensionClass Entropy where
   extensionType = StateExtension
 
 updateSeed :: X ()
-updateSeed = XS.modify (snd . next :: Entropy -> Entropy)
+updateSeed = XS.modify (snd . genWord64 :: Entropy -> Entropy)
 
-getSeed :: X Int
-getSeed = fmap (fst . next) (XS.get :: X Entropy)
+getSeed :: X Word64
+getSeed = fmap (fst . genWord64) (XS.get :: X Entropy)
 
 getColor :: Window -> X String
 getColor window = do
   seed <- hash <$> getSeed
-  name <- runQuery title window
   let generator = mkStdGen (hashWithSalt seed window)
       index     = fst (randomR (0, V.length allColors - 1) generator)
   return (V.unsafeIndex allColors index)

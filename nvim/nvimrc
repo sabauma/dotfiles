@@ -1,16 +1,10 @@
 
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-
 call plug#begin('~/.nvim/plugged')
 
-Plug 'https://github.com/eparreno/vim-l9.git'
 Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
@@ -21,6 +15,7 @@ Plug 'https://github.com/vim-scripts/a.vim.git'
 
 " TreeSitter related plugins
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'https://github.com/lewis6991/spellsitter.nvim.git'
 
 " Fzf
@@ -31,6 +26,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/flazz/vim-colorschemes.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/sainnhe/everforest.git'
+Plug 'sainnhe/gruvbox-material'
+Plug 'luisiacc/gruvbox-baby'
 
 " Cmp related plugins
 Plug 'hrsh7th/cmp-buffer'
@@ -38,44 +35,42 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
+
+" LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'onsails/lspkind.nvim'
 
 " Telescope plugins
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 
 " Neorg related
 Plug 'folke/zen-mode.nvim'
 Plug 'nvim-neorg/neorg-telescope'
 Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-neorg/neorg', { 'branch': 'main' } | Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope-media-files.nvim'
+Plug 'nvim-neorg/neorg', { 'branch': 'main' }
 
 " For LLVM and MLIR Syntax files
 Plug 'https://github.com/llvm/llvm-project.git', { 'rtp': 'mlir/utils/vim' }
 Plug 'https://github.com/llvm/llvm-project.git', { 'as': 'llvm-project2', 'rtp': 'llvm/utils/vim' }
 
-Plug 'ggandor/lightspeed.nvim'
-
 " For compiler explorer
 Plug 'stevearc/dressing.nvim'
 Plug 'krady21/compiler-explorer.nvim'
 
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'rcarriga/nvim-notify'
+
 call plug#end()
 
 " Tab settings
-" set cindent
 set autoindent
 set smartindent
 set expandtab
 set tabstop=2
 set shiftwidth=2
 set conceallevel=0
-
-syntax on
-filetype plugin on
-filetype indent on
 
 set termguicolors
 
@@ -85,8 +80,15 @@ let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_contrast_light='medium'
 let g:gruvbox_guisp_fallback='fg'
+
+let g:gruvbox_material_foreground='original'
+let g:gruvbox_material_background='hard'
+let g:gruvbox_material_background='hard'
+let g:gruvbox_material_enable_bold=1
+let g:gruvbox_material_enable_italic=0
+
 set background=dark
-colorscheme gruvbox
+colorscheme gruvbox-material
 
 " Search options
 set hlsearch
