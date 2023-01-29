@@ -28,6 +28,9 @@ import           XMonad.Prompt.Window             (allWindows, windowPrompt, Win
 import           Control.Monad
 import           Data.Char
 import           Data.Monoid                      (appEndo)
+import qualified Data.Text                        as T
+import qualified Data.Text.ICU.Normalize2         as ICU
+
 import           FindEmptyWorkspace
 import           Gruvbox                          as Colors
 import           PerWorkspaceDirs                 (currentWorkspace, getDir)
@@ -261,10 +264,11 @@ mainLayouts = smartSpacing 5 $ smartBorders $ avoidStruts (tiled ||| mirror ||| 
 -- Window rules
 
 myManageHook = composeAll
-    [ className =? "MPlayer"             --> doFloat
-    , resource  =? "desktop_window"      --> doIgnore
-    , resource  =? "desktop"             --> doIgnore
-    , isFullscreen                       --> doFullFloat
+    [ className =? "MPlayer"        --> doFloat
+    , resource  =? "steam"          --> doIgnore
+    , resource  =? "desktop_window" --> doIgnore
+    , resource  =? "desktop"        --> doIgnore
+    , isFullscreen                  --> doFullFloat
     ]
 
 -- Whether focus follows the mouse pointer.
@@ -292,12 +296,18 @@ xmobarConfig = xmobarPP
              , ppSep     = sep
              , ppUrgent  = urgent }
   where
-    title   = xmobarColor xmobarTitleColor ""  . shorten 100
+    title   = xmobarColor xmobarTitleColor ""  . shorten 100 . myNormalizer
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     visible = xmobarColor xmobarVisibleWorkspaceColor "" . wrap "(" ")"
     urgent  = xmobarColor Colors.darkRed ""
     sep     = "   "
+
+-- Perform some unicode normalization on the input string.
+-- Mostly for xmobar, which cannot render oddly stylized unicode characters that can
+-- appear in application titles.
+myNormalizer :: String -> String
+myNormalizer = T.unpack . ICU.nfkd . T.pack
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do

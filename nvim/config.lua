@@ -1,6 +1,8 @@
 
 vim.notify = require('notify')
 
+require('nvim-web-devicons').setup()
+
 require('nvim-treesitter.configs').setup {
   --ensure_installed = { "norg", "norg_meta", "norg_table", "haskell", "cpp", "c", "javascript", "vim", "lua" },
   ensure_installed = "all",
@@ -154,6 +156,13 @@ require("zen-mode").setup {
 }
 
 require("lualine").setup()
+
+require("mind").setup {
+  persistence = {
+    state_path = "~/Notes/mind/mind.json",
+    data_dir = "~/Notes/mind/data"
+  }
+}
 
 -- Enable telescope theme
 vim.g.gruvbox_baby_telescope_theme = 1

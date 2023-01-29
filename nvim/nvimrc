@@ -62,6 +62,9 @@ Plug 'krady21/compiler-explorer.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'rcarriga/nvim-notify'
 
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'phaazon/mind.nvim', { 'branch': 'v2.2' }
+
 call plug#end()
 
 " Tab settings
