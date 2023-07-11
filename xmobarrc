@@ -1,6 +1,6 @@
 -- xmobar config used by Spenser Bauman
 Config {
-    font = "xft:Iosevka Etoile:size=20,antialias=true",
+    font = "xft:Fira Mono:size=20,Symbols Nerd Font Mono:size=20",
     bgColor = "#1d2021",
     fgColor = "#a89984",
     position = Top,
@@ -15,5 +15,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ <fc=#b16286>〈</fc> %cpu% <fc=#b16286>〉—〈</fc> %memory% <fc=#b16286>〉—〈</fc> %swap% <fc=#b16286>〉—〈</fc> %dynnetwork% <fc=#b16286>〉—〈</fc> %date% <fc=#b16286>〉</fc>"
+    template = "%StdinReader% }{ <fc=#b16286>[</fc>%cpu%<fc=#b16286>]·[</fc>%memory%<fc=#b16286>]·[</fc>%swap%<fc=#b16286>]·[</fc>%dynnetwork%<fc=#b16286>]·[</fc>%date%<fc=#b16286>]</fc>"
 }

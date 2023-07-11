@@ -51,44 +51,23 @@ darkCyan'    = "#427b58"
 darkOrange'  = "#af3a03"
 darkWhite'   = "#7c6f64"
 
-allColors :: V.Vector String
-allColors = V.fromList [ darkRed     , red
-                       , darkGreen   , green
-                       , darkYellow  , yellow
-                       , darkBlue    , blue
-                       , darkMagenta , magenta
-                       , darkOrange  , orange
-                       , darkCyan    , cyan
-                       , darkWhite   , white
-                       , gray0
-                       ]
-
-newtype Entropy = Entropy { getEntropy :: StdGen }
-  deriving (RandomGen)
-
-instance ExtensionClass Entropy where
-  initialValue  = Entropy (mkStdGen 0)
-  extensionType = StateExtension
-
-updateSeed :: X ()
-updateSeed = XS.modify (snd . genWord64 :: Entropy -> Entropy)
-
-getSeed :: X Word64
-getSeed = fmap (fst . genWord64) (XS.get :: X Entropy)
-
-getColor :: Window -> X String
-getColor window = do
-  seed <- hash <$> getSeed
-  let generator = mkStdGen (hashWithSalt seed window)
-      index     = fst (randomR (0, V.length allColors - 1) generator)
-  return (V.unsafeIndex allColors index)
+allColors :: [String]
+allColors = [ darkRed     , red
+            , darkGreen   , green
+            , darkYellow  , yellow
+            , darkBlue    , blue
+            , darkMagenta , magenta
+            , darkOrange  , orange
+            , darkCyan    , cyan
+            , darkWhite   , white
+            , gray0
+            ]
 
 colorizer :: Window -> Bool -> X (String, String)
 colorizer s active
   | active    = return (background, foreground)
   | otherwise = do
-    seed <- getSeed
     name <- runQuery title s
-    let index   = hashWithSalt (hash seed) name `mod` (V.length allColors)
-        bgcolor = V.unsafeIndex allColors index
+    let index   = hash name `mod` (length allColors)
+        bgcolor = allColors !! index
     return (bgcolor, background)

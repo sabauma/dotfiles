@@ -3,17 +3,50 @@ vim.notify = require('notify')
 
 require('nvim-web-devicons').setup()
 
+-- Mappings.
+local on_attach = function(client, bufnr)
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, bufopts)
+  vim.keymap.set('n', ']g', vim.diagnostic.goto_next, bufopts)
+
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+end
+
+local configs = require('lspconfig.configs')
+local lspconfig = require('lspconfig')
+local lsputil = require('lspconfig.util')
+
+lspconfig.ccls.setup {
+  on_attach = on_attach,
+  init_options = {
+    compilationDatabaseDirectory = "build";
+    index = {
+      threads = 0;
+    };
+    clang = { excludeArgs = { "-frounding-math"} };
+  },
+  root_dir = lsputil.root_pattern(".sbtools", ".ccls", "build/compile_commands.json")
+}
+
+lspconfig.mlir_lsp_server.setup {
+  on_attach = on_attach,
+  -- cmd = {'scripts/run', 'mlir-lsp-server'},
+}
+
 require('nvim-treesitter.configs').setup {
-  --ensure_installed = { "norg", "norg_meta", "norg_table", "haskell", "cpp", "c", "javascript", "vim", "lua" },
   ensure_installed = "all",
-  ignore_install = {}, -- List of parsers to ignore installing
+  ignore_install = {},
   highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = {},  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
+    enable = true,
+    disable = {},
     additional_vim_regex_highlighting = true,
   },
   indent = {
@@ -34,15 +67,15 @@ require('neorg').setup {
   -- Tell Neorg what modules to load
   load = {
     ["core.defaults"] = {}, -- Load all the default modules
-    ["core.norg.concealer"] = {
+    ["core.concealer"] = {
       config = {
         markup = {
           enabled = true
         },
-        icon_preset = "diamond"
+        icon_preset = "basic"
       }
     }, -- Allows for use of icons
-    ["core.norg.completion"] = {
+    ["core.completion"] = {
       config = {
         engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
       }
@@ -52,7 +85,7 @@ require('neorg').setup {
         zen_mode = "zen-mode"
       },
     },
-    ["core.norg.dirman"] = {
+    ["core.dirman"] = {
       config = {
         workspaces = {
           work = "~/Notes/work",
@@ -67,28 +100,25 @@ require('neorg').setup {
         neorg_leader = "<Leader>o" -- This is the default if unspecified
       }
     },
-    ["core.norg.qol.toc"] = { },
+    ["core.qol.toc"] = { },
     ["core.export"] = { },
     ["core.export.markdown"] = {
       config = {
         extensions = "all",
       }
     },
-    ["core.norg.journal"] = {
+    ["core.journal"] = {
       config = {
         journal_folder = "journal",
         strategy = "flat"
       }
     },
-    ["core.norg.esupports.metagen"] = {
+    ["core.esupports.metagen"] = {
       config = {
+        type = "auto",
+        tab = "  ",
         update_date = true
       }
-    },
-    ["core.norg.news"] = {
-      config = {
-        check_news = false,
-      },
     },
   },
 }
@@ -134,6 +164,7 @@ cmp.setup.cmdline(':', {
     })
 })
 
+local previewers = require('telescope.previewers')
 require('telescope').setup {
   defaults = {
     layout_strategy = 'vertical',
@@ -142,9 +173,6 @@ require('telescope').setup {
 }
 
 require('telescope').load_extension('media_files')
-require('spellsitter').setup {
-  enable = true,
-}
 
 require("zen-mode").setup {
   window = {
@@ -156,13 +184,6 @@ require("zen-mode").setup {
 }
 
 require("lualine").setup()
-
-require("mind").setup {
-  persistence = {
-    state_path = "~/Notes/mind/mind.json",
-    data_dir = "~/Notes/mind/data"
-  }
-}
 
 -- Enable telescope theme
 vim.g.gruvbox_baby_telescope_theme = 1

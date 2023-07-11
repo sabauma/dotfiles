@@ -1,6 +1,7 @@
 #/bin/bash
 
 source ~/.bashrc
+source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 xrdb -merge ~/.Xresources &
 
@@ -8,8 +9,7 @@ export WINDOW_MANAGER=xmonad
 export XDG_CURRENT_DESKTOP=GNOME
 export CALIBRE_USE_DARK_PALETTE=1
 
-# For some reason compton does not work well on 16.10 with mulitple monitors
-compton -bCG --backend glx --paint-on-overlay --vsync opengl-swc
+picom -b --backend glx --vsync
 
 (sleep 1 && unity-settings-daemon) &
 

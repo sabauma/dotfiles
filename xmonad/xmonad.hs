@@ -22,7 +22,7 @@ import           XMonad.Layout.Grid               (Grid (..))
 import           XMonad.Layout.NoBorders          (smartBorders)
 
 import           XMonad.Layout.Spacing            (smartSpacing)
-import           XMonad.Prompt.Window             (allWindows, windowPrompt, WindowPrompt (..))
+import           XMonad.Prompt.Window             (allWindows, windowPrompt, XWindowMap, WindowPrompt (..))
 
 -- General libraries
 import           Control.Monad
@@ -48,7 +48,7 @@ import qualified XMonad.StackSet                  as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "kitty"
+myTerminal      = "alacritty"
 
 
 -- Width of the window border in pixels.
@@ -171,7 +171,7 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_p     ), spawn "rofi -show run")
     {-, ((modm,               xK_p     ), runOrRaisePrompt myPromptConfig)-}
     -- Run Window prompt
-    , ((modm .|. shiftMask, xK_p     ), windowPrompt myPromptConfig Goto allWindows)
+    , ((modm .|. shiftMask, xK_p     ), windowPrompt myPromptConfig Goto normalizedAllWindows)
     -- Next Workspace
     , ((modm,               xK_Right ), nextWS)
     -- Previous Workspace
@@ -226,6 +226,12 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     where -- Keys for specifying workspaces.
           workspaceKeys   = [xK_1 .. xK_9] ++ [xK_0] ++ [xK_F1 .. xK_F12]
+
+          -- A list of all windows where the text has been normalized to remove
+          -- weird unicode stuff.
+          normalizedAllWindows :: XWindowMap
+          normalizedAllWindows = fmap (M.mapKeys textNormalizer) allWindows
+
 
 fullFloatFocused :: X ()
 fullFloatFocused =
@@ -296,7 +302,7 @@ xmobarConfig = xmobarPP
              , ppSep     = sep
              , ppUrgent  = urgent }
   where
-    title   = xmobarColor xmobarTitleColor ""  . shorten 100 . myNormalizer
+    title   = xmobarColor xmobarTitleColor ""  . shorten 80 . textNormalizer
     layout  = xmobarColor xmobarLayoutColor "" . cleanupLayout
     current = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "«" "»"
     visible = xmobarColor xmobarVisibleWorkspaceColor "" . wrap "(" ")"
@@ -306,12 +312,11 @@ xmobarConfig = xmobarPP
 -- Perform some unicode normalization on the input string.
 -- Mostly for xmobar, which cannot render oddly stylized unicode characters that can
 -- appear in application titles.
-myNormalizer :: String -> String
-myNormalizer = T.unpack . ICU.nfkd . T.pack
+textNormalizer :: String -> String
+textNormalizer = T.unpack . ICU.nfkd . T.pack
 
 myLogHook :: Handle -> X ()
 myLogHook xmproc = do
-  Colors.updateSeed
   dynamicLogWithPP $ xmobarConfig { ppOutput = hPutStrLn xmproc }
   -- Place pointer in the center of the focused window
   updatePointer (0.5, 0.5) (0, 0)

@@ -16,7 +16,6 @@ Plug 'https://github.com/vim-scripts/a.vim.git'
 " TreeSitter related plugins
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-Plug 'https://github.com/lewis6991/spellsitter.nvim.git'
 
 " Fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -57,13 +56,12 @@ Plug 'https://github.com/llvm/llvm-project.git', { 'as': 'llvm-project2', 'rtp':
 
 " For compiler explorer
 Plug 'stevearc/dressing.nvim'
-Plug 'krady21/compiler-explorer.nvim'
 
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'rcarriga/nvim-notify'
 
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'phaazon/mind.nvim', { 'branch': 'v2.2' }
+Plug 'stevearc/oil.nvim'
 
 call plug#end()
 
@@ -196,15 +194,15 @@ set pumheight=15
 nnoremap Y y$
 
 set statusline=
-set statusline +=%1*\ %n\ %*            "buffer number
-set statusline +=%5*%{&ff}%*            "file format
-set statusline +=%3*%y%*                "file type
-set statusline +=%4*\ %<%F%*            "full path
-set statusline +=%2*%m%*                "modified flag
-set statusline +=%1*%=%5l%*             "current line
-set statusline +=%2*/%L%*               "total lines
-set statusline +=%1*%6v\ %*             "virtual column number
-set statusline +=%2*0x%04B\ %*          "character under cursor
+set statusline +=%1*\ %n\ %*            " buffer number
+set statusline +=%5*%{&ff}%*            " file format
+set statusline +=%3*%y%*                " file type
+set statusline +=%4*\ %<%F%*            " full path
+set statusline +=%2*%m%*                " modified flag
+set statusline +=%1*%=%5l%*             " current line
+set statusline +=%2*/%L%*               " total lines
+set statusline +=%1*%6v\ %*             " virtual column number
+set statusline +=%2*0x%04B\ %*          " character under cursor
 
 set list
 set listchars=tab:>-,trail:·,extends:>,precedes:<
@@ -217,3 +215,4 @@ set tags=./tags;
 
 " Source the lua configuration
 runtime config.lua
+runtime gccinit.lua
