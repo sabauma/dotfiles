@@ -15,16 +15,16 @@ Plug 'https://github.com/nfvs/vim-perforce.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/rust-lang/rust.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
-Plug 'https://github.com/tpope/vim-obsession.git'
-Plug 'https://github.com/tpope/vim-repeat.git'
-Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/tpope/vim-vinegar.git'
-Plug 'https://github.com/vim-latex/vim-latex.git'
-Plug 'https://github.com/vim-scripts/a.vim.git'
-Plug 'https://github.com/wlangstroth/vim-racket.git'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'https://github.com/tpope/vim-obsession.git'
+" Plug 'https://github.com/tpope/vim-repeat.git'
+" Plug 'https://github.com/tpope/vim-surround.git'
+" Plug 'https://github.com/tpope/vim-vinegar.git'
+
+Plug 'https://github.com/vim-scripts/a.vim.git'
+
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'michal-h21/vim-zettel'
 
@@ -40,10 +40,6 @@ Plug 'https://github.com/tpope/vim-markdown.git'
 Plug 'https://github.com/chikamichi/mediawiki.vim.git'
 
 call plug#end()
-
-if has("gui_running")
-  set guifont=Fira\ Mono\ 16
-endif
 
 set termguicolors
 

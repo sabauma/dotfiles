@@ -1,7 +1,7 @@
 
-vim.notify = require('notify')
+-- vim.notify = require('notify')
 
-require('nvim-web-devicons').setup()
+-- require('nvim-web-devicons').setup()
 
 -- Mappings.
 local on_attach = function(client, bufnr)
@@ -11,6 +11,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', ']g', vim.diagnostic.goto_next, bufopts)
 
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -24,36 +25,32 @@ local configs = require('lspconfig.configs')
 local lspconfig = require('lspconfig')
 local lsputil = require('lspconfig.util')
 
-lspconfig.ccls.setup {
+lspconfig.clangd.setup {
+  cmd = {"clangd", "--completion-style=detailed", "--background-index", "--background-index-priority=low"},
   on_attach = on_attach,
-  init_options = {
-    compilationDatabaseDirectory = "build";
-    index = {
-      threads = 0;
-    };
-    clang = { excludeArgs = { "-frounding-math"} };
-  },
-  root_dir = lsputil.root_pattern(".sbtools", ".ccls", "build/compile_commands.json")
 }
 
 lspconfig.mlir_lsp_server.setup {
   on_attach = on_attach,
-  -- cmd = {'scripts/run', 'mlir-lsp-server'},
+}
+
+lspconfig.pyright.setup {
+  on_attach = on_attach,
 }
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "all",
-  ignore_install = {},
+  -- Grammars are managed by nix
+  -- ensure_installed = "all",
+  -- ignore_install = {},
   highlight = {
     enable = true,
     disable = {},
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = false,
   },
   indent = {
     enable = true,
   },
   incremental_selection = {
-    enable = true,
     keymaps = {
       init_selection = "gnn",
       node_incremental = "grn",
@@ -185,8 +182,3 @@ require("zen-mode").setup {
 
 require("lualine").setup()
 
--- Enable telescope theme
-vim.g.gruvbox_baby_telescope_theme = 1
-vim.g.gruvbox_baby_keyword_style = "italic"
-vim.g.gruvbox_baby_background_color = "dark"
-vim.g.gruvbox_baby_user_original_palette = true

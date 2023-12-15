@@ -4,7 +4,6 @@ call plug#begin('~/.nvim/plugged')
 Plug 'https://github.com/godlygeek/tabular.git'
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/tpope/vim-obsession.git'
@@ -13,20 +12,9 @@ Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/tpope/vim-vinegar.git'
 Plug 'https://github.com/vim-scripts/a.vim.git'
 
-" TreeSitter related plugins
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-
-" Fzf
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
 " Colorscheme bundles
-Plug 'https://github.com/flazz/vim-colorschemes.git'
-Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/sainnhe/everforest.git'
 Plug 'sainnhe/gruvbox-material'
-Plug 'luisiacc/gruvbox-baby'
 
 " Cmp related plugins
 Plug 'hrsh7th/cmp-buffer'
@@ -50,10 +38,6 @@ Plug 'nvim-neorg/neorg-telescope'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-neorg/neorg', { 'branch': 'main' }
 
-" For LLVM and MLIR Syntax files
-Plug 'https://github.com/llvm/llvm-project.git', { 'rtp': 'mlir/utils/vim' }
-Plug 'https://github.com/llvm/llvm-project.git', { 'as': 'llvm-project2', 'rtp': 'llvm/utils/vim' }
-
 " For compiler explorer
 Plug 'stevearc/dressing.nvim'
 
@@ -74,13 +58,6 @@ set shiftwidth=2
 set conceallevel=0
 
 set termguicolors
-
-let g:everforest_background = 'hard'
-let g:gruvbox_italics=1
-let g:gruvbox_invert_selection=0
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='medium'
-let g:gruvbox_guisp_fallback='fg'
 
 let g:gruvbox_material_foreground='original'
 let g:gruvbox_material_background='hard'
@@ -213,6 +190,7 @@ digraph ?! 8253
 
 set tags=./tags;
 
+autocmd BufNewFile,BufRead *.mlir set filetype=mlir
+
 " Source the lua configuration
 runtime config.lua
-runtime gccinit.lua
